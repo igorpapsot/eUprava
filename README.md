@@ -1,18 +1,19 @@
 Sistem eUprave koji simulira rad MUP-a, tužilaštva, suda, granične policije i njihove kumunikacije.
 
-MUP - građani
+MUP građani
 
--Zakazivanje izdavanja novih isprava 
--Produžavanje isprava provera da li je moguce, zahtev za ranije produzavanje
--Za dete potrebna pratnja i potvrda roditelja
--Prijave izgubljenog
--Globalni login građani(za slanje prijave tuzilastvu)
--Cuvanje poternica
+	-Zakazivanje izdavanja novih isprava 
+	-Produžavanje isprava provera da li je moguce, zahtev za ranije produzavanje
+	-Za dete potrebna pratnja i potvrda roditelja
+	-Prijave izgubljenog
+	-Globalni login građani(za slanje prijave tuzilastvu)
+	-Cuvanje poternica
 
 Sud
-- Primanje optužnice od strane tužilaštva
-- Pregled i sortiranje optužnice
-- Pretraga, kreiranje i pregled tabele građana sa poternice
+
+	- Primanje optužnice od strane tužilaštva
+	- Pregled i sortiranje optužnice
+	- Pretraga, kreiranje i pregled tabele građana sa poternice
 	- Objava konačne presude
 	- Omogućiti sudiji da raspisuje poternicu 
 	- Mogućnost biranja željenog sudije
