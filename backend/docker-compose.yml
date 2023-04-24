@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+
+  api_gateway:
+    build:
+      context: ./Api_gateway/
+      dockerfile: Dockerfile
+    container_name: api_gateway
+    restart: on-failure
+    ports:
+      - "8000:8000"
+
+  tuzilastvo_service:
+    image: tuzilastvo_service
+    build:
+      context: .
+      dockerfile: ./Tuzilastvo/Dockerfile
+    restart: always
+    container_name: 'tuzilastvo_service'
+    hostname: 'tuzilastvo_service'
+    environment:
+      - MONGO_DB_URI=${TUZILASTVO_DB_URI}
+      - app_port=${TUZILASTVO_SERVICE_PORT}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    depends_on:
+      tuzilastvo_db:
+        condition: service_healthy
+
+
+  tuzilastvo_db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: myDB
+    # Docker healtcheck - checks if database is "alive"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    volumes:
+      - mongo_store:/data/mongoTuzilastvo
+    ports:
+      - 27017:27017
+
+
+volumes:
+    mongo_store:
