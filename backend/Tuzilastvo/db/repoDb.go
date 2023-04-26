@@ -206,7 +206,7 @@ func (u *RepoDb) GetOptuznica(prijavaId string) (data.Optuznica, error) {
 
 func (u RepoDb) CreateOptuznica(p *data.Optuznica) bool {
 	u.logger.Println("Creating optuznica...")
-	coll := u.getPrijaveCollection()
+	coll := u.getOptuzniceCollection()
 	id := uuid.New()
 	p.Id = id.String()
 	rand.Seed(time.Now().UnixNano())
