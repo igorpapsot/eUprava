@@ -56,6 +56,9 @@ func main() {
 	getPrijaveRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getPrijaveRouter.HandleFunc("/prijave", usersHandler.GetPrijave)
 
+	getJavnePrijaveRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getJavnePrijaveRouter.HandleFunc("/prijave/public", usersHandler.GetJavnePrijave)
+
 	getPrijavaRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getPrijavaRouter.HandleFunc("/prijave/{id}", usersHandler.GetPrijava)
 

@@ -22,10 +22,13 @@ type RepoDb struct {
 	client *mongo.Client
 }
 
-func (u RepoDb) GetPrijave() data.KrivicnePrijave {
+func (u RepoDb) GetPrijave(javne bool) data.KrivicnePrijave {
 	u.logger.Println("Getting krivicne prijave...")
 	coll := u.getPrijaveCollection()
 	filter := bson.D{}
+	if javne {
+		filter = bson.D{{"privatnost", true}}
+	}
 	cursor, err := coll.Find(context.TODO(), filter)
 	if err != nil {
 		u.logger.Println(err)

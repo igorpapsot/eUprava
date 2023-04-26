@@ -91,7 +91,21 @@ func (u *Handler) CreatePrijava(rw http.ResponseWriter, h *http.Request) {
 }
 
 func (u *Handler) GetPrijave(rw http.ResponseWriter, h *http.Request) {
-	user := u.repo.GetPrijave()
+	user := u.repo.GetPrijave(false)
+
+	err := user.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+}
+
+func (u *Handler) GetJavnePrijave(rw http.ResponseWriter, h *http.Request) {
+	user := u.repo.GetPrijave(true)
 
 	err := user.ToJSON(rw)
 
