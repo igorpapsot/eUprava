@@ -65,11 +65,9 @@ func main() {
 
 	confirmPrijavaRouter := routerUser.Methods(http.MethodPut).Subrouter()
 	confirmPrijavaRouter.HandleFunc("/prijave/confirm/{id}", usersHandler.ConfirmPrijava)
-	confirmPrijavaRouter.Use(usersHandler.MiddlewarePrijavaValidation)
 
 	declinePrijavaRouter := routerUser.Methods(http.MethodPut).Subrouter()
 	declinePrijavaRouter.HandleFunc("/prijave/decline/{id}", usersHandler.DeclinePrijava)
-	declinePrijavaRouter.Use(usersHandler.MiddlewarePrijavaValidation)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 

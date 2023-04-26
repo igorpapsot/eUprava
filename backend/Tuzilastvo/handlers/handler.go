@@ -121,11 +121,31 @@ func (u *Handler) GetPrijava(rw http.ResponseWriter, h *http.Request) {
 }
 
 func (u *Handler) ConfirmPrijava(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var id = vars["id"]
+	t := u.repo.ConfirmPrijava(id)
 
+	if t == false {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
 }
 
 func (u *Handler) DeclinePrijava(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var id = vars["id"]
+	t := u.repo.DeclinePrijava(id)
 
+	if t == false {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
 }
 
 func (u *Handler) MiddlewareTuzilastvoValidation(next http.Handler) http.Handler {

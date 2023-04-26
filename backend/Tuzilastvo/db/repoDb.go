@@ -136,9 +136,9 @@ func (u RepoDb) GetTuzilastva() data.Tuzilastva {
 	return results
 }
 
-func (u *RepoDb) ConfirmPrijava(prijava *data.KrivicnaPrijava) bool {
+func (u *RepoDb) ConfirmPrijava(id string) bool {
 	coll := u.getPrijaveCollection()
-	filter := bson.D{{"id", prijava.Id}}
+	filter := bson.D{{"id", id}}
 	update := bson.D{{"$set", bson.D{{"status", data.PRIHVACENA}}}}
 
 	_, err := coll.UpdateOne(context.TODO(), filter, update)
@@ -149,9 +149,9 @@ func (u *RepoDb) ConfirmPrijava(prijava *data.KrivicnaPrijava) bool {
 	return true
 }
 
-func (u *RepoDb) DeclinePrijava(prijava *data.KrivicnaPrijava) bool {
+func (u *RepoDb) DeclinePrijava(id string) bool {
 	coll := u.getPrijaveCollection()
-	filter := bson.D{{"id", prijava.Id}}
+	filter := bson.D{{"id", id}}
 	update := bson.D{{"$set", bson.D{{"status", data.ODBACENA}}}}
 
 	_, err := coll.UpdateOne(context.TODO(), filter, update)
