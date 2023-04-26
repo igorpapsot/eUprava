@@ -11,5 +11,8 @@ type Repo interface {
 	GetPrijava(id string) (data.KrivicnaPrijava, error)
 	GetTuzilastvo(id string) (data.Tuzilastvo, error)
 	GetTuzilastva() data.Tuzilastva
+	CreateOptuznica(optuznica *data.Optuznica) bool
+	GetOptuznice() data.Optuznice
+	GetOptuznica(prijavaId string) (data.Optuznica, error)
 	//SendKrivicnaPrijava() ??
 }

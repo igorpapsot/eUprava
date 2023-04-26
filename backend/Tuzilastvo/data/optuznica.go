@@ -2,6 +2,7 @@ package data
 
 import (
 	"encoding/json"
+	"go.mongodb.org/mongo-driver/bson"
 	"io"
 )
 
@@ -28,4 +29,14 @@ func (p *Optuznica) ToJSON(w io.Writer) error {
 func (p *Optuznica) FromJSON(r io.Reader) error {
 	d := json.NewDecoder(r)
 	return d.Decode(p)
+}
+
+func (p *Optuznica) ToBson() (doc *bson.D, err error) {
+	data, err := bson.Marshal(p)
+	if err != nil {
+		return
+	}
+
+	err = bson.Unmarshal(data, &doc)
+	return
 }

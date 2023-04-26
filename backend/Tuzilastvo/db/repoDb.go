@@ -165,6 +165,63 @@ func (u *RepoDb) DeclinePrijava(id string) bool {
 	return true
 }
 
+func (u RepoDb) GetOptuznice() data.Optuznice {
+	u.logger.Println("Getting optuznice...")
+	coll := u.getOptuzniceCollection()
+	filter := bson.D{}
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		u.logger.Println(err)
+	}
+
+	var results []*data.Optuznica
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		u.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			u.logger.Println(err)
+		}
+		u.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
+func (u *RepoDb) GetOptuznica(prijavaId string) (data.Optuznica, error) {
+	u.logger.Println("Getting optuznica...")
+	var result data.Optuznica
+	coll := u.getOptuzniceCollection()
+	filter := bson.D{{"krivicnaPrijava.id", prijavaId}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("Couldnt find optuznica")
+	}
+
+	return result, nil
+}
+
+func (u RepoDb) CreateOptuznica(p *data.Optuznica) bool {
+	u.logger.Println("Creating optuznica...")
+	coll := u.getPrijaveCollection()
+	id := uuid.New()
+	p.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := p.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+
+	u.logger.Printf("Created optuznica with _id: %v\n", result.InsertedID)
+	return true
+}
+
 func (u *RepoDb) getPrijaveCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("prijave")
@@ -174,6 +231,12 @@ func (u *RepoDb) getPrijaveCollection() *mongo.Collection {
 func (u *RepoDb) getTuzilastvoCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("tuzilastvo")
+	return collection
+}
+
+func (u *RepoDb) getOptuzniceCollection() *mongo.Collection {
+	db := u.client.Database("myDB")
+	collection := db.Collection("optuznice")
 	return collection
 }
 
