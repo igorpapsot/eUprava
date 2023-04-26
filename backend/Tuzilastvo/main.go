@@ -43,8 +43,21 @@ func main() {
 	routerUser := mux.NewRouter()
 	routerUser.Use(usersHandler.MiddlewareContentTypeSet)
 
+	postTuzilastvoRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	postTuzilastvoRouter.HandleFunc("/tuzilastva", usersHandler.CreateTuzilastvo)
+	postTuzilastvoRouter.Use(usersHandler.MiddlewareTuzilastvoValidation)
+
+	getTuzilastvaRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getTuzilastvaRouter.HandleFunc("/tuzilastva", usersHandler.GetTuzilastva)
+
+	getTuzilastvoRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getTuzilastvoRouter.HandleFunc("/tuzilastva/{id}", usersHandler.GetTuzilastvo)
+
+	getPrijaveRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getPrijaveRouter.HandleFunc("/prijave", usersHandler.GetPrijave)
+
 	getPrijavaRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getPrijavaRouter.HandleFunc("/prijave", usersHandler.GetPrijave)
+	getPrijavaRouter.HandleFunc("/prijave/{id}", usersHandler.GetPrijava)
 
 	postPrijavaRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	postPrijavaRouter.HandleFunc("/prijave", usersHandler.CreatePrijava)

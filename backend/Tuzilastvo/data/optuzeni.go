@@ -6,7 +6,6 @@ import (
 )
 
 type Optuzeni struct {
-	Id                string `json:"id"`
 	Ime               string `json:"ime"`
 	Prezime           string `json:"prezime"`
 	DatumRodjenja     string `json:"datumRodjenja"`

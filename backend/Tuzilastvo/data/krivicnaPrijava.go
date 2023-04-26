@@ -12,10 +12,10 @@ type KrivicnaPrijava struct {
 	ClanZakonika string        `json:"clanZakonika"`
 	Datum        string        `json:"datum"`
 	MestoPrijave string        `json:"mestoPrijave"`
+	TuzilastvoId string        `json:"tuzilastvoId"`
 	Obrazlozenje string        `json:"obrazlozenje"`
 	Status       StatusPrijave `json:"status"`
 	Optuzeni     Optuzeni      `json:"optuzeni"`
-	Tuzilastvo   Tuzilastvo    `json:"tuzilastvo"`
 }
 
 type KrivicnePrijave []*KrivicnaPrijava

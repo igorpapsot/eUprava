@@ -6,7 +6,6 @@ import (
 )
 
 type Mesto struct {
-	Id    string `json:"id"`
 	Naziv string `json:"naziv"`
 	Ulica string `json:"ulica"`
 	Broj  int    `json:"broj"`

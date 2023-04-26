@@ -4,6 +4,7 @@ import (
 	"Tuzilastvo/data"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
@@ -23,7 +24,7 @@ type RepoDb struct {
 
 func (u RepoDb) GetPrijave() data.KrivicnePrijave {
 	u.logger.Println("Getting krivicne prijave...")
-	coll := u.getCollection()
+	coll := u.getPrijaveCollection()
 	filter := bson.D{}
 	cursor, err := coll.Find(context.TODO(), filter)
 	if err != nil {
@@ -46,9 +47,23 @@ func (u RepoDb) GetPrijave() data.KrivicnePrijave {
 	return results
 }
 
+func (u *RepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {
+	u.logger.Println("Getting prijava...")
+	var result data.KrivicnaPrijava
+	coll := u.getPrijaveCollection()
+	filter := bson.D{{"id", id}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("Couldnt find prijava")
+	}
+
+	return result, nil
+}
+
 func (u RepoDb) CreatePrijava(p *data.KrivicnaPrijava) bool {
 	u.logger.Println("Creating krivicna prijava...")
-	coll := u.getCollection()
+	coll := u.getPrijaveCollection()
 	id := uuid.New()
 	p.Id = id.String()
 	rand.Seed(time.Now().UnixNano())
@@ -64,19 +79,98 @@ func (u RepoDb) CreatePrijava(p *data.KrivicnaPrijava) bool {
 	return true
 }
 
+func (u RepoDb) CreateTuzilastvo(p *data.Tuzilastvo) bool {
+	u.logger.Println("Creating tuzilastvo ...")
+	coll := u.getTuzilastvoCollection()
+	id := uuid.New()
+	p.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := p.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+
+	u.logger.Printf("Created tuzilastvo with _id: %v\n", result.InsertedID)
+	return true
+}
+
+func (u *RepoDb) GetTuzilastvo(id string) (data.Tuzilastvo, error) {
+	u.logger.Println("Getting tuzilastva...")
+	var result data.Tuzilastvo
+	coll := u.getTuzilastvoCollection()
+	filter := bson.D{{"id", id}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("Couldnt find tuzilastvo")
+	}
+
+	return result, nil
+}
+
+func (u RepoDb) GetTuzilastva() data.Tuzilastva {
+	u.logger.Println("Getting tuzilastva ...")
+	coll := u.getTuzilastvoCollection()
+	filter := bson.D{}
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		u.logger.Println(err)
+	}
+
+	var results []*data.Tuzilastvo
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		u.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			u.logger.Println(err)
+		}
+		u.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
 func (u *RepoDb) ConfirmPrijava(prijava *data.KrivicnaPrijava) bool {
-	//TODO implement me
-	panic("implement me")
+	coll := u.getPrijaveCollection()
+	filter := bson.D{{"id", prijava.Id}}
+	update := bson.D{{"$set", bson.D{{"status", data.PRIHVACENA}}}}
+
+	_, err := coll.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+	return true
 }
 
 func (u *RepoDb) DeclinePrijava(prijava *data.KrivicnaPrijava) bool {
-	//TODO implement me
-	panic("implement me")
+	coll := u.getPrijaveCollection()
+	filter := bson.D{{"id", prijava.Id}}
+	update := bson.D{{"$set", bson.D{{"status", data.ODBACENA}}}}
+
+	_, err := coll.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+	return true
 }
 
-func (u *RepoDb) getCollection() *mongo.Collection {
+func (u *RepoDb) getPrijaveCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("prijave")
+	return collection
+}
+
+func (u *RepoDb) getTuzilastvoCollection() *mongo.Collection {
+	db := u.client.Database("myDB")
+	collection := db.Collection("tuzilastvo")
 	return collection
 }
 
