@@ -222,6 +222,38 @@ func (u RepoDb) CreateOptuznica(p *data.Optuznica) bool {
 	return true
 }
 
+func (u *RepoDb) Login(jmbg string, lozinka string) (data.Tuzilac, error) {
+	u.logger.Println("Logging in...")
+	var result data.Tuzilac
+	coll := u.getTuzilacCollection()
+	filter := bson.D{{"jmbg", jmbg}, {"lozinka", lozinka}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("couldnt log in")
+	}
+
+	return result, nil
+}
+
+func (u RepoDb) Register(p *data.Tuzilac) bool {
+	u.logger.Println("Registering...")
+	coll := u.getTuzilacCollection()
+	id := uuid.New()
+	p.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := p.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+
+	u.logger.Printf("Registered tuzilac with _id: %v\n", result.InsertedID)
+	return true
+}
+
 func (u *RepoDb) getPrijaveCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("prijave")
@@ -237,6 +269,12 @@ func (u *RepoDb) getTuzilastvoCollection() *mongo.Collection {
 func (u *RepoDb) getOptuzniceCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("optuznice")
+	return collection
+}
+
+func (u *RepoDb) getTuzilacCollection() *mongo.Collection {
+	db := u.client.Database("myDB")
+	collection := db.Collection("tuzioci")
 	return collection
 }
 

@@ -40,6 +40,7 @@ func main() {
 	prijavaHandler := handlers.NewPrijavaHandler(logger, repo)
 	tuzilastvoHandler := handlers.NewTuzilastvoHandler(logger, repo)
 	optuznicaHandler := handlers.NewOptuznicaHandler(logger, repo)
+	tuzilacHandler := handlers.NewTuzilacHandler(logger, repo)
 
 	//Initialize the router and add a middleware for all the requests
 	routerUser := mux.NewRouter()
@@ -80,6 +81,13 @@ func main() {
 
 	getOptuzniceRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getOptuzniceRouter.HandleFunc("/optuznice", optuznicaHandler.GetOptuznice)
+
+	loginRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	loginRouter.HandleFunc("/login", tuzilacHandler.LoginUser)
+
+	registerRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	registerRouter.HandleFunc("/register", tuzilacHandler.Register)
+	registerRouter.Use(tuzilacHandler.MiddlewareTuzilacValidation)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 

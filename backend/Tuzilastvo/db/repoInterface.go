@@ -14,5 +14,7 @@ type Repo interface {
 	CreateOptuznica(optuznica *data.Optuznica) bool
 	GetOptuznice() data.Optuznice
 	GetOptuznica(prijavaId string) (data.Optuznica, error)
+	Login(jmbg string, lozinka string) (data.Tuzilac, error)
+	Register(tuzilac *data.Tuzilac) bool
 	//SendKrivicnaPrijava() ??
 }
