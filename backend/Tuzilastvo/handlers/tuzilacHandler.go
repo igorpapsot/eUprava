@@ -110,6 +110,12 @@ func (u *TuzilacHandler) MiddlewareTuzilacValidation(next http.Handler) http.Han
 			return
 		}
 
+		_, err = u.repo.GetTuzilac(tuzilac.Jmbg)
+		if err == nil {
+			rw.WriteHeader(http.StatusNotAcceptable)
+			return
+		}
+
 		ctx := context.WithValue(h.Context(), KeyTuzilac{}, tuzilac)
 		h = h.WithContext(ctx)
 

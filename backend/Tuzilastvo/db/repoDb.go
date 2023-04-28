@@ -50,6 +50,39 @@ func (u RepoDb) GetPrijave(javne bool) data.KrivicnePrijave {
 	return results
 }
 
+//TODO SKontaj kako treba da se pretrazuje tacno
+func (u RepoDb) GetPrijaveBy(ime string, prezime string) data.KrivicnePrijave {
+	u.logger.Println("Getting krivicne prijave...")
+	coll := u.getPrijaveCollection()
+	cursor, err := coll.Find(
+		context.TODO(),
+		bson.D{
+			{"$or",
+				bson.A{
+					bson.D{{"ime", ime}},
+					bson.D{{"prezime", prezime}},
+				}},
+		})
+	if err != nil {
+		u.logger.Println(err)
+	}
+
+	var results []*data.KrivicnaPrijava
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		u.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			u.logger.Println(err)
+		}
+		u.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
 func (u *RepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {
 	u.logger.Println("Getting prijava...")
 	var result data.KrivicnaPrijava
@@ -252,6 +285,20 @@ func (u RepoDb) Register(p *data.Tuzilac) bool {
 
 	u.logger.Printf("Registered tuzilac with _id: %v\n", result.InsertedID)
 	return true
+}
+
+func (u *RepoDb) GetTuzilac(jmbg string) (data.Tuzilac, error) {
+	u.logger.Println("Getting tuzilac...")
+	var result data.Tuzilac
+	coll := u.getTuzilacCollection()
+	filter := bson.D{{"jmbg", jmbg}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("Couldnt find tuzilac")
+	}
+
+	return result, nil
 }
 
 func (u *RepoDb) getPrijaveCollection() *mongo.Collection {
