@@ -8,12 +8,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TuzilastvoComponent } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
+import { StatusPipe } from './model/tuzilastvo/statusEnum';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    TuzilastvoComponent
+    TuzilastvoComponent,
+    StatusPipe
   ],
   imports: [
     BrowserModule,

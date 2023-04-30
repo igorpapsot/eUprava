@@ -15,3 +15,16 @@
 .body {
 
 }
+
+.optuzeniT {
+    border-left: solid 1px #e4e7ea; 
+}
+
+.prijavaT {
+    border-right: solid 1px #e4e7ea;
+    border-left: solid 1px #e4e7ea;  
+}
+
+.mestoT {
+    border-right: solid 1px #e4e7ea;
+}
