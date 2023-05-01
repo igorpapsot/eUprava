@@ -23,4 +23,12 @@ export class KrivicnaPrijavaServiceService {
   getPrijave() : Observable<KrivicnaPrijava[]> {
     return this.client.get<KrivicnaPrijava[]>(environment.apiUrl + "/tuzilastvo/prijave");
   }
+
+  declinePrijava(id: string) {
+    return this.client.put<unknown>(environment.apiUrl + "/tuzilastvo/prijave/decline/" + id, null, this.options());
+  }
+
+  confirmPrijava(id: string) {
+    return this.client.put<unknown>(environment.apiUrl + "/tuzilastvo/prijave/confirm/" + id, null, this.options());
+  }
 }
