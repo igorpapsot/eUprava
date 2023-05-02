@@ -22,12 +22,17 @@ export class TuzilastvoComponent {
   constructor(private prijavaService : KrivicnaPrijavaServiceService, private modalService : NgbModal, private tuzilastvoService : TuzilastvoService){
     this.getPrijave();
     this.getTuzilastva();
+    this.getJavnePrijave();
     this.prijava.optuzeni = this.optuzeni;
     this.prijava.optuzeni.mestoPrebivalista = this.mesto;
   }
 
   getPrijave(){
     this.prijave = this.prijavaService.getPrijave()
+  }
+
+  getJavnePrijave(){
+    this.javnePrijave = this.prijavaService.getJavnePrijave()
   }
 
   getTuzilastva() {
@@ -53,6 +58,7 @@ export class TuzilastvoComponent {
   }
  
   prijave!: Observable<KrivicnaPrijava[]>
+  javnePrijave!: Observable<KrivicnaPrijava[]>
 
   closeResult = '';
 

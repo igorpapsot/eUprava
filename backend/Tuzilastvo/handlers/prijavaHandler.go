@@ -86,8 +86,14 @@ func (u *PrijavaHandler) GetPrijava(rw http.ResponseWriter, h *http.Request) {
 func (u *PrijavaHandler) ConfirmPrijava(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
 	var id = vars["id"]
-	t := u.repo.ConfirmPrijava(id)
 
+	prijava, _ := u.repo.GetPrijava(id)
+	if prijava.Status != 2 {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
+	t := u.repo.ConfirmPrijava(id)
 	if t == false {
 		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
 		u.logger.Println(unableToConvertToJson)
@@ -100,8 +106,14 @@ func (u *PrijavaHandler) ConfirmPrijava(rw http.ResponseWriter, h *http.Request)
 func (u *PrijavaHandler) DeclinePrijava(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
 	var id = vars["id"]
-	t := u.repo.DeclinePrijava(id)
 
+	prijava, _ := u.repo.GetPrijava(id)
+	if prijava.Status != 2 {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
+	t := u.repo.DeclinePrijava(id)
 	if t == false {
 		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
 		u.logger.Println(unableToConvertToJson)

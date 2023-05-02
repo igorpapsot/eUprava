@@ -43,6 +43,11 @@ func (u *OptuznicaHandler) CreateOptuznica(rw http.ResponseWriter, h *http.Reque
 		return
 	}
 
+	if prijava.Status != 2 {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
 	t := u.repo.ConfirmPrijava(optuznica.KrivicnaPrijava.Id)
 	if t == false {
 		rw.WriteHeader(http.StatusConflict)

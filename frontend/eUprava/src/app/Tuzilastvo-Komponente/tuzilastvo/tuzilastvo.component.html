@@ -1,12 +1,6 @@
 <br/>
 <br/>
 <div class="container">
-    <div class="row">
-        <div class="col-md-9">
-            <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
-            <button id="dodaj" type="button" class="btn btn-sm btn-success " (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
-        </div>    
-    </div>
     <br/>
     <div class="row">
         <div class="md-col">
@@ -54,6 +48,60 @@
             </table>
         </div>
     </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-9">
+            <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
+            <button id="dodaj" type="button" class="btn btn-sm btn-success " (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
+        </div>    
+    </div>
+    <br/>
+
+
+    <h3>Prikaz javnih prijava (za gradjanina)</h3>
+        <div class="row">
+                <div class="md-col">
+                <table class="table table-striped">
+                        <thead>
+                        <tr>
+                                <th scope="col">Krivicna prijava</th>
+                                <!-- <th scope="col">Privatnost</th> -->
+                                <th scope="col">Clan zakonika</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Mesto prijave</th>
+                                <th scope="col">Obrazlozenje</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Optuzeni</th>
+                                <th scope="col">Datum rodjenja</th>
+                                <th scope="col">Jmbg</th>
+                                <th scope="col">Zanimanje</th>
+                                <th scope="col">Broj telefona</th>
+                                <th scope="col">Mesto prebivalista</th>
+                                
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let prijava of javnePrijave |async; index as i">
+                                <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                                <!-- <td>{{ prijava.privatnost }}</td> -->
+                                <td>{{ prijava.clanZakonika }}</td>
+                                <td>{{ prijava.datum }}</td>
+                                <td>{{ prijava.mestoPrijave }}</td>
+                                <td>{{ prijava.obrazlozenje }}</td>
+                                <td>{{ prijava.status | status }}</td>
+                                <td class="optuzeniT">{{ prijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                                <td>{{ prijava.optuzeni.datumRodjenja }}</td>
+                                <td>{{ prijava.optuzeni.jmbg }}</td>
+                                <td>{{ prijava.optuzeni.zanimanje }}</td>
+                                <td>{{ prijava.optuzeni.brTelefona }}</td>
+                                <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }}, {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
+                        </tr>
+                        </tbody>
+                </table>
+                </div>
+        </div>
+
 </div>
 
 <ng-template #odbacivanje let-modal>
@@ -339,3 +387,4 @@
 		<button type="button" class="btn btn-success success" (click)="[modals.close('Save click'), createPrijava()]" [disabled]="!userForm.form.valid">Potvrdi</button>
 	</div>
 </ng-template>
+
