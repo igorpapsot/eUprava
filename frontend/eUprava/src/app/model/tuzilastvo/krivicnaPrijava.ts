@@ -8,10 +8,11 @@ export class KrivicnaPrijava {
     id: string
     privatnost: boolean
     clanZakonika: string
-    datum: string
+    datum: string | null
     mestoPrijave: string
     tuzilastvoId: string
     obrazlozenje: string
     status: Status
     optuzeni: Optuzeni
+    gradjaninId: string
 }

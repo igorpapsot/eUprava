@@ -31,4 +31,10 @@ export class KrivicnaPrijavaServiceService {
   confirmPrijava(id: string) {
     return this.client.put<unknown>(environment.apiUrl + "/tuzilastvo/prijave/confirm/" + id, null, this.options());
   }
+
+  createPrijava(prijava: KrivicnaPrijava) {
+    const body=JSON.stringify(prijava);
+    console.log(body)
+    return this.client.post<unknown>(environment.apiUrl + "/tuzilastvo/prijave", body, this.options());
+  }
 }

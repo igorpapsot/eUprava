@@ -6,7 +6,7 @@ export class Optuzeni {
 
     ime: string
     prezime: string
-    datumRodjenja: string
+    datumRodjenja: string | null
     jmbg: string
     zanimanje: string
     brTelefona: string
