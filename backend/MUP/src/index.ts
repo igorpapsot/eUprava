@@ -1,10 +1,21 @@
 import express from "express"
-import { appController } from "./controllers/appController"
+import { UserController } from "./controllers/user.controller"
+import mongoose from "mongoose"
+import bodyParser from "body-parser"
 
-const app = express()
+async function main() {
 
-app.use(appController)
+    const app = express()
+    console.log("Connecting to db...")
+    const db = await mongoose.connect("mongodb://localhost:27018/mup")
+    console.log("Connection established.")
 
-app.listen(8004, () => {
-    console.log("MUP app started")
-})
+    app.use(bodyParser.urlencoded({extended: true}))
+    app.use(bodyParser.json())
+    app.use(UserController)
+
+    app.listen(8004, () => {
+        console.log("MUP app started")
+    })
+}
+main();
