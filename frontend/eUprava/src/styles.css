@@ -1,0 +1,43 @@
+.blue {
+    background-color: #043e77;
+}
+
+.white {
+    color: whitesmoke;
+}
+
+.pStranica {
+    margin-left: 15px;
+    font-weight: bold;
+    color: #D0FF00;
+}
+
+.optuzeniT {
+    border-left: solid 1px #e4e7ea; 
+}
+
+.prijavaT {
+    border-right: solid 1px #e4e7ea;
+    border-left: solid 1px #e4e7ea;  
+}
+
+.mestoT {
+    border-right: solid 1px #e4e7ea;
+}
+
+.prikaz {
+    background-color: #043e77;
+    border-color: #043e77;
+}
+
+.prikaz:hover {
+    background-color: #0659ac;
+    border-color: #0659ac;
+}
+
+footer {
+    background-color:#f2f2f2 ;
+    padding: 50px;
+    text-align: center;
+    color: #f2f2f2;
+}

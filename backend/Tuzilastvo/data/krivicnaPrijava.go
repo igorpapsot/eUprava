@@ -16,6 +16,7 @@ type KrivicnaPrijava struct {
 	Obrazlozenje string        `json:"obrazlozenje"`
 	Status       StatusPrijave `json:"status"`
 	Optuzeni     Optuzeni      `json:"optuzeni"`
+	GradjaninId  string        `json:"gradjaninId"`
 }
 
 type KrivicnePrijave []*KrivicnaPrijava

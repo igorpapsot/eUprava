@@ -37,39 +37,57 @@ func main() {
 	repo.Ping()
 
 	//Initialize the handler and inject said logger
-	usersHandler := handlers.NewHandler(logger, repo)
+	prijavaHandler := handlers.NewPrijavaHandler(logger, repo)
+	tuzilastvoHandler := handlers.NewTuzilastvoHandler(logger, repo)
+	optuznicaHandler := handlers.NewOptuznicaHandler(logger, repo)
+	tuzilacHandler := handlers.NewTuzilacHandler(logger, repo)
 
 	//Initialize the router and add a middleware for all the requests
 	routerUser := mux.NewRouter()
-	routerUser.Use(usersHandler.MiddlewareContentTypeSet)
+	routerUser.Use(prijavaHandler.MiddlewareContentTypeSet)
 
 	postTuzilastvoRouter := routerUser.Methods(http.MethodPost).Subrouter()
-	postTuzilastvoRouter.HandleFunc("/tuzilastva", usersHandler.CreateTuzilastvo)
-	postTuzilastvoRouter.Use(usersHandler.MiddlewareTuzilastvoValidation)
+	postTuzilastvoRouter.HandleFunc("/tuzilastva", tuzilastvoHandler.CreateTuzilastvo)
+	postTuzilastvoRouter.Use(tuzilastvoHandler.MiddlewareTuzilastvoValidation)
 
 	getTuzilastvaRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getTuzilastvaRouter.HandleFunc("/tuzilastva", usersHandler.GetTuzilastva)
+	getTuzilastvaRouter.HandleFunc("/tuzilastva", tuzilastvoHandler.GetTuzilastva)
 
 	getTuzilastvoRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getTuzilastvoRouter.HandleFunc("/tuzilastva/{id}", usersHandler.GetTuzilastvo)
+	getTuzilastvoRouter.HandleFunc("/tuzilastva/{id}", tuzilastvoHandler.GetTuzilastvo)
 
 	getPrijaveRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getPrijaveRouter.HandleFunc("/prijave", usersHandler.GetPrijave)
+	getPrijaveRouter.HandleFunc("/prijave", prijavaHandler.GetPrijave)
+
+	getJavnePrijaveRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getJavnePrijaveRouter.HandleFunc("/prijave/public", prijavaHandler.GetJavnePrijave)
 
 	getPrijavaRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getPrijavaRouter.HandleFunc("/prijave/{id}", usersHandler.GetPrijava)
+	getPrijavaRouter.HandleFunc("/prijave/{id}", prijavaHandler.GetPrijava)
 
 	postPrijavaRouter := routerUser.Methods(http.MethodPost).Subrouter()
-	postPrijavaRouter.HandleFunc("/prijave", usersHandler.CreatePrijava)
-	postPrijavaRouter.Use(usersHandler.MiddlewarePrijavaValidation)
+	postPrijavaRouter.HandleFunc("/prijave", prijavaHandler.CreatePrijava)
+	postPrijavaRouter.Use(prijavaHandler.MiddlewarePrijavaValidation)
 
 	confirmPrijavaRouter := routerUser.Methods(http.MethodPut).Subrouter()
-	confirmPrijavaRouter.HandleFunc("/prijave/confirm/{id}", usersHandler.ConfirmPrijava)
-	confirmPrijavaRouter.Use(usersHandler.MiddlewarePrijavaValidation)
+	confirmPrijavaRouter.HandleFunc("/prijave/confirm/{id}", prijavaHandler.ConfirmPrijava)
 
 	declinePrijavaRouter := routerUser.Methods(http.MethodPut).Subrouter()
-	declinePrijavaRouter.HandleFunc("/prijave/decline/{id}", usersHandler.DeclinePrijava)
-	declinePrijavaRouter.Use(usersHandler.MiddlewarePrijavaValidation)
+	declinePrijavaRouter.HandleFunc("/prijave/decline/{id}", prijavaHandler.DeclinePrijava)
+
+	postOptuznicaRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	postOptuznicaRouter.HandleFunc("/optuznice", optuznicaHandler.CreateOptuznica)
+	postOptuznicaRouter.Use(optuznicaHandler.MiddlewareOptuznicaValidation)
+
+	getOptuzniceRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getOptuzniceRouter.HandleFunc("/optuznice", optuznicaHandler.GetOptuznice)
+
+	loginRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	loginRouter.HandleFunc("/login", tuzilacHandler.LoginUser)
+
+	registerRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	registerRouter.HandleFunc("/register", tuzilacHandler.Register)
+	registerRouter.Use(tuzilacHandler.MiddlewareTuzilacValidation)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 

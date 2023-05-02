@@ -1,0 +1,456 @@
+<br/>
+<br/>
+<div class="container">
+        <div class="row">
+                <div ngbDropdown class="d-inline-block">
+                        <button type="button" class="btn btn-primary prikaz" id="dropdownBasic1" ngbDropdownToggle>
+                                Prikaži:
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="prikaziOptuznice()">Optužnice</button>
+                                <button ngbDropdownItem (click)="prikaziPrijave()">Krivične prijave</button>
+                        </div>
+                </div>
+        </div>
+    <br/>
+    <div class="row" [hidden]="prikazOptuznice == true">
+        <div class="md-col">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Krivicna prijava</th>
+                        <!-- <th scope="col">Privatnost</th> -->
+                        <th scope="col">Clan zakonika</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Mesto prijave</th>
+                        <th scope="col">Obrazlozenje</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Optuzeni</th>
+                        <th scope="col">Datum rodjenja</th>
+                        <th scope="col">Jmbg</th>
+                        <th scope="col">Zanimanje</th>
+                        <th scope="col">Broj telefona</th>
+                        <th scope="col">Mesto prebivalista</th>
+                        <th scope="col"></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prijava of prijave |async; index as i">
+                        <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                        <!-- <td>{{ prijava.privatnost }}</td> -->
+                        <td>{{ prijava.clanZakonika }}</td>
+                        <td>{{ prijava.datum }}</td>
+                        <td>{{ prijava.mestoPrijave }}</td>
+                        <td>{{ prijava.obrazlozenje }}</td>
+                        <td>{{ prijava.status | status }}</td>
+                        <td class="optuzeniT">{{ prijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                        <td>{{ prijava.optuzeni.datumRodjenja }}</td>
+                        <td>{{ prijava.optuzeni.jmbg }}</td>
+                        <td>{{ prijava.optuzeni.zanimanje }}</td>
+                        <td>{{ prijava.optuzeni.brTelefona }}</td>
+                        <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }}, {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
+                        <td class="prijavaT">
+                            <button type="button" class="btn btn-success" style="margin-bottom: 2px;" (click)="openPrihvati(prihvatanje, prijava.id)" [hidden]="prijava.status != 2">Prihvati</button>
+                            <button type="button" class="btn btn-danger" (click)="openOdbaci(odbacivanje, prijava.id)" [hidden]="prijava.status != 2">Odbaci</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+
+    <br/>
+    <div class="row" [hidden]="prikazOptuznice == true"> 
+        <div class="col-md-9">
+            <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
+            <button id="dodaj" type="button" class="btn btn-sm btn-success " (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
+        </div>    
+    </div>
+    <br/>
+
+
+    <h3 [hidden]="prikazOptuznice == true">Prikaz javnih prijava (za gradjanina)</h3>
+        <div class="row" [hidden]="prikazOptuznice == true">
+                <div class="md-col">
+                <table class="table table-striped">
+                        <thead>
+                        <tr>
+                                <th scope="col">Krivicna prijava</th>
+                                <!-- <th scope="col">Privatnost</th> -->
+                                <th scope="col">Clan zakonika</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Mesto prijave</th>
+                                <th scope="col">Obrazlozenje</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Optuzeni</th>
+                                <th scope="col">Datum rodjenja</th>
+                                <th scope="col">Jmbg</th>
+                                <th scope="col">Zanimanje</th>
+                                <th scope="col">Broj telefona</th>
+                                <th scope="col">Mesto prebivalista</th>
+                                
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let prijava of javnePrijave |async; index as i">
+                                <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                                <!-- <td>{{ prijava.privatnost }}</td> -->
+                                <td>{{ prijava.clanZakonika }}</td>
+                                <td>{{ prijava.datum }}</td>
+                                <td>{{ prijava.mestoPrijave }}</td>
+                                <td>{{ prijava.obrazlozenje }}</td>
+                                <td>{{ prijava.status | status }}</td>
+                                <td class="optuzeniT">{{ prijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                                <td>{{ prijava.optuzeni.datumRodjenja }}</td>
+                                <td>{{ prijava.optuzeni.jmbg }}</td>
+                                <td>{{ prijava.optuzeni.zanimanje }}</td>
+                                <td>{{ prijava.optuzeni.brTelefona }}</td>
+                                <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }}, {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
+                        </tr>
+                        </tbody>
+                </table>
+                </div>
+        </div>
+
+        <div class="row" [hidden]="prikazOptuznice == false">
+                <div class="md-col">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Optužnica</th>
+                                <!-- <th scope="col">Privatnost</th> -->
+                                <th scope="col">Clan zakonika</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Mesto prijave</th>
+                                <th scope="col">Obrazlozenje</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Optuzeni</th>
+                                <th scope="col">Datum rodjenja</th>
+                                <th scope="col">Jmbg</th>
+                                <th scope="col">Zanimanje</th>
+                                <th scope="col">Broj telefona</th>
+                                <th scope="col">Mesto prebivalista</th>
+                                <th scope="col">Aktivna</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let o of optuznice |async; index as i">
+                                <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                                <!-- <td>{{ prijava.privatnost }}</td> -->
+                                <td>{{ o.krivicnaPrijava.clanZakonika }}</td>
+                                <td>{{ o.krivicnaPrijava.datum }}</td>
+                                <td>{{ o.krivicnaPrijava.mestoPrijave }}</td>
+                                <td>{{ o.krivicnaPrijava.obrazlozenje }}</td>
+                                <td>{{ o.krivicnaPrijava.status | status }}</td>
+                                <td class="optuzeniT">{{ o.krivicnaPrijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.datumRodjenja }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.jmbg }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.zanimanje }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.brTelefona }}</td>
+                                <td class="mestoT">{{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.naziv }}, {{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.ulica }}  {{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.broj }}</td>
+                                <td class="prijavaT">
+                                        <p [hidden]="o.aktivna">Ne</p>
+                                        <p [hidden]="!o.aktivna">Da</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+</div>
+
+<ng-template #odbacivanje let-modal>
+	<div class="modal-header" style="background-color: #f2f2f2; font-weight: bold;">
+		<h4 class="modal-title" id="odbaci" style=" font-weight: bold;">Potvrdi odbacivanje krivicne prijave</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body" style="background-color: #f2f2f2;">
+		<form>
+			<p>Da li ste sigurni da želite da odbacite krivičnu prijavu?</p>
+		</form>
+	</div>
+	<div class="modal-footer" style="background-color: #f2f2f2;">
+		<button type="button" class="btn btn-success success" (click)="modal.close('Save click')">Potvrdi</button>
+	</div>
+</ng-template>
+
+<ng-template #prihvatanje let-modals>
+	<div class="modal-header" style="background-color: #f2f2f2;">
+		<h4 class="modal-title" id="prihvati" style=" font-weight: bold;">Potvrdi kreiranje optuznice</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modals.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body" style="background-color: #f2f2f2;">
+		<form>
+			<p>Da li ste sigurni da želite da kreirate optuznicu na osnovu ove krivicne prijave?</p>
+		</form>
+	</div>
+	<div class="modal-footer" style="background-color: #f2f2f2;">
+		<button type="button" class="btn btn-success success" (click)="modals.close('Save click')">Potvrdi</button>
+	</div>
+</ng-template>
+
+<ng-template #dodavanje let-modals>
+	<div class="modal-header" style="background-color: #f2f2f2;">
+		<h4 class="modal-title" id="dodavanje" style=" font-weight: bold;">Posalji krivičnu prijavu tužilaštvu</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modals.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body" style="background-color: #f2f2f2;">
+        <div class="container">
+
+            <form #userForm="ngForm" (submit)="createPrijava()">
+
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label>Privatnost krivične prijave</label>
+                                <select [(ngModel)] = "privatnost" class="form-select form-select-md" name="privatnost">
+                                        <option>Privatna</option>
+                                        <option>Javna</option>
+                                </select>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label>Clan zakonika</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.clanZakonika" name="clanZakonika"
+                                        #clanZakonika="ngModel" >
+                                <div [hidden]="clanZakonika.valid || !clanZakonika.touched"
+                                        class="alert alert-danger">
+                                        Clan zakonika je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Datum ( date picker )</label>
+                                <input type="date" class="form-control gray" required
+                                        [(ngModel)]="prijava.datum" name="datum"
+                                        #datum="ngModel" >
+                                <div [hidden]="datum.valid || !datum.touched"
+                                        class="alert alert-danger">
+                                        Datum je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Mesto prijave</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.mestoPrijave" name="mestoPrijave"
+                                        #mestoPrijave="ngModel" >
+                                <div [hidden]="mestoPrijave.valid || !mestoPrijave.touched"
+                                        class="alert alert-danger">
+                                        Mesto prijave je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Tuzilastvo</label>
+                                <select class="form-control" required
+                                [(ngModel)]="tuzilastvo.id" name="tuzilastvo"
+                                #communityId="ngModel" class="form-select form-select-md">
+                                <option *ngFor="let tuzilastvo of tuzilastva | async; index as i; first as isFirst" [value] = "tuzilastvo.id">{{tuzilastvo.naziv}}</option>
+                                </select>
+                                <div [hidden]="communityId.valid || !communityId.touched"
+                                        class="alert alert-danger">
+                                        Community is required
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Obrazlozenje</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.obrazlozenje" name="obrazlozenje"
+                                        #obrazlozenje="ngModel" >
+                                <div [hidden]="obrazlozenje.valid || !obrazlozenje.touched"
+                                        class="alert alert-danger">
+                                        Obrazlozenje je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h4 class="offset-md-1" style="margin-top: 5px;">Optuženi:</h4>
+                </div>
+
+                
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Ime</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.ime" name="ime"
+                                        #ime="ngModel" >
+                                <div [hidden]="ime.valid || !ime.touched"
+                                        class="alert alert-danger">
+                                        Ime je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Prezime</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.prezime" name="prezime"
+                                        #prezime="ngModel" >
+                                <div [hidden]="prezime.valid || !prezime.touched"
+                                        class="alert alert-danger">
+                                        Prezime je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Datum rodjenja ( datepicker )</label>
+                                <input type="date" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.datumRodjenja" name="datumRodjenja"
+                                        #datumRodjenja="ngModel" >
+                                <div [hidden]="datumRodjenja.valid || !datumRodjenja.touched"
+                                        class="alert alert-danger">
+                                        Datum rodjenja je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Jmbg</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.jmbg" name="jmbg"
+                                        #jmbg="ngModel" >
+                                <div [hidden]="jmbg.valid || !jmbg.touched"
+                                        class="alert alert-danger">
+                                        Jmbg je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Zanimanje</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.zanimanje" name="zanimanje"
+                                        #zanimanje="ngModel" >
+                                <div [hidden]="zanimanje.valid || !zanimanje.touched"
+                                        class="alert alert-danger">
+                                        Zanimanje je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Broj telefona</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.brTelefona" name="brTelefona"
+                                        #brTelefona="ngModel" >
+                                <div [hidden]="brTelefona.valid || !brTelefona.touched"
+                                        class="alert alert-danger">
+                                        Broj telefona je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h4 class="offset-md-1" style="margin-top: 5px;">Mesto prebivališta optuženog:</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Naziv</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.mestoPrebivalista.naziv" name="naziv"
+                                        #naziv="ngModel" >
+                                <div [hidden]="naziv.valid || !naziv.touched"
+                                        class="alert alert-danger">
+                                        Naziv je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Ulica</label>
+                                <input type="text" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.mestoPrebivalista.ulica" name="ulica"
+                                        #ulica="ngModel" >
+                                <div [hidden]="ulica.valid || !ulica.touched"
+                                        class="alert alert-danger">
+                                        Ulica je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                            <div class="form-group">
+                                <label for="username">Broj</label>
+                                <input type="number" class="form-control gray" required
+                                        [(ngModel)]="prijava.optuzeni.mestoPrebivalista.broj" name="broj"
+                                        #broj="ngModel" >
+                                <div [hidden]="broj.valid || !broj.touched"
+                                        class="alert alert-danger">
+                                        Broj je obavezno polje
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+	</div>
+	<div class="modal-footer" style="background-color: #f2f2f2;">
+		<button type="button" class="btn btn-success success" (click)="[modals.close('Save click'), createPrijava()]" [disabled]="!userForm.form.valid">Potvrdi</button>
+	</div>
+</ng-template>
+
+<br/>
+<br/>
+
+<!-- <footer>
+        <p>ff</p>
+</footer> -->
+
