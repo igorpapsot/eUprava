@@ -44,10 +44,10 @@
                         <td>{{ prijava.optuzeni.jmbg }}</td>
                         <td>{{ prijava.optuzeni.zanimanje }}</td>
                         <td>{{ prijava.optuzeni.brTelefona }}</td>
-                        <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }} {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
+                        <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }}, {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
                         <td class="prijavaT">
-                            <button type="button" class="btn btn-success" style="margin-bottom: 2px;" (click)="openPrihvati(prihvatanje, prijava.id)">Prihvati</button>
-                            <button type="button" class="btn btn-danger" (click)="openOdbaci(odbacivanje, prijava.id)">Odbaci</button>
+                            <button type="button" class="btn btn-success" style="margin-bottom: 2px;" (click)="openPrihvati(prihvatanje, prijava.id)" [hidden]="prijava.status != 2">Prihvati</button>
+                            <button type="button" class="btn btn-danger" (click)="openOdbaci(odbacivanje, prijava.id)" [hidden]="prijava.status != 2">Odbaci</button>
                         </td>
                     </tr>
                 </tbody>

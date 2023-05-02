@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { Tuzilastvo } from 'src/app/model/tuzilastvo/tuzilastvo';
 import { TuzilastvoService } from 'src/app/services/tuzilastvo/tuzilastvo.service';
 import { Status } from 'src/app/model/tuzilastvo/statusEnum';
+import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
 
 @Component({
   selector: 'app-tuzilastvo',
@@ -41,7 +42,11 @@ export class TuzilastvoComponent {
   }
 
   confirmPrijava(id: string){
-    this.prijavaService.confirmPrijava(id).subscribe(data => {
+    this.okp.id = id;
+    this.optuznica.krivicnaPrijava = this.okp;
+    this.optuznica.idGradjanina = "tempIdGradjanina";
+    this.optuznica.aktivna = true;
+    this.prijavaService.confirmPrijava(this.optuznica).subscribe(data => {
       console.log(data);
       this.getPrijave();
     })
@@ -114,7 +119,7 @@ export class TuzilastvoComponent {
     }
 
     //Dodaj da se cita iz jwta
-    this.prijava.gradjaninId = "gradjanin1"
+    this.prijava.gradjaninId = "tempIdGradjanina"
     this.prijava.tuzilastvoId = this.tuzilastvo.id
     this.prijava.status = Status.NACEKANJU
 
@@ -131,6 +136,8 @@ export class TuzilastvoComponent {
   privatnost: string;
   tuzilastvo: Tuzilastvo = new Tuzilastvo();
   tuzilastva! : Observable<Tuzilastvo[]>;
+  optuznica: Optuznica = new Optuznica();
+  okp: KrivicnaPrijava = new KrivicnaPrijava();
 
 
 }
