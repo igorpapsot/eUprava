@@ -1,8 +1,19 @@
 <br/>
 <br/>
 <div class="container">
+        <div class="row">
+                <div ngbDropdown class="d-inline-block">
+                        <button type="button" class="btn btn-primary prikaz" id="dropdownBasic1" ngbDropdownToggle>
+                                Prikaži:
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="prikaziOptuznice()">Optužnice</button>
+                                <button ngbDropdownItem (click)="prikaziPrijave()">Krivične prijave</button>
+                        </div>
+                </div>
+        </div>
     <br/>
-    <div class="row">
+    <div class="row" [hidden]="prikazOptuznice == true">
         <div class="md-col">
             <table class="table table-striped">
                 <thead>
@@ -48,9 +59,10 @@
             </table>
         </div>
     </div>
+    <br/>
 
     <br/>
-    <div class="row">
+    <div class="row" [hidden]="prikazOptuznice == true"> 
         <div class="col-md-9">
             <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
             <button id="dodaj" type="button" class="btn btn-sm btn-success " (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
@@ -59,8 +71,8 @@
     <br/>
 
 
-    <h3>Prikaz javnih prijava (za gradjanina)</h3>
-        <div class="row">
+    <h3 [hidden]="prikazOptuznice == true">Prikaz javnih prijava (za gradjanina)</h3>
+        <div class="row" [hidden]="prikazOptuznice == true">
                 <div class="md-col">
                 <table class="table table-striped">
                         <thead>
@@ -101,6 +113,53 @@
                 </table>
                 </div>
         </div>
+
+        <div class="row" [hidden]="prikazOptuznice == false">
+                <div class="md-col">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Optužnica</th>
+                                <!-- <th scope="col">Privatnost</th> -->
+                                <th scope="col">Clan zakonika</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Mesto prijave</th>
+                                <th scope="col">Obrazlozenje</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Optuzeni</th>
+                                <th scope="col">Datum rodjenja</th>
+                                <th scope="col">Jmbg</th>
+                                <th scope="col">Zanimanje</th>
+                                <th scope="col">Broj telefona</th>
+                                <th scope="col">Mesto prebivalista</th>
+                                <th scope="col">Aktivna</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let o of optuznice |async; index as i">
+                                <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                                <!-- <td>{{ prijava.privatnost }}</td> -->
+                                <td>{{ o.krivicnaPrijava.clanZakonika }}</td>
+                                <td>{{ o.krivicnaPrijava.datum }}</td>
+                                <td>{{ o.krivicnaPrijava.mestoPrijave }}</td>
+                                <td>{{ o.krivicnaPrijava.obrazlozenje }}</td>
+                                <td>{{ o.krivicnaPrijava.status | status }}</td>
+                                <td class="optuzeniT">{{ o.krivicnaPrijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.datumRodjenja }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.jmbg }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.zanimanje }}</td>
+                                <td>{{ o.krivicnaPrijava.optuzeni.brTelefona }}</td>
+                                <td class="mestoT">{{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.naziv }}, {{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.ulica }}  {{ o.krivicnaPrijava.optuzeni.mestoPrebivalista.broj }}</td>
+                                <td class="prijavaT">
+                                        <p [hidden]="o.aktivna">Ne</p>
+                                        <p [hidden]="!o.aktivna">Da</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
 </div>
 
@@ -387,4 +446,11 @@
 		<button type="button" class="btn btn-success success" (click)="[modals.close('Save click'), createPrijava()]" [disabled]="!userForm.form.valid">Potvrdi</button>
 	</div>
 </ng-template>
+
+<br/>
+<br/>
+
+<!-- <footer>
+        <p>ff</p>
+</footer> -->
 

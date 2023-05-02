@@ -8,7 +8,6 @@ import (
 
 type Optuznica struct {
 	Id              string          `json:"id"`
-	IdGradjanina    string          `json:"idGradjanina"`
 	Aktivna         bool            `json:"aktivna"`
 	KrivicnaPrijava KrivicnaPrijava `json:"krivicnaPrijava"`
 	//Za dodati sta sve treba

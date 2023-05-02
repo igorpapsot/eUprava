@@ -12,10 +12,6 @@
     color: #D0FF00;
 }
 
-.body {
-
-}
-
 .optuzeniT {
     border-left: solid 1px #e4e7ea; 
 }
@@ -27,4 +23,21 @@
 
 .mestoT {
     border-right: solid 1px #e4e7ea;
+}
+
+.prikaz {
+    background-color: #043e77;
+    border-color: #043e77;
+}
+
+.prikaz:hover {
+    background-color: #0659ac;
+    border-color: #0659ac;
+}
+
+footer {
+    background-color:#f2f2f2 ;
+    padding: 50px;
+    text-align: center;
+    color: #f2f2f2;
 }

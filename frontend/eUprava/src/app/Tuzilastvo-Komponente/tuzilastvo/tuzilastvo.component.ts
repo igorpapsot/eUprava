@@ -10,6 +10,7 @@ import { Tuzilastvo } from 'src/app/model/tuzilastvo/tuzilastvo';
 import { TuzilastvoService } from 'src/app/services/tuzilastvo/tuzilastvo.service';
 import { Status } from 'src/app/model/tuzilastvo/statusEnum';
 import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
+import { OptuzniceService } from 'src/app/services/tuzilastvo/optuznice.service';
 
 @Component({
   selector: 'app-tuzilastvo',
@@ -19,12 +20,23 @@ import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
 export class TuzilastvoComponent {
 [x: string]: any;
 
-  constructor(private prijavaService : KrivicnaPrijavaServiceService, private modalService : NgbModal, private tuzilastvoService : TuzilastvoService){
+  constructor(private prijavaService : KrivicnaPrijavaServiceService, private modalService : NgbModal, private tuzilastvoService : TuzilastvoService,
+    private optuzniceService: OptuzniceService){
     this.getPrijave();
     this.getTuzilastva();
     this.getJavnePrijave();
     this.prijava.optuzeni = this.optuzeni;
     this.prijava.optuzeni.mestoPrebivalista = this.mesto;
+  }
+
+  prikaziPrijave() {
+    this.prikazOptuznice = false;
+    this.getPrijave();
+  }
+
+  prikaziOptuznice() {
+    this.prikazOptuznice = true;
+    this.getOptuznice();
   }
 
   getPrijave(){
@@ -37,6 +49,10 @@ export class TuzilastvoComponent {
 
   getTuzilastva() {
     this.tuzilastva = this.tuzilastvoService.getTuzilastva()
+  }
+
+  getOptuznice() {
+    this.optuznice = this.optuzniceService.getOptuznice()
   }
 
   declinePrijava(id: string){
@@ -56,9 +72,6 @@ export class TuzilastvoComponent {
       this.getPrijave();
     })
   }
- 
-  prijave!: Observable<KrivicnaPrijava[]>
-  javnePrijave!: Observable<KrivicnaPrijava[]>
 
   closeResult = '';
 
@@ -141,9 +154,13 @@ export class TuzilastvoComponent {
   mesto: Mesto = new Mesto();
   privatnost: string;
   tuzilastvo: Tuzilastvo = new Tuzilastvo();
-  tuzilastva! : Observable<Tuzilastvo[]>;
   optuznica: Optuznica = new Optuznica();
   okp: KrivicnaPrijava = new KrivicnaPrijava();
 
+  prijave!: Observable<KrivicnaPrijava[]>
+  javnePrijave!: Observable<KrivicnaPrijava[]>
+  optuznice!: Observable<Optuznica[]>
+  tuzilastva! : Observable<Tuzilastvo[]>;
 
+  prikazOptuznice: boolean = false;
 }
