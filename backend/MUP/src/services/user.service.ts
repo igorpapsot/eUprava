@@ -10,8 +10,8 @@ export class UserService {
         return user
     }
 
-    async getUserByIdAndSifra(jmbg: string, sifra: string) {
-        const user = await this.userModel.findOne({jmbg : jmbg, sifra : sifra})
+    async getUserByJmbgAndSifra(jmbg: string, sifra: string) {
+        const user = await this.userModel.findOne({jmbg: jmbg, sifra : sifra})
         return user
     }
 

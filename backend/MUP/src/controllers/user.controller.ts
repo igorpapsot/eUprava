@@ -12,7 +12,7 @@ UserController.get("/user", async (req, res) => {
 })
 
 UserController.post("/user/login", async (req, res) => {
-    const user = await userService.getUserByIdAndSifra(req.body.jmbg as string, req.body.sifra as string)
+    const user = await userService.getUserByJmbgAndSifra(req.body.jmbg as string, req.body.sifra as string)
     res.json(user)
     return 
 })
