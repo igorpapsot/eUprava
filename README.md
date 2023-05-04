@@ -1,4 +1,4 @@
-Sistem eUprave koji simulira rad MUP-a, tužilaštva, suda, granične policije i njihove kumunikacije.
+Sistem eUprave koji simulira rad MUP-a, tužilaštva, suda, granične policije i njihove komunikacije.
 
 MUP građani
 
