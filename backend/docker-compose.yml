@@ -54,6 +54,8 @@ services:
         condition: service_healthy
     networks:
       - mup
+    ports:
+      - 8004:8004
 
   mup_db:
     image: mongo

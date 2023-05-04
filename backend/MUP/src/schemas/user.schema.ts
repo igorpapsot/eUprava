@@ -15,9 +15,11 @@ export interface User {
 
 export const UserSchema = new Schema <User> ({
     id: {type: String, required: true},
-    jmbg: {type: String, required: true},
+    jmbg: {type: String, required: true, unique: true},
     ime: {type: String, required: true},
     prezime: {type: String, required: true},
     pol: {type: Number, enum: Pol},
     sifra: {type: String, required: true},
+}, {
+    versionKey: false
 })

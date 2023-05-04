@@ -11,7 +11,7 @@ ReqController.get("/req", async (req, res) => {
     return
 })
 
-ReqController.get("/req", async (req, res) => {
+ReqController.get("/req/user", async (req, res) => {
     const request = await reqService.getReqByUserId(req.query.userId as string)
     res.json(request)
     return

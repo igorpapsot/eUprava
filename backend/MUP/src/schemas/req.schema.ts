@@ -22,4 +22,6 @@ export const ReqSchema = new Schema <Req> ({
     zahtevTip: {type: Number, required: true},
     dokumentTip: {type: Number, required: true},
     korisnikId: {type: String, required: true}
+}, {
+    versionKey: false
 })

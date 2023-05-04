@@ -9,6 +9,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TuzilastvoComponent } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
 import { StatusPipe } from './model/tuzilastvo/statusEnum';
+import { KorisnikService } from './services/mup/korisnik.service';
+import { ZahtevService } from './services/mup/zahtev.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import { StatusPipe } from './model/tuzilastvo/statusEnum';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [KorisnikService, ZahtevService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

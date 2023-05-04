@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { KorisnikService } from '../services/mup/korisnik.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent {
 
-  constructor(private router : Router){
+  constructor(private router : Router, private korisnikService: KorisnikService){
   }
 
   //Ovo treba da se promeni u gradjanin i da se doda sta treba
@@ -17,7 +18,12 @@ export class HomePageComponent {
 
   submitted : boolean = false;
 
-  login() {
-    this.router.navigateByUrl("/");
+   login() {
+    const jmbg = document.getElementById("username") as HTMLInputElement;
+    const sifra = document.getElementById("password") as HTMLInputElement;
+    this.korisnikService.loginUser(jmbg.value, sifra.value).subscribe(data => {
+        localStorage.setItem("jmbg", data.jmbg)
+        this.router.navigateByUrl("/mup")
+    })
   }
 }

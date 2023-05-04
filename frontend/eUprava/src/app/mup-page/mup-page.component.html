@@ -1,0 +1,14 @@
+<form>
+    <select class="browser-default custom-select" id="zahtevTip">
+        <option selected>Odaberite tip zahteva</option>
+        <option value="0">Dokument izgubljen</option>
+        <option value="1">Produzavanje dokumenta</option>
+        <option value="2">Izdavanje dokumenta za dete</option>
+    </select>
+    <select class="browser-default custom-select" id="dokumentTip">
+        <option selected>Odaberite tip dokumenta</option>
+        <option value="0">Licna karta</option>
+        <option value="1">Pasos</option>
+    </select>
+    <button type="button" (click)="createRequest()" class="btn btn-primary">Posalji zahtev</button>
+</form>
