@@ -226,8 +226,30 @@ export class TuzilastvoComponent {
 				  return direction === 'asc' ? res : -res;
         }
         else if (column == "datum") {
-				  const res = compare(a[column], b[column]);
-				  return direction === 'asc' ? res : -res;
+
+				  const [dayA, monthA, yearA] = a[column].split('/');
+          const [dayB, monthB, yearB] = b[column].split('/');
+          
+          var valueA = new Date(+yearA, +monthA - 1, +dayA)
+          var valueB = new Date(+yearB, +monthB - 1, +dayB)
+          
+          
+          console.log(valueA)
+          console.log(valueB)
+
+          if(valueA.getTime() > valueB.getTime()) {
+            console.log("1")
+            return direction === 'asc' ? 1 : -1;
+          }
+          else if (valueA.getTime() < valueB.getTime()) {
+            console.log("-1")
+            return direction === 'asc' ? -1 : 1;
+          }
+          else {
+            console.log("0")
+            return direction === 'asc' ? 0 : -0;
+          }
+          
         }
         else {
           const res = compare("1", "1");
@@ -255,26 +277,29 @@ export class TuzilastvoComponent {
 				  return direction === 'asc' ? res : -res;
         }
         else if (column == "datum") {
-          // var valueA = new Date(a[column])
-          // var valueB = new Date(b[column])
+
+          const [dayA, monthA, yearA] = a[column].split('/');
+          const [dayB, monthB, yearB] = b[column].split('/');
           
-          // console.log(valueA)
-          // console.log(valueB)
-				  // const res = 0;
-          // if(valueA.getTime() > valueB.getTime()) {
-          //   console.log("1")
-          //   return 1
-          // }
-          // else if (valueA.getTime() < valueB.getTime()) {
-          //   console.log("-1")
-          //   return -1
-          // }
-          // else {
-          //   console.log("0")
-          //   return 0
-          // }
-          const res = compare(a[column], b[column]);
-				  return direction === 'asc' ? res : -res;
+          var valueA = new Date(+yearA, +monthA - 1, +dayA)
+          var valueB = new Date(+yearB, +monthB - 1, +dayB)
+          
+          
+          console.log(valueA)
+          console.log(valueB)
+
+          if(valueA.getTime() > valueB.getTime()) {
+            console.log("1")
+            return direction === 'asc' ? 1 : -1;
+          }
+          else if (valueA.getTime() < valueB.getTime()) {
+            console.log("-1")
+            return direction === 'asc' ? -1 : 1;
+          }
+          else {
+            console.log("0")
+            return direction === 'asc' ? 0 : -0;
+          }
   
         }
         else if (column == "mestoPrijave") {
