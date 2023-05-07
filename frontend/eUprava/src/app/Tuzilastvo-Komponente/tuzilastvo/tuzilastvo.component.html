@@ -20,9 +20,9 @@
                     <tr>
                         <th scope="col">Krivicna prijava</th>
                         <!-- <th scope="col">Privatnost</th> -->
-                        <th scope="col">Clan zakonika</th>
-                        <th scope="col">Datum</th>
-                        <th scope="col">Mesto prijave</th>
+                        <th scope="col" sortable="clanZakonika" (sort)="onSort($event)" class="thSort">Clan zakonika</th>
+                        <th scope="col" sortable="datum" (sort)="onSort($event)" class="thSort">Datum</th>
+                        <th scope="col" sortable="mestoPrijave" (sort)="onSort($event)" class="thSort">Mesto prijave</th>
                         <th scope="col">Obrazlozenje</th>
                         <th scope="col">Status</th>
                         <th scope="col">Optuzeni</th>
@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let prijava of prijave |async; index as i">
+                    <tr *ngFor="let prijava of prijave; index as i">
                         <th scope="row" class="prijavaT">{{ i + 1 }}</th>
                         <!-- <td>{{ prijava.privatnost }}</td> -->
                         <td>{{ prijava.clanZakonika }}</td>
@@ -79,9 +79,9 @@
                         <tr>
                                 <th scope="col">Krivicna prijava</th>
                                 <!-- <th scope="col">Privatnost</th> -->
-                                <th scope="col">Clan zakonika</th>
-                                <th scope="col">Datum</th>
-                                <th scope="col">Mesto prijave</th>
+                                <th scope="col" sortable="clanZakonika" (sort)="onSortJavne($event)" class="thSort">Clan zakonika</th>
+                                <th scope="col" sortable="datum" (sort)="onSortJavne($event)" class="thSort">Datum</th>
+                                <th scope="col" sortable="mestoPrijave" (sort)="onSortJavne($event)" class="thSort">Mesto prijave</th>
                                 <th scope="col">Obrazlozenje</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Optuzeni</th>
@@ -94,7 +94,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let prijava of javnePrijave |async; index as i">
+                        <tr *ngFor="let prijava of javnePrijave; index as i">
                                 <th scope="row" class="prijavaT">{{ i + 1 }}</th>
                                 <!-- <td>{{ prijava.privatnost }}</td> -->
                                 <td>{{ prijava.clanZakonika }}</td>
@@ -132,7 +132,7 @@
                                 <th scope="col">Zanimanje</th>
                                 <th scope="col">Broj telefona</th>
                                 <th scope="col">Mesto prebivalista</th>
-                                <th scope="col">Aktivna</th>
+                                <th scope="col" >Aktivna</th>
                                 
                             </tr>
                         </thead>
@@ -234,7 +234,7 @@
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                             <div class="form-group">
-                                <label for="username">Datum ( date picker )</label>
+                                <label for="username">Datum</label>
                                 <input type="date" class="form-control gray" required
                                         [(ngModel)]="prijava.datum" name="datum"
                                         #datum="ngModel" >
@@ -282,9 +282,10 @@
                     <div class="col-md-10 offset-md-1">
                             <div class="form-group">
                                 <label for="username">Obrazlozenje</label>
-                                <input type="text" class="form-control gray" required
+                                <textarea type="text" class="form-control gray" required
                                         [(ngModel)]="prijava.obrazlozenje" name="obrazlozenje"
                                         #obrazlozenje="ngModel" >
+                                </textarea>
                                 <div [hidden]="obrazlozenje.valid || !obrazlozenje.touched"
                                         class="alert alert-danger">
                                         Obrazlozenje je obavezno polje
@@ -332,7 +333,7 @@
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                             <div class="form-group">
-                                <label for="username">Datum rodjenja ( datepicker )</label>
+                                <label for="username">Datum rodjenja</label>
                                 <input type="date" class="form-control gray" required
                                         [(ngModel)]="prijava.optuzeni.datumRodjenja" name="datumRodjenja"
                                         #datumRodjenja="ngModel" >

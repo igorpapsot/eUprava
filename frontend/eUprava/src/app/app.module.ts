@@ -11,13 +11,17 @@ import { TuzilastvoComponent } from './Tuzilastvo-Komponente/tuzilastvo/tuzilast
 import { StatusPipe } from './model/tuzilastvo/statusEnum';
 import { KorisnikService } from './services/mup/korisnik.service';
 import { ZahtevService } from './services/mup/zahtev.service';
+import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
+    //TuzilastvoComponent,
+    StatusPipe,
     TuzilastvoComponent,
-    StatusPipe
+    NgbdSortableHeader
+    
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,8 @@ import { ZahtevService } from './services/mup/zahtev.service';
     NgbModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   providers: [KorisnikService, ZahtevService],
   bootstrap: [AppComponent]
