@@ -14,6 +14,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -50,37 +51,43 @@ func (u RepoDb) GetPrijave(javne bool) data.KrivicnePrijave {
 	return results
 }
 
-//TODO SKontaj kako treba da se pretrazuje tacno
-func (u RepoDb) GetPrijaveBy(ime string, prezime string) data.KrivicnePrijave {
+// TODO SKontaj kako treba da se pretrazuje tacno
+func (u RepoDb) SearchPrijave(input string) data.KrivicnePrijave {
 	u.logger.Println("Getting krivicne prijave...")
 	coll := u.getPrijaveCollection()
-	cursor, err := coll.Find(
-		context.TODO(),
-		bson.D{
-			{"$or",
-				bson.A{
-					bson.D{{"ime", ime}},
-					bson.D{{"prezime", prezime}},
-				}},
-		})
+	filter := bson.D{}
+	cursor, err := coll.Find(context.TODO(), filter)
 	if err != nil {
 		u.logger.Println(err)
 	}
 
 	var results []*data.KrivicnaPrijava
+	var returnValues []*data.KrivicnaPrijava
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		u.logger.Println(err)
 	}
 
 	for _, result := range results {
 		cursor.Decode(&result)
+		if strings.Contains(strings.ToLower(result.MestoPrijave), strings.ToLower(input)) ||
+			strings.Contains(strings.ToLower(result.ClanZakonika), strings.ToLower(input)) || strings.Contains(result.Datum, input) ||
+			strings.Contains(strings.ToLower(result.Obrazlozenje), strings.ToLower(input)) || strings.Contains(string(rune(result.Status)), input) ||
+			strings.Contains(strings.ToLower(result.Optuzeni.Jmbg), strings.ToLower(input)) || strings.Contains(strings.ToLower(result.Optuzeni.Ime), strings.ToLower(input)) ||
+			strings.Contains(strings.ToLower(result.Optuzeni.Prezime), strings.ToLower(input)) ||
+			strings.Contains(strings.ToLower(result.Optuzeni.Zanimanje), strings.ToLower(input)) || strings.Contains(strings.ToLower(result.Optuzeni.BrTelefona), strings.ToLower(input)) ||
+			strings.Contains(strings.ToLower(result.Optuzeni.MestoPrebivalista.Naziv), strings.ToLower(input)) || strings.Contains(strings.ToLower(result.Optuzeni.MestoPrebivalista.Ulica), strings.ToLower(input)) ||
+			strings.Contains(string(result.Optuzeni.MestoPrebivalista.Broj), input) {
+
+			returnValues = append(returnValues, result)
+		}
 		output, err := json.MarshalIndent(result, "", "    ")
 		if err != nil {
 			u.logger.Println(err)
 		}
 		u.logger.Printf("%s\n", output)
 	}
-	return results
+	u.logger.Println(returnValues)
+	return returnValues
 }
 
 func (u *RepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {

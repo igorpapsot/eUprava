@@ -12,6 +12,7 @@ import { Status } from 'src/app/model/tuzilastvo/statusEnum';
 import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
 import { OptuzniceService } from 'src/app/services/tuzilastvo/optuznice.service';
 import { Event } from '@angular/router';
+import { Search } from 'src/app/model/tuzilastvo/search';
 
 
 export type SortColumn = keyof KrivicnaPrijava | '';
@@ -188,6 +189,28 @@ export class TuzilastvoComponent {
     
   }
 
+  public searchF() {
+    if(this.search.input){
+      console.log(this.search.input);
+      this.prijavaService.search(this.search.input).subscribe(data => {
+        console.log(data);
+        this.javnePrijave = [] 
+        data.forEach(element => {
+          if(element.privatnost == true){
+            this.javnePrijave.push(element)
+          }
+        });
+  
+      });
+    }
+    else {
+      this.getJavnePrijave()
+    }
+
+    
+  }
+
+
   prijava: KrivicnaPrijava = new KrivicnaPrijava();
   optuzeni: Optuzeni = new Optuzeni();
   mesto: Mesto = new Mesto();
@@ -202,6 +225,7 @@ export class TuzilastvoComponent {
   tuzilastva! : Observable<Tuzilastvo[]>;
 
   prikazOptuznice: boolean = false;
+  search: Search = new Search();
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   

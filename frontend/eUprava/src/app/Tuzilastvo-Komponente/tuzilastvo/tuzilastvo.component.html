@@ -61,17 +61,50 @@
     </div>
     <br/>
 
-    <br/>
+    <!-- <br/>
     <div class="row" [hidden]="prikazOptuznice == true"> 
         <div class="col-md-9">
             <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
             <button id="dodaj" type="button" class="btn btn-sm btn-success " (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
         </div>    
     </div>
+    <br/> -->
+
+    <form #searchForm="ngForm" [hidden]="prikazOptuznice == true">
+
+        <div class="row">
+          <div class="col-md-3" style="margin-left: 15px;">
+            <div class="form-group row">
+              <input type="text" class="form-control"
+                required id="input" name="searchInput"
+                [(ngModel)]="search.input" 
+                #searchInput="ngModel" placeholder="Search">
+            </div >
+          </div>
+
+          <div class="col-sm-1" style="margin-left: 5px;">
+                <div class="form-group row">
+                        <button type="button" class="btn btn-success btn-block" (click)="searchF()">Search</button>
+                </div>
+          </div>
+
+          <div class="col-md-3"style="margin-left: 145px;">
+                <div class="form-group row">
+                        <label>Forma za slanje krivične prijave tužilaštvu: &nbsp;</label>
+                </div>
+          </div>
+
+          <div class="col-sm-2" style="margin-left: 5px;">
+                <div class="form-group row">
+                        <button id="dodaj" type="button" class="btn btn-success btn-block" (click)="openDodavanje(dodavanje)">Posalji krivicnu prijavu</button>
+                </div>
+          </div>
+
+        </div>
+    </form>         
     <br/>
 
-
-    <h3 [hidden]="prikazOptuznice == true">Prikaz javnih prijava (za gradjanina)</h3>
+    <!-- <h3 [hidden]="prikazOptuznice == true">Prikaz javnih prijava (za gradjanina)</h3> -->
         <div class="row" [hidden]="prikazOptuznice == true">
                 <div class="md-col">
                 <table class="table table-striped">

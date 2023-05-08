@@ -42,4 +42,8 @@ export class KrivicnaPrijavaServiceService {
     console.log(body)
     return this.client.post<unknown>(environment.apiUrl + "/tuzilastvo/prijave", body, this.options());
   }
+
+  search(input: String) : Observable<KrivicnaPrijava[]>{
+    return this.client.get<KrivicnaPrijava[]>(environment.apiUrl + "/tuzilastvo/prijave/search/" + input)
+  }
 }
