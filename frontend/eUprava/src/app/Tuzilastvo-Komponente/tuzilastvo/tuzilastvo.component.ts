@@ -226,6 +226,7 @@ export class TuzilastvoComponent {
 
   prikazOptuznice: boolean = false;
   search: Search = new Search();
+  meni: string = "Tužilac"
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   
@@ -337,4 +338,15 @@ export class TuzilastvoComponent {
 			});
 		}
 	}
+
+  public toggleMeni() {
+    if(this.meni == "Tužilac") {
+      this.meni = "Građanin"
+    }
+    else {
+      console.log(1)
+      this.meni = "Tužilac"
+    }
+  }
+
 }
