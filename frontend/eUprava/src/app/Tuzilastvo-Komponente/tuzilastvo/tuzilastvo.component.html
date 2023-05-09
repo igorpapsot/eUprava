@@ -108,8 +108,6 @@
     </form>         
  
 
-    <!-- <h3 [hidden]="prikazOptuznice == true">Prikaz javnih prijava (za gradjanina)</h3> -->
-
         <div class="row" [hidden]="prikazOptuznice == false || meni == 'Građanin'">
                 <div class="md-col">
                     <table class="table table-striped">
@@ -184,6 +182,49 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let prijava of javnePrijave; index as i">
+                                <th scope="row" class="prijavaT">{{ i + 1 }}</th>
+                                <!-- <td>{{ prijava.privatnost }}</td> -->
+                                <td>{{ prijava.clanZakonika }}</td>
+                                <td>{{ prijava.datum }}</td>
+                                <td>{{ prijava.mestoPrijave }}</td>
+                                <td>{{ prijava.obrazlozenje }}</td>
+                                <td>{{ prijava.status | status }}</td>
+                                <td class="optuzeniT">{{ prijava.optuzeni.ime }} {{ prijava.optuzeni.prezime }}</td>
+                                <td>{{ prijava.optuzeni.datumRodjenja }}</td>
+                                <td>{{ prijava.optuzeni.jmbg }}</td>
+                                <td>{{ prijava.optuzeni.zanimanje }}</td>
+                                <td>{{ prijava.optuzeni.brTelefona }}</td>
+                                <td class="mestoT">{{ prijava.optuzeni.mestoPrebivalista.naziv }}, {{ prijava.optuzeni.mestoPrebivalista.ulica }}  {{ prijava.optuzeni.mestoPrebivalista.broj }}</td>
+                        </tr>
+                        </tbody>
+                </table>
+                </div>
+        </div>
+        <br/>
+        <h2>Vaše krivične prijave:</h2>
+        <div class="row" [hidden]="prikazOptuznice == true">
+                <div class="md-col">
+                <table class="table table-striped">
+                        <thead>
+                        <tr>
+                                <th scope="col">Krivicna prijava</th>
+                                <!-- <th scope="col">Privatnost</th> -->
+                                <th scope="col" >Clan zakonika</th>
+                                <th scope="col" >Datum</th>
+                                <th scope="col" >Mesto prijave</th>
+                                <th scope="col">Obrazlozenje</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Optuzeni</th>
+                                <th scope="col">Datum rodjenja</th>
+                                <th scope="col">Jmbg</th>
+                                <th scope="col">Zanimanje</th>
+                                <th scope="col">Broj telefona</th>
+                                <th scope="col">Mesto prebivalista</th>
+                                
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let prijava of licnePrijave; index as i">
                                 <th scope="row" class="prijavaT">{{ i + 1 }}</th>
                                 <!-- <td>{{ prijava.privatnost }}</td> -->
                                 <td>{{ prijava.clanZakonika }}</td>

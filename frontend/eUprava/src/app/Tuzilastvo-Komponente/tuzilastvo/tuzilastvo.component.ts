@@ -78,7 +78,16 @@ export class TuzilastvoComponent {
   getPrijave(){
     this.prijavaService.getPrijave().subscribe(data => {
       this.prijave = data;
-  })
+      this.licnePrijave = [];
+      data.forEach(element => {
+        if(element.optuzeni.jmbg == localStorage.getItem('jmbg')) {
+          console.log("gas")
+          this.licnePrijave.push(element)
+        }
+      });
+    })
+
+
   }
 
   getJavnePrijave(){
@@ -222,7 +231,8 @@ export class TuzilastvoComponent {
   public prijave!: KrivicnaPrijava[]
   javnePrijave!: KrivicnaPrijava[]
   optuznice!: Observable<Optuznica[]>
-  tuzilastva! : Observable<Tuzilastvo[]>;
+  tuzilastva! : Observable<Tuzilastvo[]>
+  licnePrijave : KrivicnaPrijava[]
 
   prikazOptuznice: boolean = false;
   search: Search = new Search();
