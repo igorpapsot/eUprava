@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from './services/login.service';
 
 
 @Component({
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'eUprava';
+export class AppComponent{
+  
+  constructor(public s: LoginService) {
+  }
+
 }

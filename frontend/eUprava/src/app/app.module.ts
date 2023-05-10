@@ -12,7 +12,7 @@ import { StatusPipe } from './model/tuzilastvo/statusEnum';
 import { KorisnikService } from './services/mup/korisnik.service';
 import { ZahtevService } from './services/mup/zahtev.service';
 import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
-
+import { LogoutComponent } from './logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +20,8 @@ import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastv
     //TuzilastvoComponent,
     StatusPipe,
     TuzilastvoComponent,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    LogoutComponent
     
   ],
   imports: [

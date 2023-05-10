@@ -92,6 +92,9 @@ func main() {
 	registerRouter.HandleFunc("/register", tuzilacHandler.Register)
 	registerRouter.Use(tuzilacHandler.MiddlewareTuzilacValidation)
 
+	getTuzilacRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getTuzilacRouter.HandleFunc("/tuzioci/{jmbg}", tuzilacHandler.GetTuzilac)
+
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 
 	//Initialize the server

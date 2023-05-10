@@ -13,6 +13,8 @@ import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
 import { OptuzniceService } from 'src/app/services/tuzilastvo/optuznice.service';
 import { Event } from '@angular/router';
 import { Search } from 'src/app/model/tuzilastvo/search';
+import { TuzilacService } from 'src/app/services/tuzilastvo/tuzilac.service';
+import { Tuzilac } from 'src/app/model/tuzilastvo/tuzilac';
 
 
 export type SortColumn = keyof KrivicnaPrijava | '';
@@ -57,12 +59,15 @@ export class TuzilastvoComponent {
   datepipe: DatePipe = new DatePipe('en-US');
 
   constructor(private prijavaService : KrivicnaPrijavaServiceService, private modalService : NgbModal, private tuzilastvoService : TuzilastvoService,
-    private optuzniceService: OptuzniceService){
+    private optuzniceService: OptuzniceService, private tuzilacService: TuzilacService){
     this.getPrijave();
     this.getTuzilastva();
     this.getJavnePrijave();
     this.prijava.optuzeni = this.optuzeni;
-    this.prijava.optuzeni.mestoPrebivalista = this.mesto;    
+    this.prijava.optuzeni.mestoPrebivalista = this.mesto;
+    this.jmbg = localStorage.getItem('jmbg')
+    
+    console.log(this.jmbg)
   }
 
   prikaziPrijave() {
@@ -85,8 +90,14 @@ export class TuzilastvoComponent {
           this.licnePrijave.push(element)
         }
       });
+      if(localStorage.getItem('jmbg')){
+        this.tuzilac = this.getTuzilac(localStorage.getItem('jmbg'))
+      }
+      if(this.tuzilac.id) {
+        this.tuzilacUlogovan = true
+        console.log(this.tuzilac)
+      }
     })
-
 
   }
 
@@ -102,6 +113,17 @@ export class TuzilastvoComponent {
 
   getOptuznice() {
     this.optuznice = this.optuzniceService.getOptuznice()
+  }
+
+  getTuzilac(jmbg: string | null) : Tuzilac{
+    if (jmbg) {
+      this.tuzilacService.getTuzilac(jmbg).subscribe(data => {
+        console.log("Tuzilac sranje")
+        console.log(data)
+        return data
+      })
+    }
+    return new Tuzilac
   }
 
   declinePrijava(id: string){
@@ -236,7 +258,10 @@ export class TuzilastvoComponent {
 
   prikazOptuznice: boolean = false;
   search: Search = new Search();
-  meni: string = "Tužilac"
+  meni: string = "Građanin"
+  tuzilac: Tuzilac = new Tuzilac()
+  tuzilacUlogovan: boolean = false
+  jmbg: string | null = null
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   
