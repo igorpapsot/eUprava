@@ -5,6 +5,7 @@ import (
 	"Tuzilastvo/db"
 	"context"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"time"
@@ -98,6 +99,22 @@ func (u *TuzilacHandler) Register(rw http.ResponseWriter, h *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusNotAcceptable)
+}
+
+func (u *TuzilacHandler) GetTuzilac(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var jmbg = vars["jmbg"]
+	t, err := u.repo.GetTuzilac(jmbg)
+
+	err = t.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
 }
 
 func (u *TuzilacHandler) MiddlewareTuzilacValidation(next http.Handler) http.Handler {

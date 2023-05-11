@@ -14,6 +14,7 @@ import { ZahtevService } from './services/mup/zahtev.service';
 import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
 import { SudstvoPageComponent } from './sudstvo-page/sudstvo-page.component';
 
+import { LogoutComponent } from './logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { SudstvoPageComponent } from './sudstvo-page/sudstvo-page.component';
     StatusPipe,
     TuzilastvoComponent,
     NgbdSortableHeader,
-    SudstvoPageComponent
+    SudstvoPageComponent,
+    LogoutComponent
     
   ],
   imports: [

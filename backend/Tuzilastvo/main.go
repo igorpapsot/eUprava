@@ -65,6 +65,9 @@ func main() {
 	getPrijavaRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getPrijavaRouter.HandleFunc("/prijave/{id}", prijavaHandler.GetPrijava)
 
+	searchPrijavaRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	searchPrijavaRouter.HandleFunc("/prijave/search/{input}", prijavaHandler.SearchPrijave)
+
 	postPrijavaRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	postPrijavaRouter.HandleFunc("/prijave", prijavaHandler.CreatePrijava)
 	postPrijavaRouter.Use(prijavaHandler.MiddlewarePrijavaValidation)
@@ -88,6 +91,9 @@ func main() {
 	registerRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	registerRouter.HandleFunc("/register", tuzilacHandler.Register)
 	registerRouter.Use(tuzilacHandler.MiddlewareTuzilacValidation)
+
+	getTuzilacRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getTuzilacRouter.HandleFunc("/tuzioci/{jmbg}", tuzilacHandler.GetTuzilac)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 

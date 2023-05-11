@@ -12,6 +12,9 @@ import { Status } from 'src/app/model/tuzilastvo/statusEnum';
 import { Optuznica } from 'src/app/model/tuzilastvo/optuznica';
 import { OptuzniceService } from 'src/app/services/tuzilastvo/optuznice.service';
 import { Event } from '@angular/router';
+import { Search } from 'src/app/model/tuzilastvo/search';
+import { TuzilacService } from 'src/app/services/tuzilastvo/tuzilac.service';
+import { Tuzilac } from 'src/app/model/tuzilastvo/tuzilac';
 
 
 export type SortColumn = keyof KrivicnaPrijava | '';
@@ -56,12 +59,15 @@ export class TuzilastvoComponent {
   datepipe: DatePipe = new DatePipe('en-US');
 
   constructor(private prijavaService : KrivicnaPrijavaServiceService, private modalService : NgbModal, private tuzilastvoService : TuzilastvoService,
-    private optuzniceService: OptuzniceService){
+    private optuzniceService: OptuzniceService, private tuzilacService: TuzilacService){
     this.getPrijave();
     this.getTuzilastva();
     this.getJavnePrijave();
     this.prijava.optuzeni = this.optuzeni;
-    this.prijava.optuzeni.mestoPrebivalista = this.mesto;    
+    this.prijava.optuzeni.mestoPrebivalista = this.mesto;
+    this.jmbg = localStorage.getItem('jmbg')
+    
+    console.log(this.jmbg)
   }
 
   prikaziPrijave() {
@@ -77,7 +83,22 @@ export class TuzilastvoComponent {
   getPrijave(){
     this.prijavaService.getPrijave().subscribe(data => {
       this.prijave = data;
-  })
+      this.licnePrijave = [];
+      data.forEach(element => {
+        if(element.optuzeni.jmbg == localStorage.getItem('jmbg')) {
+          console.log("gas")
+          this.licnePrijave.push(element)
+        }
+      });
+      if(localStorage.getItem('jmbg')){
+        this.tuzilac = this.getTuzilac(localStorage.getItem('jmbg'))
+      }
+      if(this.tuzilac.id) {
+        this.tuzilacUlogovan = true
+        console.log(this.tuzilac)
+      }
+    })
+
   }
 
   getJavnePrijave(){
@@ -92,6 +113,17 @@ export class TuzilastvoComponent {
 
   getOptuznice() {
     this.optuznice = this.optuzniceService.getOptuznice()
+  }
+
+  getTuzilac(jmbg: string | null) : Tuzilac{
+    if (jmbg) {
+      this.tuzilacService.getTuzilac(jmbg).subscribe(data => {
+        console.log("Tuzilac sranje")
+        console.log(data)
+        return data
+      })
+    }
+    return new Tuzilac
   }
 
   declinePrijava(id: string){
@@ -188,6 +220,28 @@ export class TuzilastvoComponent {
     
   }
 
+  public searchF() {
+    if(this.search.input){
+      console.log(this.search.input);
+      this.prijavaService.search(this.search.input).subscribe(data => {
+        console.log(data);
+        this.javnePrijave = [] 
+        data.forEach(element => {
+          if(element.privatnost == true){
+            this.javnePrijave.push(element)
+          }
+        });
+  
+      });
+    }
+    else {
+      this.getJavnePrijave()
+    }
+
+    
+  }
+
+
   prijava: KrivicnaPrijava = new KrivicnaPrijava();
   optuzeni: Optuzeni = new Optuzeni();
   mesto: Mesto = new Mesto();
@@ -199,9 +253,15 @@ export class TuzilastvoComponent {
   public prijave!: KrivicnaPrijava[]
   javnePrijave!: KrivicnaPrijava[]
   optuznice!: Observable<Optuznica[]>
-  tuzilastva! : Observable<Tuzilastvo[]>;
+  tuzilastva! : Observable<Tuzilastvo[]>
+  licnePrijave : KrivicnaPrijava[]
 
   prikazOptuznice: boolean = false;
+  search: Search = new Search();
+  meni: string = "Građanin"
+  tuzilac: Tuzilac = new Tuzilac()
+  tuzilacUlogovan: boolean = false
+  jmbg: string | null = null
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   
@@ -313,4 +373,15 @@ export class TuzilastvoComponent {
 			});
 		}
 	}
+
+  public toggleMeni() {
+    if(this.meni == "Tužilac") {
+      this.meni = "Građanin"
+    }
+    else {
+      console.log(1)
+      this.meni = "Tužilac"
+    }
+  }
+
 }

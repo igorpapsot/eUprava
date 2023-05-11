@@ -53,6 +53,22 @@ func (u *PrijavaHandler) GetPrijave(rw http.ResponseWriter, h *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 }
 
+func (u *PrijavaHandler) SearchPrijave(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var input = vars["input"]
+	user := u.repo.SearchPrijave(input)
+
+	err := user.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+}
+
 func (u *PrijavaHandler) GetJavnePrijave(rw http.ResponseWriter, h *http.Request) {
 	user := u.repo.GetPrijave(true)
 
