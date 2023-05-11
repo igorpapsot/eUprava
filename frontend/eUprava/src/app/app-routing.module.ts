@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TuzilastvoComponent } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
 import { MupPageComponent } from './mup-page/mup-page.component';
+import { SudstvoPageComponent } from './sudstvo-page/sudstvo-page.component';
 
 const routes: Routes = [
 
   {path: '', component: HomePageComponent},
   {path: 'tuzilastvo', component: TuzilastvoComponent},
-  {path: 'mup', component: MupPageComponent}
+  {path: 'mup', component: MupPageComponent},
+  {path: 'sud', component: SudstvoPageComponent},
 
 ];
 
