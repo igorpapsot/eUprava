@@ -20,7 +20,7 @@ export class SudstvoService {
   }
 
   getSudovi() : Observable<Sud[]> {
-    return this.client.get<Sud[]>(environment.apiUrl + "/sud")
+    return this.client.get<Sud[]>(environment.apiUrl + "sudstvo/sudovi")
   }
 
 }

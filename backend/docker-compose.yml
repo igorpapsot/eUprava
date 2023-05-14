@@ -81,7 +81,7 @@ services:
     container_name: 'sudstvo_service'
     hostname: 'sudstvo_service'
     environment:
-      - MONGO_DB_URI=mongodb://sudstvo_db:27019
+      - MONGO_DB_URI=${SUDSTVO_DB_URI}
       - app_port=${SUDSTVO_SERVICE_PORT}
     healthcheck:
       test: echo 'db.runCommand("ping").ok'
@@ -94,7 +94,7 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_DATABASE: myDB
+      MONGO_INITDB_DATABASE: myDB1
     # Docker healtcheck - checks if database is "alive"
     healthcheck:
       test: echo 'db.runCommand("ping").ok'

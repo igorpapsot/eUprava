@@ -12,9 +12,11 @@ import { StatusPipe } from './model/tuzilastvo/statusEnum';
 import { KorisnikService } from './services/mup/korisnik.service';
 import { ZahtevService } from './services/mup/zahtev.service';
 import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
-import { SudstvoPageComponent } from './sudstvo-page/sudstvo-page.component';
+import { SudstvoPageComponent } from './sudstvo_components/sudstvo-page/sudstvo-page.component';
 
 import { LogoutComponent } from './logout/logout.component';
+import { PoternicaComponent } from './sudstvo_components/poternica/poternica.component';
+import { RocisteComponent } from './sudstvo_components/rociste/rociste.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,9 @@ import { LogoutComponent } from './logout/logout.component';
     TuzilastvoComponent,
     NgbdSortableHeader,
     SudstvoPageComponent,
-    LogoutComponent
+    LogoutComponent,
+    PoternicaComponent,
+    RocisteComponent
     
   ],
   imports: [

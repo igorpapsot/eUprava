@@ -18,12 +18,12 @@ func main() {
 
 	logger := log.New(os.Stdout, "[sudstvo-api] ", log.LstdFlags)
 
-	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	port := os.Getenv("app_port")
 	if len(port) == 0 {
-		port = "8081"
+		port = "8082"
 	}
 
 	// NoSQL: Initialize Product Repository store
