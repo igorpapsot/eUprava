@@ -1,14 +1,96 @@
 <form>
-    <select class="browser-default custom-select" id="zahtevTip">
-        <option selected>Odaberite tip zahteva</option>
-        <option value="0">Dokument izgubljen</option>
-        <option value="1">Produzavanje dokumenta</option>
+    <label for="zahtevTip">Odaberite tip zahteva:</label>
+    <select class="browser-default custom-select" id="zahtevTip" [(ngModel)]="zahtevTip" [ngModelOptions]="{standalone: true}">
+        <option value="0">Produzavanje dokumenta</option>
+        <option value="1">Dokument izgubljen</option>
         <option value="2">Izdavanje dokumenta za dete</option>
     </select>
+    <br>
+    <label for="dokumentTip">Odaberite tip dokumenta:</label>
     <select class="browser-default custom-select" id="dokumentTip">
-        <option selected>Odaberite tip dokumenta</option>
         <option value="0">Licna karta</option>
         <option value="1">Pasos</option>
     </select>
+    <div id="dete" [style]="zahtevTip == 2 ? 'display:block' : 'display:none'">
+        <label for="deteJmbg">Jmbg deteta</label>
+        <input type="text" id="deteJmbg">
+    </div>
+    <div id="produzavanje" [style]="zahtevTip == 0 ? 'display:block' : 'display:none'">
+        <label for="isticanjeDatum">Unesite datum isticanja dokumenta.</label>
+        <input type="date" id="isticanjeDatum">
+    </div>
+    <div id="zakazivanje">
+        <input type="date" id="zakazivanjeDatum">
+        <select id="sati">
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+        </select>
+        sati
+        <select id="minuti">
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select>
+        minuta
+    </div>
     <button type="button" (click)="createRequest()" class="btn btn-primary">Posalji zahtev</button>
 </form>
+
+<div id="produzavanjeTip">
+    <h2>Zahtevi za produzavanje</h2>
+    <table>
+        <thead>
+            <th>Tip dokumenta</th>
+            <th>Zakazano datum i vreme</th>
+            <th>Datum isticanja</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let z of getZahteviZaProduzavanje()">
+                <td>{{convertDokumentTipToString(z.dokumentTip)}}</td>
+                <td>{{z.zakazanDatumVreme}}</td>
+                <td>{{z.datumIsticanja}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="izgubljenoTip">
+    <h2>Zahtevi za izgubljena dokumenta</h2>
+    <table>
+        <thead>
+            <th>Tip dokumenta</th>
+            <th>Zakazano datum i vreme</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let z of getZahteviZaIzgubljena()">
+                <td>{{convertDokumentTipToString(z.dokumentTip)}}</td>
+                <td>{{z.zakazanDatumVreme}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="deteTip">
+    <h2>Zahtevi za izdavanje dokumenta za dete</h2>
+    <table>
+        <thead>
+            <th>Tip dokumenta</th>
+            <th>Zakazano datum i vreme</th>
+            <th>Jmbg deteta</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let z of getZahteviZaDete()">
+                <td>{{convertDokumentTipToString(z.dokumentTip)}}</td>
+                <td>{{z.zakazanDatumVreme}}</td>
+                <td>{{z.jmbgDeteta}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

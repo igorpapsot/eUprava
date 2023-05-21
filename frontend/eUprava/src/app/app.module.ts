@@ -11,13 +11,15 @@ import { TuzilastvoComponent } from './Tuzilastvo-Komponente/tuzilastvo/tuzilast
 import { StatusPipe } from './model/tuzilastvo/statusEnum';
 import { KorisnikService } from './services/mup/korisnik.service';
 import { ZahtevService } from './services/mup/zahtev.service';
+import { MupPageComponent } from './mup-page/mup-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     TuzilastvoComponent,
-    StatusPipe
+    StatusPipe,
+    MupPageComponent
   ],
   imports: [
     BrowserModule,
