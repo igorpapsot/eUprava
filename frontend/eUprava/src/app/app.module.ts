@@ -13,6 +13,8 @@ import { KorisnikService } from './services/mup/korisnik.service';
 import { ZahtevService } from './services/mup/zahtev.service';
 import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastvo.component';
 import { LogoutComponent } from './logout/logout.component';
+import { MupPageComponent } from './mup-page/mup-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +23,9 @@ import { LogoutComponent } from './logout/logout.component';
     StatusPipe,
     TuzilastvoComponent,
     NgbdSortableHeader,
-    LogoutComponent
-    
+    LogoutComponent,
+    StatusPipe,
+    MupPageComponent
   ],
   imports: [
     BrowserModule,
