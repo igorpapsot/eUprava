@@ -41,6 +41,8 @@ func main() {
 	sudHandler := handlers.NewSudHandler(logger, repo)
 	rocisteHandler := handlers.NewRocisteHandler(logger, repo)
 	sudijaHandler := handlers.NewSudijaHandler(logger, repo)
+	optuznicaHandler := handlers.NewOptuznicaHandler(logger, repo)
+	konacnaPresudaHandler := handlers.NewKonacnaPresudaHandler(logger, repo)
 
 	//Initialize the router and add a middleware for all the requests
 	routerUser := mux.NewRouter()
@@ -55,6 +57,12 @@ func main() {
 	getSudRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getSudRouter.HandleFunc("/sudovi/{id}", sudHandler.GetSud)
 
+	getOptuzniceRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getOptuzniceRouter.HandleFunc("/optuznice", optuznicaHandler.GetOptuznice)
+
+	getOptuznicaRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getOptuznicaRouter.HandleFunc("/optuznice/{id}", optuznicaHandler.GetOptuznica)
+
 	getPoterniceRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getPoterniceRouter.HandleFunc("/poternice", poternicaHandler.GetPoternice)
 
@@ -64,6 +72,13 @@ func main() {
 	postPoternicaRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	postPoternicaRouter.HandleFunc("/poternice", poternicaHandler.CreatePoternica)
 	postPoternicaRouter.Use(poternicaHandler.MiddlewarePoternicaValidation)
+
+	postKonacnaPresudaRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	postKonacnaPresudaRouter.HandleFunc("/konacnaPresuda", konacnaPresudaHandler.CreateKonacnaPresuda)
+	postKonacnaPresudaRouter.Use(konacnaPresudaHandler.MiddlewareKonacnaPresudaValidation)
+
+	getKonacnaPresudaRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getKonacnaPresudaRouter.HandleFunc("/konacnaPresuda/{id}", konacnaPresudaHandler.GetKonacnaPresuda)
 
 	postRocisteRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	postRocisteRouter.HandleFunc("/rocista", rocisteHandler.CreateRociste)
@@ -81,6 +96,12 @@ func main() {
 	registerRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	registerRouter.HandleFunc("/register", sudijaHandler.Register)
 	registerRouter.Use(sudijaHandler.MiddlewareSudijaValidation)
+
+	getSudijeRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getSudijeRouter.HandleFunc("/sudije", sudijaHandler.GetSudije)
+
+	getSudijaRouter := routerUser.Methods(http.MethodGet).Subrouter()
+	getSudijaRouter.HandleFunc("/sudija/{jmbg}", sudijaHandler.GetSudija)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"https://localhost:4200/"}))
 

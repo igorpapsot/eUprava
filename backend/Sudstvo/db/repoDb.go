@@ -118,24 +118,37 @@ func (u *RepoDb) GetPoternica(id string) (data.Poternica, error) {
 	return result, nil
 }
 
-//// ispraviti
-//func (u RepoDb) CreateKonacnaPresuda(p *data.Sud) bool {
-//	u.logger.Println("Creating konacna presuda ...")
-//	coll := u.getKonacnaPresudaCollection()
-//	id := uuid.New()
-//	p.Id = id.String()
-//	rand.Seed(time.Now().UnixNano())
-//
-//	user, err := p.ToBson()
-//	result, err := coll.InsertOne(context.TODO(), user)
-//	if err != nil {
-//		u.logger.Println(err)
-//		return false
-//	}
-//
-//	u.logger.Printf("Created konacna presuda with _id: %v\n", result.InsertedID)
-//	return true
-//}
+// // ispraviti
+func (u RepoDb) CreateKonacnaPresuda(p *data.KonacnaPresuda) bool {
+	u.logger.Println("Creating konacna presuda ...")
+	coll := u.getKonacnaPresudaCollection()
+	id := uuid.New()
+	p.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := p.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+
+	u.logger.Printf("Created konacna presuda with _id: %v\n", result.InsertedID)
+	return true
+}
+func (u *RepoDb) GetKonacnaPresuda(id string) (data.KonacnaPresuda, error) {
+	u.logger.Println("Getting konacna presuda..")
+	var result data.KonacnaPresuda
+	coll := u.getKonacnaPresudaCollection()
+	filter := bson.D{{"id", id}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		u.logger.Println(err)
+		return result, errors.New("Couldn't find konacna presuda")
+	}
+
+	return result, nil
+}
 
 func (u RepoDb) CreateSud(p *data.Sud) bool {
 	u.logger.Println("Creating sud ...")
@@ -373,6 +386,13 @@ func (u *RepoDb) getOptuzniceCollection() *mongo.Collection {
 func (u *RepoDb) getSudijaCollection() *mongo.Collection {
 	db := u.client.Database("myDB")
 	collection := db.Collection("sudije")
+	return collection
+
+}
+
+func (u *RepoDb) getKonacnaPresudaCollection() *mongo.Collection {
+	db := u.client.Database("myDB")
+	collection := db.Collection("konacnaPresuda")
 	return collection
 }
 

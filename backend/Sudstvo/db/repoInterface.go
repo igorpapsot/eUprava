@@ -8,7 +8,8 @@ type Repo interface {
 	CreatePoternica(poternica *data.Poternica) bool
 	GetPoternice() data.Poternice
 	GetPoternica(id string) (data.Poternica, error)
-	//CreateKonacnaPresuda(sud *data.Sud) bool //ispraviti
+	CreateKonacnaPresuda(p *data.KonacnaPresuda) bool         //ispraviti
+	GetKonacnaPresuda(id string) (data.KonacnaPresuda, error) //ispraviti verovatno
 	CreateSud(p *data.Sud) bool
 	GetSud(id string) (data.Sud, error)
 	GetSudovi() data.Sudovi

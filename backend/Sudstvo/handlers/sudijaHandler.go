@@ -5,6 +5,7 @@ import (
 	"Sudstvo/db"
 	"context"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"time"
@@ -98,6 +99,36 @@ func (u *SudijaHandler) Register(rw http.ResponseWriter, h *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusNotAcceptable)
+}
+
+func (u *SudijaHandler) GetSudije(rw http.ResponseWriter, h *http.Request) {
+	user := u.repo.GetSudije()
+
+	err := user.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+}
+
+func (u *SudijaHandler) GetSudija(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var jmbg = vars["jmbg"]
+	t, err := u.repo.GetSudija(jmbg)
+
+	err = t.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
 }
 
 func (u *SudijaHandler) MiddlewareSudijaValidation(next http.Handler) http.Handler {
