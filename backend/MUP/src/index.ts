@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import bodyParser from "body-parser"
 import { ReqController } from "./controllers/req.controller"
 import cors from "cors"
+import { PoternicaController } from "./controllers/poternica.controller"
 
 async function main() {
 
@@ -18,6 +19,7 @@ async function main() {
     
     app.use(UserController)
     app.use(ReqController)
+    app.use(PoternicaController)
 
     app.listen(8004, () => {
         console.log("MUP app started")
