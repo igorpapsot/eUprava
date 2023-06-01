@@ -15,8 +15,7 @@ import { NgbdSortableHeader } from './Tuzilastvo-Komponente/tuzilastvo/tuzilastv
 import { SudstvoPageComponent } from './sudstvo_components/sudstvo-page/sudstvo-page.component';
 
 import { LogoutComponent } from './logout/logout.component';
-import { PoternicaComponent } from './sudstvo_components/poternica/poternica.component';
-import { RocisteComponent } from './sudstvo_components/rociste/rociste.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +26,7 @@ import { RocisteComponent } from './sudstvo_components/rociste/rociste.component
     NgbdSortableHeader,
     SudstvoPageComponent,
     LogoutComponent,
-    PoternicaComponent,
-    RocisteComponent
+   
     
   ],
   imports: [

@@ -21,7 +21,7 @@ export class RocisteService {
 
   postRociste(rociste : Rociste){
     console.log(rociste)
-    return this.client.post<unknown>(environment.apiUrl + "sudstvo/rociste", {
+    return this.client.post<unknown>(environment.apiUrl + "/sudstvo/rociste", {
       datum: rociste.datum,
       mesto: rociste.mesto,
       sud: rociste.sud
@@ -29,6 +29,10 @@ export class RocisteService {
   }
 
   getRocista() : Observable<Rociste[]> {
-    return this.client.get<Rociste[]>(environment.apiUrl + "sudstvo/rocista")
+    return this.client.get<Rociste[]>(environment.apiUrl + "/sudstvo/rocista")
+  }
+
+  getRociste(id: string) : Observable<Rociste> {
+    return this.client.get<Rociste>(environment.apiUrl + "/sudstvo/rocista" + id);
   }
 }
