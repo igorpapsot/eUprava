@@ -49,13 +49,10 @@ services:
       dockerfile: ./MUP/Dockerfile
     restart: always
     container_name: 'mup_service'
+    hostname: 'mup_service'
     depends_on:
       mup_db:
         condition: service_healthy
-    networks:
-      - mup
-    ports:
-      - 8004:8004
 
   mup_db:
     image: mongo
@@ -67,8 +64,6 @@ services:
       - mongo_store:/data/mongoMup
     ports:
       - 27018:27017
-    networks:
-      - mup
 
 
 
