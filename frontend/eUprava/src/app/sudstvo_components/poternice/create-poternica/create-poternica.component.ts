@@ -13,24 +13,32 @@ export class CreatePoternicaComponent implements OnInit {
 
   createPoternicaForm: FormGroup;
   poternicaModel: Poternica;
-  ime = new FormControl('');
+  sudijaId = new FormControl('');
+  gradjaninId = new FormControl('');
+  naslov = new FormControl('');
   opis = new FormControl('');
 
   constructor(private router: Router, private poternicaService: PoternicaService) {
     this.createPoternicaForm = new FormGroup({
-      ime: new FormControl(''),
-      opis: new FormControl('')
+      sudijaId: new FormControl(''),
+      gradjaninId: new FormControl(''),
+      naslov : new FormControl(''),
+      opis : new FormControl('')
     });
     this.poternicaModel = {
       id: '',
-      ime: '',
+      sudijaId: '',
+      gradjaninId: '',
+      naslov: '',
       opis: ''
     }
   }
 
   ngOnInit(){
       this.createPoternicaForm = new FormGroup({
-        ime: new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+        sudijaId: new FormControl('',Validators.required),
+        gradjaninId: new FormControl('', Validators.required),
+        naslov: new FormControl('',Validators.required),
         opis: new FormControl('', Validators.required)
       })
   }
@@ -44,7 +52,9 @@ export class CreatePoternicaComponent implements OnInit {
   }
 
   createPoternica() {
-    this.poternicaModel.ime = this.createPoternicaForm.get('ime')?.value;
+    this.poternicaModel.sudijaId = this.createPoternicaForm.get('sudijaId')?.value;
+    this.poternicaModel.gradjaninId = this.createPoternicaForm.get('gradjaninId')?.value;
+    this.poternicaModel.naslov = this.createPoternicaForm.get('naslov')?.value;
     this.poternicaModel.opis = this.createPoternicaForm.get('opis')?.value;
     this.poternicaService.postPoternica(this.poternicaModel).subscribe(data => {
       console.log(data);

@@ -7,10 +7,11 @@ import (
 )
 
 type Rociste struct {
-	Id    string  `json:"id"`
-	Datum string  `json:"datum"`
-	Mesto string  `json:"mesto"`
-	Sud   sudEnum `json:"sud"`
+	Id       string  `json:"id"`
+	sudijaId string  `json:"sudijaId"`
+	Datum    string  `json:"datum"`
+	Mesto    string  `json:"mesto"`
+	Sud      sudEnum `json:"sud"`
 }
 
 type Rocista []*Rociste

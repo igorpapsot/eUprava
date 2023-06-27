@@ -21,4 +21,9 @@ export class SideBarComponent implements OnInit{
     this.router.navigateByUrl('/create-rociste');
 
   }
+
+  registerSudija() {
+    this.router.navigateByUrl('/register-sudija');
+
+  }
 }

@@ -4,6 +4,14 @@
         <form class="post-form" [formGroup]="createRocistaForm" (ngSubmit)="createRociste()">
           <div class="form-group">
             <div class="create-rociste-heading">Create Rociste</div>
+            <div>
+              <input type="text" [formControlName]="'sudijaId'" class="form-control" style="margin-top: 5px" name="sudijaId"
+                placeholder="SudijaId">
+                <small class="text-danger" 
+                *ngIf="createRocistaForm.get('sudijaId')?.touched && createRocistaForm.get('sudijaId')?.errors?.['required']">
+                SudijaId is required.</small>
+  
+            </div>
           <div>
             <input type="text" [formControlName]="'datum'" class="form-control" style="margin-top: 5px" name="datum"
               placeholder="Datum">

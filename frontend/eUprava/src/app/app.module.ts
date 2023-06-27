@@ -23,6 +23,11 @@ import { ViewRocisteComponent } from './sudstvo_components/rocista/view-rociste/
 import { PoterniceListComponent } from './sudstvo_components/poternice/poternice-list/poternice-list.component';
 import { RocisteListComponent } from './sudstvo_components/rocista/rociste-list/rociste-list.component';
 import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.component';
+import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija/create-sudija.component';
+import { SudijeListComponent } from './sudstvo_components/sudija/sudije-list/sudije-list.component';
+import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
+import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
+
 
 
 
@@ -47,6 +52,10 @@ import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.compone
     PoterniceListComponent,
     RocisteListComponent,
     SideBarComponent,
+    CreateSudijaComponent,
+    SudijeListComponent,
+    ViewSudijeComponent,
+    ViewOptuzniceComponent
   ],
   imports: [
     BrowserModule,

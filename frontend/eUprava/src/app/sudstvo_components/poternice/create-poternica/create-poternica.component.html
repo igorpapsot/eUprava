@@ -5,14 +5,27 @@
           <div class="form-group">
             <div class="create-poternica-heading">Create Poternica</div>
           <div>
-            <input type="text" [formControlName]="'ime'" class="form-control" style="margin-top: 5px" name="ime"
-              placeholder="Ime">
+            <input type="text" [formControlName]="'sudijaId'" class="form-control" style="margin-top: 5px" name="sudijaId"
+              placeholder="SudijaId">
               <small class="text-danger" 
-              *ngIf="createPoternicaForm.get('ime')?.touched && createPoternicaForm.get('ime')?.errors?.['required']">
-              Ime is required.</small>
+              *ngIf="createPoternicaForm.get('sudijaId')?.touched && createPoternicaForm.get('sudijaId')?.errors?.['required']">
+              SudijaId is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'gradjaninId'" class="form-control" style="margin-top: 5px" name="gradjaninId"
+              placeholder="GradjaninId">
               <small class="text-danger" 
-              *ngIf="createPoternicaForm.get('ime')?.touched && createPoternicaForm.get('ime')?.errors?.['minlength']">
-              Your ime must contain min 3 characters.</small>
+              *ngIf="createPoternicaForm.get('gradjaninId')?.touched && createPoternicaForm.get('gradjaninId')?.errors?.['required']">
+              GradjaninId is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'naslov'" class="form-control" style="margin-top: 5px" name="naslov"
+              placeholder="Naslov">
+              <small class="text-danger" 
+              *ngIf="createPoternicaForm.get('naslov')?.touched && createPoternicaForm.get('naslov')?.errors?.['required']">
+              Naslov is required.</small>
 
           </div>
             <textarea type="text" [formControlName]="'opis'" style="width: 100%; margin-top: 5px"

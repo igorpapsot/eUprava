@@ -22,8 +22,10 @@ export class PoternicaService {
   postPoternica(poternica : Poternica){
     console.log(poternica)
     return this.client.post<unknown>(environment.apiUrl + "/sudstvo/poternice", {
-      ime: poternica.ime,
-      opis: poternica.opis,
+      ime: poternica.gradjaninId,
+      sudijaId: poternica.sudijaId,
+      naslov: poternica.naslov,
+      opis: poternica.opis
     }, this.options())
   }
 
