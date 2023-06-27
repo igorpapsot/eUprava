@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { Sudija } from 'src/app/model/sudstvo/sudija';
 import { SudijaService } from 'src/app/services/sudstvo/sudija.service';
 import { KonacnaPresudaService } from 'src/app/services/sudstvo/konacna-presuda.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { KonacnaPresudaService } from 'src/app/services/sudstvo/konacna-presuda.
 })
 export class SudstvoPageComponent {
 
-  constructor(private poternicaService: PoternicaService, private rocisteService: RocisteService, private sudstvoService: SudstvoService, private modalService: NgbModal,
+  constructor(private router: Router ,private poternicaService: PoternicaService, private rocisteService: RocisteService, private sudstvoService: SudstvoService, private modalService: NgbModal,
     private optuznicaService: OptuznicaService, private sudijaService: SudijaService, private konacnaPresudaService: KonacnaPresudaService) {
       
   }
@@ -30,6 +31,7 @@ export class SudstvoPageComponent {
   openLg(content : any) {
     this.modalService.open(content, { size: 'lg' });
   }
+
 
   poternica: Poternica = new Poternica();
   rociste: Rociste = new Rociste();
@@ -44,7 +46,7 @@ export class SudstvoPageComponent {
   konacnePresude! : Observable<KonacnaPresuda[]>
 
   prikazSudovi: boolean = true;
-  prikazOptuznice: boolean = false;
+  prikazOptuznice: boolean = true;
   prikazPoternice: boolean = true;
   prikazRocista: boolean = true;
   prikazKonacnuPresudu: boolean = true;

@@ -1,0 +1,10 @@
+<div class="card mb-4">
+    <div class="card-header">Rocista:</div>
+    <div class="card-body">
+      <ul>
+        <li *ngFor="let rociste of rocista">
+          <a routerLink="/rociste-list/{{rociste.id}}">{{rociste.datum}}</a>
+        </li>
+      </ul>
+    </div>
+  

@@ -21,7 +21,7 @@ export class RocisteService {
 
   postRociste(rociste : Rociste){
     console.log(rociste)
-    return this.client.post<unknown>(environment.apiUrl + "/sudstvo/rociste", {
+    return this.client.post<unknown>(environment.apiUrl + "/sudstvo/rocista", {
       datum: rociste.datum,
       mesto: rociste.mesto,
       sud: rociste.sud
