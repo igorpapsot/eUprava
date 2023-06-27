@@ -26,6 +26,7 @@ import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.compone
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,9 @@ import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.compone
     StatusPipe,
     TuzilastvoComponent,
     NgbdSortableHeader,
+    LogoutComponent,
+    StatusPipe,
+    MupPageComponent,
     SudstvoPageComponent,
     LogoutComponent,
     CreatePoternicaComponent,

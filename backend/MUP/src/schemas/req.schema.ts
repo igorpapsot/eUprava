@@ -13,7 +13,10 @@ export interface Req {
     datum: string,
     zahtevTip: ZahtevTip,
     dokumentTip: DokumentTip,
-    korisnikId: string
+    korisnikId: string,
+    zakazanDatumVreme: string,
+    datumIsticanja: string,
+    jmbgDeteta: string
 }
 
 export const ReqSchema = new Schema <Req> ({
@@ -21,7 +24,10 @@ export const ReqSchema = new Schema <Req> ({
     datum: {type: String, required: true},
     zahtevTip: {type: Number, required: true},
     dokumentTip: {type: Number, required: true},
-    korisnikId: {type: String, required: true}
+    korisnikId: {type: String, required: true},
+    zakazanDatumVreme: {type: String, required: true},
+    datumIsticanja: {type: String},
+    jmbgDeteta: {type: String}
 }, {
     versionKey: false
 })

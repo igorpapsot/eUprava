@@ -18,7 +18,7 @@ ReqController.get("/req/user", async (req, res) => {
 })
 
 ReqController.post("/req", async (req, res) => {
-    const request = await reqService.createRequest(req.body.zahtevTip, req.body.dokumentTip, req.body.korisnikId)
+    const request = await reqService.createRequest(req.body.zahtevTip, req.body.dokumentTip, req.body.korisnikId, req.body.zakazanDatumVreme, req.body.datumIsticanja, req.body.jmbgDeteta)
     res.json(request)
     return
 })
