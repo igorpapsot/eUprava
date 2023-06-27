@@ -8,13 +8,15 @@ import (
 )
 
 type GPolicajac struct {
-	Id      string   `json:"id"`
-	Ime     string   `json:"ime"`
-	Prezime string   `json:"prezime"`
-	Jmbg    string   `json:"jmbg"`
-	Lozinka string   `json:"lozinka"`
-	Pol     EPol     `json:"pol"`
-	GPrelaz EGPrelaz `json:"prelaz"`
+	Id       string   `json:"id"`
+	Ime      string   `json:"ime"`
+	Prezime  string   `json:"prezime"`
+	Jmbg     string   `json:"jmbg"`
+	Lozinka  string   `json:"lozinka"`
+	Pol      EPol     `json:"pol"`
+	GPrelaz  EGPrelaz `json:"prelaz"`
+	Password string   `json:"password"`
+	CCode    int      `json:"ccode"`
 }
 
 type GPolicajci []*GPolicajac
@@ -34,7 +36,7 @@ func (p *GPolicajac) FromJSON(r io.Reader) error {
 	return d.Decode(p)
 }
 
-func (p *GPolicajac) ToBson(doc *bson.D, err error) {
+func (p *GPolicajac) ToBson() (doc *bson.D, err error) {
 	data, err := bson.Marshal(p)
 	if err != nil {
 		return

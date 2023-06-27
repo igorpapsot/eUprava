@@ -35,7 +35,7 @@ func (p *KrivicnaPrijava) FromJSON(r io.Reader) error {
 	return d.Decode(p)
 }
 
-func (p *KrivicnaPrijava) ToBson(doc *bson.D, err error) {
+func (p *KrivicnaPrijava) ToBson() (doc *bson.D, err error) {
 	data, err := bson.Marshal(p)
 	if err != nil {
 		return

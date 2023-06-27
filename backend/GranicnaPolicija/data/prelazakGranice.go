@@ -13,7 +13,7 @@ type PrelazakGranice struct {
 	GPrelaz   EGPrelaz  `json:"g_prelaz"`
 }
 
-type PrelasciGranice []*GPolicajac
+type PrelasciGranice []*PrelazakGranice
 
 func (p *PrelasciGranice) ToJSON(w io.Writer) error {
 	e := json.NewEncoder(w)
@@ -30,7 +30,7 @@ func (p *PrelazakGranice) FromJSON(r io.Reader) error {
 	return d.Decode(p)
 }
 
-func (p *PrelazakGranice) ToBson(doc *bson.D, err error) {
+func (p *PrelazakGranice) ToBson() (doc *bson.D, err error) {
 	data, err := bson.Marshal(p)
 	if err != nil {
 		return
