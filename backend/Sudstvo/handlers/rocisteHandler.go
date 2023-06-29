@@ -4,6 +4,7 @@ import (
 	"Sudstvo/data"
 	"Sudstvo/db"
 	"context"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
@@ -23,6 +24,22 @@ func (u *RocisteHandler) GetRocista(rw http.ResponseWriter, h *http.Request) {
 	user := u.repo.GetRocista()
 
 	err := user.ToJSON(rw)
+
+	if err != nil {
+		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)
+		u.logger.Println(unableToConvertToJson, " :", err)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+}
+
+func (u *RocisteHandler) GetRociste(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var id = vars["id"]
+	t, err := u.repo.GetRociste(id)
+
+	err = t.ToJSON(rw)
 
 	if err != nil {
 		http.Error(rw, unableToConvertToJson, http.StatusInternalServerError)

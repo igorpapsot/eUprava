@@ -81,15 +81,6 @@ export class SudstvoPageComponent {
   }
 
 
-
-
-
-
-  prikaziPoternice(){
-    this.prikazPoternice = true;
-    this.getPoternice();
-  }
-
   prikaziOptuznice(){
     this.prikazOptuznice = true;
     this.getOptuznice();
@@ -128,9 +119,6 @@ export class SudstvoPageComponent {
     return new KonacnaPresuda
   }
 
-  getPoternice() {
-    this.poternice = this.poternicaService.getPoternice();
-  }
 
   getPoternica(id: string | null) : Poternica {
     if(id) {

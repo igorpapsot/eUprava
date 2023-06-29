@@ -16,17 +16,17 @@ export class ViewPoterniceComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.getPoternice();
+      // this.getPoternice();
   }
 
-  private getPoternice(){
-    this.poternicaService.getPoternice().subscribe(data => {
-      this.poternice = data;
-    })
-  }
+  // private getPoternice(){
+  //   this.poternicaService.getPoternica().subscribe(data => {
+  //     this.poternice = data;
+  //   })
+  // }
 
-  poterniceDetails(id:number) {
-    this.router.navigate(['poternice-list', id]);
+  poterniceDetails(sudijaId:string) {
+    this.router.navigate(['poternice-list', sudijaId]);
   }
 
 }
