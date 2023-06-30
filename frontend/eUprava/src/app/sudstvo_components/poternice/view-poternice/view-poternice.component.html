@@ -1,0 +1,10 @@
+<div class="card mb-4">
+    <div class="card-header">Poternice:</div>
+    <div class="card-body">
+      <ul>
+        <li *ngFor="let poternica of poternice">
+          <a routerLink="/poternice-list/{{poternica.id}}">{{poternica.sudijaId}}</a>
+        </li>
+      </ul>
+    </div>
+  

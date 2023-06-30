@@ -7,9 +7,11 @@ import (
 )
 
 type Poternica struct {
-	Id   string `json:"id"`
-	Ime  string `json:"ime"`
-	Opis string `json:"opis"`
+	Id          string `json:"id"`
+	sudijaId    string `json:"sudijaId"`
+	gradjaninId string `json:"gradjaninId"`
+	naslov      string `json:"naslov"`
+	opis        string `json:"opis"`
 }
 
 type Poternice []*Poternica

@@ -22,6 +22,24 @@ type RepoDb struct {
 	client *mongo.Client
 }
 
+func (u RepoDb) PostOptuznica(p *data.Optuznica) bool {
+	u.logger.Println("Creating optuznica...")
+	coll := u.getOptuzniceCollection()
+	id := uuid.New()
+	p.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := p.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		u.logger.Println(err)
+		return false
+	}
+
+	u.logger.Printf("Created optuznica with _id: %v\n", result.InsertedID)
+	return true
+}
+
 func (u RepoDb) GetOptuznice() data.Optuznice {
 	u.logger.Println("Getting optuznice...")
 	coll := u.getOptuzniceCollection()

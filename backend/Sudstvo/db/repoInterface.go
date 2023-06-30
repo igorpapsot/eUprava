@@ -3,6 +3,7 @@ package db
 import "Sudstvo/data"
 
 type Repo interface {
+	PostOptuznica(optuznica *data.Optuznica) bool
 	GetOptuznice() data.Optuznice
 	GetOptuznica(id string) (data.Optuznica, error)
 	CreatePoternica(poternica *data.Poternica) bool

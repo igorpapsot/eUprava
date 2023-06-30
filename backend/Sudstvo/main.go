@@ -57,6 +57,10 @@ func main() {
 	getSudRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getSudRouter.HandleFunc("/sudovi/{id}", sudHandler.GetSud)
 
+	postOptuznicaRouter := routerUser.Methods(http.MethodPost).Subrouter()
+	postOptuznicaRouter.HandleFunc("/optuznice", optuznicaHandler.PostOptuznica)
+	postOptuznicaRouter.Use(optuznicaHandler.MiddlewareOptuznicaValidation)
+
 	getOptuzniceRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getOptuzniceRouter.HandleFunc("/optuznice", optuznicaHandler.GetOptuznice)
 

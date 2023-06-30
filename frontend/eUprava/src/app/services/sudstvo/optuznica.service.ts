@@ -12,10 +12,10 @@ export class OptuznicaService {
   constructor(private client: HttpClient) { }
 
   getOptuznice() : Observable<Optuznica[]> {
-    return this.client.get<Optuznica[]>(environment.apiUrl + "/sudstvo/optuznice")
+    return this.client.get<Optuznica[]>(environment.apiUrl + "/tuzilastvo/optuznice")
   }
 
-  getOptuznica(id: string) : Observable<Optuznica> {
-    return this.client.get<Optuznica>(environment.apiUrl + "/sudstvo/optuznice" + id);
-  }
+  // getOptuznica(id: string) : Observable<Optuznica> {
+  //   return this.client.get<Optuznica>(environment.apiUrl + "/tuzilastvo/optuznice" + id);
+  // }
 }

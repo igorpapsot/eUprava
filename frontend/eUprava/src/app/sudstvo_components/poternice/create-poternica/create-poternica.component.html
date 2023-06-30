@@ -1,0 +1,48 @@
+<div class="post-poternica">
+    <div class="row">
+      <div class="create-poternica-container">
+        <form class="post-form" [formGroup]="createPoternicaForm" (ngSubmit)="createPoternica()">
+          <div class="form-group">
+            <div class="create-poternica-heading">Create Poternica</div>
+          <div>
+            <input type="text" [formControlName]="'sudijaId'" class="form-control" style="margin-top: 5px" name="sudijaId"
+              placeholder="SudijaId">
+              <small class="text-danger" 
+              *ngIf="createPoternicaForm.get('sudijaId')?.touched && createPoternicaForm.get('sudijaId')?.errors?.['required']">
+              SudijaId is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'gradjaninId'" class="form-control" style="margin-top: 5px" name="gradjaninId"
+              placeholder="GradjaninId">
+              <small class="text-danger" 
+              *ngIf="createPoternicaForm.get('gradjaninId')?.touched && createPoternicaForm.get('gradjaninId')?.errors?.['required']">
+              GradjaninId is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'naslov'" class="form-control" style="margin-top: 5px" name="naslov"
+              placeholder="Naslov">
+              <small class="text-danger" 
+              *ngIf="createPoternicaForm.get('naslov')?.touched && createPoternicaForm.get('naslov')?.errors?.['required']">
+              Naslov is required.</small>
+
+          </div>
+            <textarea type="text" [formControlName]="'opis'" style="width: 100%; margin-top: 5px"
+              placeholder="Opis"></textarea>
+              <small class="text-danger" 
+              *ngIf="createPoternicaForm.get('opis')?.touched && createPoternicaForm.get('opis')?.errors?.['required']">
+              Opis is required.</small>
+            <div>
+              <div style="margin-top: 5px" class="float-right">
+                <button (click)="cancel()" class="btnCancel">Cancel</button>
+                <button class="btnSuccess">Create</button>
+              </div>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>

@@ -1,0 +1,10 @@
+<div class="card mb-4">
+    <div class="card-header">Sudije:</div>
+    <div class="card-body">
+      <ul>
+        <li *ngFor="let sudija of sudije">
+          <a routerLink="/sudije-list/{{sudija.jmbg}}">{{sudija.jmbg}}</a>
+        </li>
+      </ul>
+    </div>
+  

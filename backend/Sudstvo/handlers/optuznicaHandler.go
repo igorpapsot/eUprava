@@ -50,6 +50,23 @@ func (u *OptuznicaHandler) GetOptuznica(rw http.ResponseWriter, h *http.Request)
 	rw.WriteHeader(http.StatusOK)
 }
 
+func (u *OptuznicaHandler) PostOptuznica(rw http.ResponseWriter, h *http.Request) {
+	optuznica := h.Context().Value(KeyOptuznica{}).(*data.Optuznica)
+
+	_, err := u.repo.GetOptuznica(optuznica.Id)
+	if err == nil {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
+	if u.repo.PostOptuznica(optuznica) {
+		rw.WriteHeader(http.StatusAccepted)
+		return
+	}
+
+	rw.WriteHeader(http.StatusNotAcceptable)
+}
+
 func (u *OptuznicaHandler) MiddlewareOptuznicaValidation(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
 		optuznica := &data.Optuznica{}

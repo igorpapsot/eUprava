@@ -21,17 +21,23 @@ export class PoternicaService {
 
   postPoternica(poternica : Poternica){
     console.log(poternica)
-    return this.client.post<unknown>(environment.apiUrl + "/sudstvo/poternice", {
-      ime: poternica.ime,
-      opis: poternica.opis,
+    return this.client.post<unknown>(environment.apiUrl + "/mup/poternica", {
+      gradjaninId: poternica.gradjaninId,
+      sudijaId: poternica.sudijaId,
+      naslov: poternica.naslov,
+      opis: poternica.opis
     }, this.options())
-  }
-
-  getPoternice() : Observable<Poternica[]> {
-    return this.client.get<Poternica[]>(environment.apiUrl + "/sudstvo/poternice")
   }
 
   getPoternica(id: string) : Observable<Poternica> {
     return this.client.get<Poternica>(environment.apiUrl + "/sudstvo/poternice" + id);
+  }
+
+  getPoternicaSudija(sudijaId: string) : Observable<Poternica> {
+    return this.client.get<Poternica>(environment.apiUrl + "/mup/poternica" + sudijaId);
+  }
+
+  getPoternicaGradjanin(gradjaninId: string) : Observable<Poternica> {
+    return this.client.get<Poternica>(environment.apiUrl + "/mup/poternica" + gradjaninId);
   }
 }

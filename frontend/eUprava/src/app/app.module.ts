@@ -16,6 +16,19 @@ import { SudstvoPageComponent } from './sudstvo_components/sudstvo-page/sudstvo-
 
 import { LogoutComponent } from './logout/logout.component';
 import { MupPageComponent } from './mup-page/mup-page.component';
+import { CreatePoternicaComponent } from './sudstvo_components/poternice/create-poternica/create-poternica.component';
+import { ViewPoterniceComponent } from './sudstvo_components/poternice/view-poternice/view-poternice.component';
+import { CreateRocisteComponent } from './sudstvo_components/rocista/create-rociste/create-rociste.component';
+import { ViewRocisteComponent } from './sudstvo_components/rocista/view-rociste/view-rociste.component';
+import { PoterniceListComponent } from './sudstvo_components/poternice/poternice-list/poternice-list.component';
+import { RocisteListComponent } from './sudstvo_components/rocista/rociste-list/rociste-list.component';
+import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.component';
+import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija/create-sudija.component';
+import { SudijeListComponent } from './sudstvo_components/sudija/sudije-list/sudije-list.component';
+import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
+import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
+
+
 
 
 
@@ -32,6 +45,17 @@ import { MupPageComponent } from './mup-page/mup-page.component';
     MupPageComponent,
     SudstvoPageComponent,
     LogoutComponent,
+    CreatePoternicaComponent,
+    ViewPoterniceComponent,
+    CreateRocisteComponent,
+    ViewRocisteComponent,
+    PoterniceListComponent,
+    RocisteListComponent,
+    SideBarComponent,
+    CreateSudijaComponent,
+    SudijeListComponent,
+    ViewSudijeComponent,
+    ViewOptuzniceComponent
   ],
   imports: [
     BrowserModule,

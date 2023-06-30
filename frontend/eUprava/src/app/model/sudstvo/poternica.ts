@@ -1,5 +1,7 @@
 export class Poternica {
-    id : string
-    ime : string
-    opis : string
+    id: string
+    sudijaId: string
+    gradjaninId: string
+    naslov: string
+    opis: string
 }
