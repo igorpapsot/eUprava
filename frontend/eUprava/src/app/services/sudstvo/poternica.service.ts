@@ -29,11 +29,16 @@ export class PoternicaService {
     }, this.options())
   }
 
-  getPoternice() : Observable<Poternica[]> {
-    return this.client.get<Poternica[]>(environment.apiUrl + "/sudstvo/poternice")
+
+  getPoternica(id: string) : Observable<Poternica[]> {
+    return this.client.get<Poternica[]>(environment.apiUrl + "/mup/poternica" + id);
   }
 
-  getPoternica(id: string) : Observable<Poternica> {
-    return this.client.get<Poternica>(environment.apiUrl + "/sudstvo/poternice" + id);
+  getPoternicaSudija(sudijaId: string) : Observable<Poternica[]> {
+    return this.client.get<Poternica[]>(environment.apiUrl + "/mup/poternica" + sudijaId);
+  }
+
+  getPoternicaGradjanin(gradjaninId: string) : Observable<Poternica> {
+    return this.client.get<Poternica>(environment.apiUrl + "/mup/poternica" + gradjaninId);
   }
 }

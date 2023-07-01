@@ -13,7 +13,7 @@
   
             </div>
           <div>
-            <input type="text" [formControlName]="'datum'" class="form-control" style="margin-top: 5px" name="datum"
+            <input type="date" [formControlName]="'datum'" class="form-control" style="margin-top: 5px" name="datum"
               placeholder="Datum">
               <small class="text-danger" 
               *ngIf="createRocistaForm.get('datum')?.touched && createRocistaForm.get('datum')?.errors?.['required']">

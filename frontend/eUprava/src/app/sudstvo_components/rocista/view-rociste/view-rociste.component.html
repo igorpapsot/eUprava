@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<!-- <div class="card mb-4">
     <div class="card-header">Rocista:</div>
     <div class="card-body">
       <ul>
@@ -7,4 +7,26 @@
         </li>
       </ul>
     </div>
-  
+   -->
+
+   <div class="container">
+      
+    <table class="table table-striped">  
+      <thead>  
+          <tr>  
+            <th>sudijaId</th>  
+            <th>Datum</th>  
+            <th>Mesto</th>  
+            <th>Sud</th>
+          </tr>  
+      </thead>  
+      <tbody>  
+        <tr *ngFor="let rociste of rocista">  
+          <td>{{ rociste.sudijaId }}</td>  
+          <td>{{ rociste.datum }}</td>  
+          <td>{{ rociste.mesto }}</td> 
+          <td>{{ rociste.sud}}</td> 
+        </tr>  
+      </tbody>  
+    </table>  
+  </div>  

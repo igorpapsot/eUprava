@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<!-- <div class="card mb-4">
     <div class="card-header">Poternice:</div>
     <div class="card-body">
       <ul>
@@ -7,4 +7,26 @@
         </li>
       </ul>
     </div>
-  
+   -->
+
+   <div class="container">
+      
+    <table class="table table-striped">  
+      <thead>  
+          <tr>  
+            <th>sudijaId</th>  
+            <th>gradjaninId</th>  
+            <th>Naslov</th>  
+            <th>Opis</th>  
+          </tr>  
+      </thead>  
+      <tbody>  
+        <tr *ngFor="let poternica of poternice">  
+          <td>{{ poternica.sudijaId }}</td>  
+          <td>{{ poternica.gradjaninId }}</td>  
+          <td>{{ poternica.naslov }}</td>  
+          <td>{{ poternica.opis }}</td>  
+        </tr>  
+      </tbody>  
+    </table>  
+  </div>  

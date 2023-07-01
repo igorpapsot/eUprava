@@ -25,7 +25,7 @@ export class ViewSudijeComponent implements OnInit{
     })
   }
 
-  sudijeDetails(jmbg: string) {
-    this.router.navigate(['sudije-list', jmbg]);
-  }
+  // sudijeDetails(jmbg: string) {
+  //   this.router.navigate(['sudije-list', jmbg]);
+  // }
 }

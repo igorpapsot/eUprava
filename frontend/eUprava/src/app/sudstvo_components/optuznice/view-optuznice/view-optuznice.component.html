@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<!-- <div class="card mb-4">
     <div class="card-header">Optuznice:</div>
     <div class="card-body">
       <ul>
@@ -6,4 +6,22 @@
           <a>{{optuznica.id}}</a>
         </li>
       </ul>
-    </div>
+    </div> -->
+
+    <div class="container">
+      <p><b>Optuznice</b></p>
+      <table class="table table-striped">  
+        <thead>  
+            <tr>  
+              <th>Id</th>  
+              <th>Aktivna</th>  
+            </tr>  
+        </thead>  
+        <tbody>  
+          <tr *ngFor="let optuznica of optuznice">  
+            <td>{{ optuznica.id }}</td>  
+            <td>{{ optuznica.aktivna }}</td>  
+          </tr>  
+        </tbody>  
+      </table>  
+    </div>  

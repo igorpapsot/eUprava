@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Optuznica } from 'src/app/model/sudstvo/optuznica';
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 export class OptuznicaService {
 
   constructor(private client: HttpClient) { }
+
 
   getOptuznice() : Observable<Optuznica[]> {
     return this.client.get<Optuznica[]>(environment.apiUrl + "/tuzilastvo/optuznice")

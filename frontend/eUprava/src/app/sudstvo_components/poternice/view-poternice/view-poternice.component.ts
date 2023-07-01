@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Poternica } from 'src/app/model/sudstvo/poternica';
 import { PoternicaService } from 'src/app/services/sudstvo/poternica.service';
 
@@ -9,24 +10,25 @@ import { PoternicaService } from 'src/app/services/sudstvo/poternica.service';
   styleUrls: ['./view-poternice.component.css']
 })
 export class ViewPoterniceComponent implements OnInit{
+ 
+  sudijaId!: string;
+  poternice: Poternica[];
 
-  poternice!: Poternica[];
   constructor(private poternicaService: PoternicaService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-      this.getPoternice();
+      this.getPoternica(this.sudijaId);
   }
 
-  private getPoternice(){
-    this.poternicaService.getPoternice().subscribe(data => {
-      this.poternice = data;
-    })
-  }
 
-  poterniceDetails(id:number) {
-    this.router.navigate(['poternice-list', id]);
+  private getPoternica(sudijaId: string) {
+      this.poternicaService.getPoternicaSudija(sudijaId).subscribe(data => {
+        this.poternice = data;
+      })
+
   }
+ 
 
 }

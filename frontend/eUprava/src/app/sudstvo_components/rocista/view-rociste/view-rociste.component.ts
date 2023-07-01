@@ -25,8 +25,8 @@ export class ViewRocisteComponent implements OnInit{
     })
   }
 
-  rocistaDetails(id:number) {
-    this.router.navigate(['rociste-list', id]);
-  }
+  // rocistaDetails(id:number) {
+  //   this.router.navigate(['rociste-list', id]);
+  // }
 
 }

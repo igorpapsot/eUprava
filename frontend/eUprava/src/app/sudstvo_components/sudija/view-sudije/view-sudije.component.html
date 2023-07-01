@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<!-- <div class="card mb-4">
     <div class="card-header">Sudije:</div>
     <div class="card-body">
       <ul>
@@ -7,4 +7,29 @@
         </li>
       </ul>
     </div>
-  
+   -->
+
+   
+   <div class="container">
+      
+    <table class="table table-striped">  
+      <thead>  
+          <tr>  
+            <th>Ime</th>  
+            <th>Prezime</th>  
+            <th>Pol</th> 
+            <th>Jmbg</th>
+            <th>Sud</th>
+          </tr>  
+      </thead>  
+      <tbody>  
+        <tr *ngFor="let sudija of sudije">  
+          <td>{{ sudija.ime }}</td>  
+          <td>{{ sudija.prezime }}</td>  
+          <td>{{ sudija.pol }}</td>  
+          <td>{{ sudija.jmbg }}</td>  
+          <td>{{ sudija.sud }}</td>  
+        </tr>  
+      </tbody>  
+    </table>  
+  </div>  

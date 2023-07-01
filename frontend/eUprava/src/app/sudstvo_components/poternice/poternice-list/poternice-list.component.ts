@@ -17,9 +17,6 @@ export class PoterniceListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.id = this.route.snapshot.params['id'];
-      this.poternicaService.getPoternica(this.id).subscribe(data => {
-          this.poternica = data;
-      })
+     
   }
 }
