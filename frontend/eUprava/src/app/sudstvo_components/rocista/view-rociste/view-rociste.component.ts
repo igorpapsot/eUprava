@@ -10,7 +10,7 @@ import { RocisteService } from 'src/app/services/sudstvo/rociste.service';
 })
 export class ViewRocisteComponent implements OnInit{
 
-  rocista!: Rociste[];
+  rocista : Rociste[];
   constructor(private rocisteService: RocisteService, private router: Router) {
 
   }

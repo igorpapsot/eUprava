@@ -28,7 +28,7 @@
               Jmbg is required.</small>
 
               <div>
-                <input type="text" [formControlName]="'lozinka'" class="form-control" style="margin-top: 5px" name="lozinka"
+                <input type="password" [formControlName]="'lozinka'" class="form-control" style="margin-top: 5px" name="lozinka"
                   placeholder="lozinka">
                   <small class="text-danger" 
                   *ngIf="createSudijaForm.get('lozinka')?.touched && createSudijaForm.get('lozinka')?.errors?.['required']">

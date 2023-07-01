@@ -25,7 +25,4 @@ export class ViewOptuzniceComponent implements OnInit{
     })
   }
 
-  // optuzniceDetails(id:number) {
-  //   this.router.navigate(['optuznice-list', id]);
-  // }
 }

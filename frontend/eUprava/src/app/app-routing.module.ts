@@ -9,11 +9,8 @@ import { CreatePoternicaComponent } from './sudstvo_components/poternice/create-
 import { CreateRocisteComponent } from './sudstvo_components/rocista/create-rociste/create-rociste.component';
 import { ViewPoterniceComponent } from './sudstvo_components/poternice/view-poternice/view-poternice.component';
 import { ViewRocisteComponent } from './sudstvo_components/rocista/view-rociste/view-rociste.component';
-import { PoterniceListComponent } from './sudstvo_components/poternice/poternice-list/poternice-list.component';
-import { RocisteListComponent } from './sudstvo_components/rocista/rociste-list/rociste-list.component';
 import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija/create-sudija.component';
 import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
-import { SudijeListComponent } from './sudstvo_components/sudija/sudije-list/sudije-list.component';
 import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
 
 
@@ -28,9 +25,6 @@ const routes: Routes = [
   {path: 'create-rociste', component: CreateRocisteComponent},
   {path: 'view-poternice', component: ViewPoterniceComponent},
   {path: 'view-rociste', component: ViewRocisteComponent},
-  {path: 'poternice-list/:id', component: PoterniceListComponent},
-  {path: 'rociste-list/:id', component: RocisteListComponent},
-  {path: 'sudije-list/:jmbg', component: SudijeListComponent},
   {path: 'register-sudija', component: CreateSudijaComponent},
   {path: 'view-sudije', component: ViewSudijeComponent},
   {path: 'view-optuznice', component: ViewOptuzniceComponent},

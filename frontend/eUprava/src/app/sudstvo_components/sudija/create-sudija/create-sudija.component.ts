@@ -33,7 +33,7 @@ export class CreateSudijaComponent implements OnInit {
       pol: 1,
       jmbg: '',
       lozinka: '',
-      sud: 2
+      sud: 1
     }
   }
 

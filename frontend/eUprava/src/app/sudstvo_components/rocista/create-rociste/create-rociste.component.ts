@@ -29,7 +29,7 @@ export class CreateRocisteComponent implements OnInit {
       sudijaId: '',
       datum: '',
       mesto: '',
-      sud: 2
+      sud: 1
   
     }
   }

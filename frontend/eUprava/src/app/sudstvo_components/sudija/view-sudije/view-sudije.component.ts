@@ -10,7 +10,7 @@ import { SudijaService } from 'src/app/services/sudstvo/sudija.service';
 })
 export class ViewSudijeComponent implements OnInit{
 
-  sudije!: Sudija[];
+  sudije : Sudija[];
   constructor(private sudijaService: SudijaService, private router: Router) {
 
   }

@@ -29,6 +29,9 @@ export class PoternicaService {
     }, this.options())
   }
 
+  getPoternice() : Observable<Poternica[]> {
+    return this.client.get<Poternica[]>(environment.apiUrl + "/mup/poternica/all")
+  }
 
   getPoternica(id: string) : Observable<Poternica[]> {
     return this.client.get<Poternica[]>(environment.apiUrl + "/mup/poternica" + id);

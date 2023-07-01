@@ -11,7 +11,6 @@ import { PoternicaService } from 'src/app/services/sudstvo/poternica.service';
 })
 export class ViewPoterniceComponent implements OnInit{
  
-  sudijaId!: string;
   poternice: Poternica[];
 
   constructor(private poternicaService: PoternicaService, private router: Router) {
@@ -19,12 +18,12 @@ export class ViewPoterniceComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.getPoternica(this.sudijaId);
+      this.getPoternice();
   }
 
 
-  private getPoternica(sudijaId: string) {
-      this.poternicaService.getPoternicaSudija(sudijaId).subscribe(data => {
+  private getPoternice() {
+      this.poternicaService.getPoternice().subscribe(data => {
         this.poternice = data;
       })
   }
