@@ -10,6 +10,11 @@ export class PoternicaService {
         return poternica
     }
 
+    async getAllPoternica() {
+        const poternica = await this.poternicaModel.find()
+        return poternica;
+    }
+
     async getPoternicaByGradjaninId(gradjaninId: string) {
         const poternica = await this.poternicaModel.findOne({gradjaninId: gradjaninId})
         return poternica
