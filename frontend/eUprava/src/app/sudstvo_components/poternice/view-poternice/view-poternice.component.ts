@@ -27,7 +27,6 @@ export class ViewPoterniceComponent implements OnInit{
       this.poternicaService.getPoternicaSudija(sudijaId).subscribe(data => {
         this.poternice = data;
       })
-
   }
  
 

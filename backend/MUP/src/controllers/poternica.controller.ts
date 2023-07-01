@@ -11,6 +11,13 @@ PoternicaController.get("/poternica", async (req, res) => {
     return
 })
 
+PoternicaController.get("/poternica/all", async (req, res) => {
+    const poternica = await poternicaService.getAllPoternica()
+    res.json(poternica)
+    return
+})
+
+
 PoternicaController.get("/poternica/gradjanin", async (req, res) => {
     const poternica = await poternicaService.getPoternicaByGradjaninId(req.query.gradjaninId as string)
     res.json(poternica)
