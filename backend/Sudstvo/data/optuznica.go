@@ -7,8 +7,9 @@ import (
 )
 
 type Optuznica struct {
-	Id      string `json:"id"`
-	Aktivna bool   `json:"aktivna"`
+	Id              string          `json:"id"`
+	Aktivna         bool            `json:"aktivna"`
+	KrivicnaPrijava KrivicnaPrijava `json:"krivicnaPrijava"`
 }
 
 type Optuznice []*Optuznica
