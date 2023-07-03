@@ -5,13 +5,15 @@
         <thead>  
             <tr>  
               <th>Id</th>  
-              <th>Aktivna</th>  
+              <th>Aktivna</th> 
+              <th>Krivicna prijava</th> 
             </tr>  
         </thead>  
         <tbody>  
           <tr *ngFor="let optuznica of optuznice">  
             <td>{{ optuznica.id }}</td>  
             <td>{{ optuznica.aktivna }}</td>  
+            <td>{{ optuznica.krivicnaPrijava }}</td> 
           </tr>  
         </tbody>  
       </table>  

@@ -1,4 +1,10 @@
+import { KrivicnaPrijava } from "./krivicnaPrijava"
+
 export class Optuznica {
-    id : string
-    aktivna : boolean
+
+    constructor() {}
+
+    id: string
+    aktivna: boolean
+    krivicnaPrijava: string
 }
