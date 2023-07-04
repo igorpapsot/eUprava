@@ -133,6 +133,38 @@ func (gr GPRepoDb) GetPolicajac(id string) (data.GPolicajac, error) {
 	return result, nil
 }
 
+func (gr GPRepoDb) CreateProvera(provera *data.ProveraGradjanina) bool {
+	gr.logger.Println("Creating provera...")
+	coll := gr.getPrelazakCollection()
+	id := uuid.New()
+	provera.Id = id.String()
+	rand.Seed(time.Now().UnixNano())
+
+	user, err := provera.ToBson()
+	result, err := coll.InsertOne(context.TODO(), user)
+	if err != nil {
+		gr.logger.Println(err)
+		return false
+	}
+
+	gr.logger.Printf("Created prelazak with _id: %v\n", result.InsertedID)
+	return true
+}
+
+func (gr GPRepoDb) GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina, error) {
+	gr.logger.Println("Getting provera...")
+	var result data.ProveraGradjanina
+	coll := gr.getPrelazakCollection()
+	filter := bson.D{{"gradjanin", gradjanin}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		gr.logger.Println(err)
+		return result, errors.New("Couldnt find provera")
+	}
+
+	return result, nil
+}
+
 func (gr GPRepoDb) CreatePrelazak(prelazak *data.PrelazakGranice) bool {
 	gr.logger.Println("Creating prelazak...")
 	coll := gr.getPrelazakCollection()
@@ -155,6 +187,31 @@ func (gr GPRepoDb) GetPrelasci() data.PrelasciGranice {
 	gr.logger.Println("Getting prelasci granice...")
 	coll := gr.getPrelazakCollection()
 	filter := bson.D{}
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		gr.logger.Println(err)
+	}
+
+	var results []*data.PrelazakGranice
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		gr.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			gr.logger.Println(err)
+		}
+		gr.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
+func (gr GPRepoDb) GetPrelasciByPrelaz(prelaz string) data.PrelasciGranice {
+	gr.logger.Println("Getting prelasci granice...")
+	coll := gr.getPrelazakCollection()
+	filter := bson.D{{"g_prelaz", prelaz}}
 	cursor, err := coll.Find(context.TODO(), filter)
 	if err != nil {
 		gr.logger.Println(err)
