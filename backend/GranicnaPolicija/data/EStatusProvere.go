@@ -3,7 +3,7 @@ package data
 type EStatusProvere string
 
 const (
-	NACEKANJU string = "horgos"
-	ODBIJEN          = "batrovci"
-	PUSTEN           = "gradina"
+	NACEKANJU string = "naceknaju"
+	ODBIJEN          = "odbijen"
+	PUSTEN           = "pusten"
 )

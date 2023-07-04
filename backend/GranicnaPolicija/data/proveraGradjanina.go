@@ -11,7 +11,7 @@ type ProveraGradjanina struct {
 	Policajac       GPolicajac     `json:"policajac"`
 	Gradjanin       Gradjanin      `json:"gradjanin"`
 	Vreme           string         `json:"vreme"`
-	ZabranaPrelaska EStatusProvere `json:"zabrana_prelaska"`
+	Status EStatusProvere `json:"status"`
 	Poternica       Poternica      `json:"poternica"`
 }
 

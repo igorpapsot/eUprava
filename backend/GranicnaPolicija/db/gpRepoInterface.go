@@ -9,6 +9,8 @@ type GpRepo interface {
 
 	CreateProvera(provera *data.ProveraGradjanina) bool
 	GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina, error)
+	GetProvere() data.ProvereG
+	GetProvereByStatus(status string) data.ProvereG
 
 	CreatePrelazak(prelazak *data.PrelazakGranice) bool
 	GetPrelasci() data.PrelasciGranice

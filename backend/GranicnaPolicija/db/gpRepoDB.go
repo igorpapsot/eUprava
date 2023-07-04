@@ -133,9 +133,11 @@ func (gr GPRepoDb) GetPolicajac(id string) (data.GPolicajac, error) {
 	return result, nil
 }
 
+//======Provera gradjanina
+
 func (gr GPRepoDb) CreateProvera(provera *data.ProveraGradjanina) bool {
 	gr.logger.Println("Creating provera...")
-	coll := gr.getPrelazakCollection()
+	coll := gr.getProveraCollection()
 	id := uuid.New()
 	provera.Id = id.String()
 	rand.Seed(time.Now().UnixNano())
@@ -154,7 +156,7 @@ func (gr GPRepoDb) CreateProvera(provera *data.ProveraGradjanina) bool {
 func (gr GPRepoDb) GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina, error) {
 	gr.logger.Println("Getting provera...")
 	var result data.ProveraGradjanina
-	coll := gr.getPrelazakCollection()
+	coll := gr.getProveraCollection()
 	filter := bson.D{{"gradjanin", gradjanin}}
 	err := coll.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
@@ -164,6 +166,58 @@ func (gr GPRepoDb) GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina
 
 	return result, nil
 }
+
+func (gr GPRepoDb) GetProvere() data.ProvereG {
+	gr.logger.Println("Getting provere gradjanina...")
+	coll := gr.getProveraCollection()
+	filter := bson.D{}
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		gr.logger.Println(err)
+	}
+
+	var results []*data.ProveraGradjanina
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		gr.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			gr.logger.Println(err)
+		}
+		gr.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
+func (gr GPRepoDb) GetProvereByStatus(status string) data.ProvereG {
+	gr.logger.Println("Getting provere gradjanina...")
+	coll := gr.getProveraCollection()
+	filter := bson.D{{"status", status}}
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		gr.logger.Println(err)
+	}
+
+	var results []*data.ProveraGradjanina
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		gr.logger.Println(err)
+	}
+
+	for _, result := range results {
+		cursor.Decode(&result)
+		output, err := json.MarshalIndent(result, "", "    ")
+		if err != nil {
+			gr.logger.Println(err)
+		}
+		gr.logger.Printf("%s\n", output)
+	}
+	return results
+}
+
+//======Prelazak Granice
 
 func (gr GPRepoDb) CreatePrelazak(prelazak *data.PrelazakGranice) bool {
 	gr.logger.Println("Creating prelazak...")
@@ -247,6 +301,8 @@ func (gr GPRepoDb) GetPrelazak(id string) (data.PrelazakGranice, error) {
 	return result, nil
 }
 
+//======Krivicna prijava
+
 func (gr GPRepoDb) CreatePrijava(prijava *data.KrivicnaPrijava) bool {
 	gr.logger.Println("Creating prijava...")
 	coll := gr.getPrijavaCollection()
@@ -309,6 +365,12 @@ func (gr GPRepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {
 func (gr *GPRepoDb) getGPCollection() *mongo.Collection {
 	db := gr.client.Database("myDB")
 	collection := db.Collection("policajac")
+	return collection
+}
+
+func (gr *GPRepoDb) getProveraCollection() *mongo.Collection {
+	db := gr.client.Database("myDB")
+	collection := db.Collection("provere")
 	return collection
 }
 

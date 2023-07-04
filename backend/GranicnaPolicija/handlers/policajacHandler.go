@@ -35,6 +35,10 @@ type Jwt struct {
 
 var jwtKey = []byte("secret_key")
 
+func NewPolicajacHandler(l *log.Logger, ur db.GpRepo) *GPolicajacHandler {
+	return &GPolicajacHandler{l, ur}
+}
+
 func (u *GPolicajacHandler) Register(rw http.ResponseWriter, h *http.Request) {
 	policajac := h.Context().Value(KeyPolicajac{}).(*data.GPolicajac)
 
@@ -108,6 +112,17 @@ func (u *GPolicajacHandler) MiddlewareGPValidation(next http.Handler) http.Handl
 
 		ctx := context.WithValue(h.Context(), KeyPolicajac{}, policajac)
 		h = h.WithContext(ctx)
+
+		next.ServeHTTP(rw, h)
+	})
+
+}
+
+func (u *GPolicajacHandler) MiddlewareContentTypeSet(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
+		u.logger.Println("Method [", h.Method, "] - Hit path :", h.URL.Path)
+
+		rw.Header().Add("Content-Type", "application/json")
 
 		next.ServeHTTP(rw, h)
 	})

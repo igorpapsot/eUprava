@@ -3,6 +3,7 @@ package handlers
 import (
 	"GranicnaPolicija/data"
 	"GranicnaPolicija/db"
+	"context"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -16,7 +17,11 @@ type PrelazakHandler struct {
 
 type PrelazakKey struct{}
 
-func (p *PrelazakHandler) NewPrelazakHandler(rw http.ResponseWriter, h *http.Request) {
+func NewPrelazakHandler(l *log.Logger, ur db.GpRepo) *PrelazakHandler {
+	return &PrelazakHandler{l, ur}
+}
+
+func (p *PrelazakHandler) CreatePrelazakHandler(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
 	var provera = vars["proveraId"]
 	var prelazak *data.PrelazakGranice
@@ -60,4 +65,21 @@ func (p *PrelazakHandler) GetPrelasciByGPrelaz(rw http.ResponseWriter, h *http.R
 	}
 
 	rw.WriteHeader(http.StatusOK)
+}
+
+func (u *PrelazakHandler) MiddlewarePrelazakValidation(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
+		prelazak := &data.PrelazakGranice{}
+		err := prelazak.FromJSON(h.Body)
+		if err != nil {
+			http.Error(rw, "Unable to decode json", http.StatusBadRequest)
+			u.logger.Println(err)
+			return
+		}
+
+		ctx := context.WithValue(h.Context(), PrelazakKey{}, prelazak)
+		h = h.WithContext(ctx)
+
+		next.ServeHTTP(rw, h)
+	})
 }
