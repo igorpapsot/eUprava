@@ -1,0 +1,43 @@
+<div class="post-rociste">
+  <div class="row">
+    <div class="create-rociste-container">
+      <form class="post-form" [formGroup]="createRocistaForm" (ngSubmit)="createRociste()">
+        <div class="form-group">
+          <div class="create-rociste-heading">Create Rociste</div>
+        <div>
+          <input type="text" [formControlName]="'sudijaId'" class="form-control" style="margin-top: 5px" name="sudijaId"
+            placeholder="SudijaId">
+            <small class="text-danger" 
+            *ngIf="createRocistaForm.get('sudijaId')?.touched && createRocistaForm.get('sudijaId')?.errors?.['required']">
+            SudijaId is required.</small>
+
+        </div>
+        <div>
+          <input type="date" [formControlName]="'datum'" class="form-control" style="margin-top: 5px" name="datum"
+            placeholder="Datum">
+            <small class="text-danger" 
+            *ngIf="createRocistaForm.get('datum')?.touched && createRocistaForm.get('datum')?.errors?.['required']">
+            Datum is required.</small>
+
+        </div>
+        <div>
+          <input type="text" [formControlName]="'mesto'" class="form-control" style="margin-top: 5px" name="mesto"
+            placeholder="Mesto">
+            <small class="text-danger" 
+            *ngIf="createRocistaForm.get('mesto')?.touched && createRocistaForm.get('mesto')?.errors?.['required']">
+            Mesto is required.</small>
+
+        </div>
+          <div>
+            <div style="margin-top: 5px" class="float-right">
+              <button (click)="cancel()" class="btnCancel">Cancel</button>
+              <button class="btnSuccess">Create</button>
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>

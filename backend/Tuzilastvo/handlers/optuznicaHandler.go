@@ -3,7 +3,11 @@ package handlers
 import (
 	"Tuzilastvo/data"
 	"Tuzilastvo/db"
+	"bytes"
 	"context"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -55,11 +59,32 @@ func (u *OptuznicaHandler) CreateOptuznica(rw http.ResponseWriter, h *http.Reque
 	}
 
 	if u.repo.CreateOptuznica(optuznica) {
+		go u.SlanjeOptuznice(optuznica)
 		rw.WriteHeader(http.StatusAccepted)
 		return
 	}
 
 	rw.WriteHeader(http.StatusNotAcceptable)
+}
+
+func (u *OptuznicaHandler) SlanjeOptuznice(optuznica *data.Optuznica) {
+	jsonValue, _ := json.Marshal(optuznica)
+	//one-line post request/response...
+	response, err := http.Post("http://localhost:8000/api/sudstvo/optuznice", "application/json", bytes.NewBuffer(jsonValue))
+
+	//okay, moving on...
+	if err != nil {
+		//handle postform error
+	}
+
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+
+	if err != nil {
+		//handle read response error
+	}
+	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	fmt.Printf("%s\n", string(body))
 }
 
 func (u *OptuznicaHandler) MiddlewareOptuznicaValidation(next http.Handler) http.Handler {

@@ -49,13 +49,10 @@ services:
       dockerfile: ./MUP/Dockerfile
     restart: always
     container_name: 'mup_service'
+    hostname: 'mup_service'
     depends_on:
       mup_db:
         condition: service_healthy
-    networks:
-      - mup
-    ports:
-      - 8004:8004
 
   mup_db:
     image: mongo
@@ -67,8 +64,39 @@ services:
       - mongo_store:/data/mongoMup
     ports:
       - 27018:27017
-    networks:
-      - mup
+
+
+
+  sudstvo_service:
+    image: sudstvo_service
+    build:
+      context: .
+      dockerfile: ./Sudstvo/Dockerfile
+    restart: always
+    container_name: 'sudstvo_service'
+    hostname: 'sudstvo_service'
+    environment:
+      - MONGO_DB_URI=${SUDSTVO_DB_URI}
+      - app_port=${SUDSTVO_SERVICE_PORT}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    depends_on:
+      sudstvo_db:
+        condition: service_healthy
+
+
+  sudstvo_db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: myDB1
+    # Docker healtcheck - checks if database is "alive"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    volumes:
+      - mongo_store:/data/mongoSudstvo
+    ports:
+      - 27019:27017
 
 
 volumes:

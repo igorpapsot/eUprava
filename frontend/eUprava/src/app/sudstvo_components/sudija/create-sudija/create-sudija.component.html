@@ -1,0 +1,49 @@
+<div class="register-sudija">
+    <div class="row">
+      <div class="create-sudija-container">
+        <form class="post-form" [formGroup]="createSudijaForm" (ngSubmit)="createSudija()">
+          <div class="form-group">
+            <div class="create-sudija-heading">Create Sudija</div>
+          <div>
+            <input type="text" [formControlName]="'ime'" class="form-control" style="margin-top: 5px" name="ime"
+              placeholder="ime">
+              <small class="text-danger" 
+              *ngIf="createSudijaForm.get('ime')?.touched && createSudijaForm.get('ime')?.errors?.['required']">
+              Ime is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'prezime'" class="form-control" style="margin-top: 5px" name="prezime"
+              placeholder="prezime">
+              <small class="text-danger" 
+              *ngIf="createSudijaForm.get('prezime')?.touched && createSudijaForm.get('prezime')?.errors?.['required']">
+              Prezime is required.</small>
+
+          </div>
+          <div>
+            <input type="text" [formControlName]="'jmbg'" class="form-control" style="margin-top: 5px" name="jmbg"
+              placeholder="jmbg">
+              <small class="text-danger" 
+              *ngIf="createSudijaForm.get('jmbg')?.touched && createSudijaForm.get('jmbg')?.errors?.['required']">
+              Jmbg is required.</small>
+
+              <div>
+                <input type="password" [formControlName]="'lozinka'" class="form-control" style="margin-top: 5px" name="lozinka"
+                  placeholder="lozinka">
+                  <small class="text-danger" 
+                  *ngIf="createSudijaForm.get('lozinka')?.touched && createSudijaForm.get('lozinka')?.errors?.['required']">
+                  Lozinka is required.</small>
+    
+              </div>
+              <div style="margin-top: 5px" class="float-right">
+                <button (click)="cancel()" class="btnCancel">Cancel</button>
+                <button class="btnSuccess">Create</button>
+              </div>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>

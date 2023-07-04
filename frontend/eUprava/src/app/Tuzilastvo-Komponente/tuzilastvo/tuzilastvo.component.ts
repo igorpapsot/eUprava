@@ -86,16 +86,12 @@ export class TuzilastvoComponent {
       this.licnePrijave = [];
       data.forEach(element => {
         if(element.optuzeni.jmbg == localStorage.getItem('jmbg')) {
-          console.log("gas")
           this.licnePrijave.push(element)
         }
       });
-      if(localStorage.getItem('jmbg')){
-        this.tuzilac = this.getTuzilac(localStorage.getItem('jmbg'))
-      }
-      if(this.tuzilac.id) {
-        this.tuzilacUlogovan = true
-        console.log(this.tuzilac)
+      var j = localStorage.getItem('jmbg')
+      if(j){
+        this.getTuzilac(j)
       }
     })
 
@@ -115,15 +111,18 @@ export class TuzilastvoComponent {
     this.optuznice = this.optuzniceService.getOptuznice()
   }
 
-  getTuzilac(jmbg: string | null) : Tuzilac{
-    if (jmbg) {
-      this.tuzilacService.getTuzilac(jmbg).subscribe(data => {
-        console.log("Tuzilac sranje")
-        console.log(data)
-        return data
-      })
-    }
-    return new Tuzilac
+  getTuzilac(jmbg: string){
+    this.tuzilacService.getTuzilac(jmbg).subscribe(data => {
+      console.log("Tuzilac iz baze")
+      console.log(data)
+      this.tuzilac = data;
+      
+      if(this.tuzilac.id) {
+        this.tuzilacUlogovan = true
+        console.log(this.tuzilac)
+      }
+    })
+
   }
 
   declinePrijava(id: string){
@@ -259,7 +258,7 @@ export class TuzilastvoComponent {
   prikazOptuznice: boolean = false;
   search: Search = new Search();
   meni: string = "Građanin"
-  tuzilac: Tuzilac = new Tuzilac()
+  tuzilac: Tuzilac;
   tuzilacUlogovan: boolean = false
   jmbg: string | null = null
 

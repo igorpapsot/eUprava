@@ -6,5 +6,8 @@ export interface Zahtev {
     datum: string,
     zahtevTip: ZahtevTip,
     dokumentTip: DokumentTip,
-    korisnikId: string
+    korisnikId: string,
+    zakazanDatumVreme: string,
+    datumIsticanja: string,
+    jmbgDeteta: string
 }
