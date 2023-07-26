@@ -1,42 +1,22 @@
-Sistem eUprave koji simulira rad MUP-a, tužilaštva, suda, granične policije i njihove komunikacije.
+# E-government
 
-MUP građani
+## Description
 
-	-Zakazivanje izdavanja novih isprava 
-	-Produžavanje isprava provera da li je moguce, zahtev za ranije produzavanje
-	-Za dete potrebna pratnja i potvrda roditelja
-	-Prijave izgubljenog
-	-Globalni login građani(za slanje prijave tuzilastvu)
-	-Cuvanje poternica
+Web application composed of multiple microservices that enables communication between departments of e-government. It connects services of the ministry of internal affairs, the judiciary, border police and prosecutor's office.
+Technologies used: MongoDB, Nginix, Docker, Angular
 
-Sud
+## Installation
 
-	- Primanje optužnice od strane tužilaštva
-	- Pregled i sortiranje optužnice
-	- Pretraga, kreiranje i pregled tabele građana sa poternice
-	- Objava konačne presude
-	- Omogućiti sudiji da raspisuje poternicu 
-	- Mogućnost biranja željenog sudije
-	- Rotacija sudija
-	- Slanje poternice graničnoj policiji
-	- Kreiranje ročišta 
-	- Odabir željenog suda(Osnovni, Viši, Apelacioni, Vrhovni) ?
 
-Tužilaštvo
+```console
+git clone https://github.com/igorpapsot/eUprava
+```
+ 
+## Usage
 
-	-Kreiranje optužnice u slučaju da ima dovoljno dokaza
-	-Odbacivanje krivične prijave ukoliko nema dovoljno dokaza
-	-Pretraga prethodnih krivičnih prijava ukoliko su javne
-	-Slanje optužnice sudu
-	-Slanje zahteva za dopunu izveštaja graničnoj policiji
-	-Slanje anonimne ili javne prijave od strane gradjana
-	-Primanje krivične prijave od granične policije
+To build  back-end server you will need Docker. Position yourself in /backend and execute
+```console
+ docker compose up --build
+```
 
-Granična policija
-
-	-Provera lične karte i pasoša sa MUP-om
-	-Dobijanje liste lica sa poternicom od strane MUP-a
-	-Zabrana prelaska i kontaktiranje MUP-a i licu sa poternicom
-	-Lista svih prelaza granice do sada
-	-Provera krijumčarenja
-	-Podnošenje prijave krijumčarenja tužilaštvu sa slikom
+Run `ng serve` for a front-end server. Navigate to  `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
