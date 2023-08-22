@@ -1,8 +1,8 @@
 package data
 
-type EPol string
+type EPol int
 
 const (
-	MUSKI  string = "muski"
-	ZENSKI        = "zenski"
+	MUSKI  int = 1
+	ZENSKI     = 2
 )

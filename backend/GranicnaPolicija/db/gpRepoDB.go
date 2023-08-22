@@ -363,25 +363,25 @@ func (gr GPRepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {
 //======Kolekcije==========
 
 func (gr *GPRepoDb) getGPCollection() *mongo.Collection {
-	db := gr.client.Database("myDB")
+	db := gr.client.Database("myGpDB")
 	collection := db.Collection("policajac")
 	return collection
 }
 
 func (gr *GPRepoDb) getProveraCollection() *mongo.Collection {
-	db := gr.client.Database("myDB")
+	db := gr.client.Database("myGpDB")
 	collection := db.Collection("provere")
 	return collection
 }
 
 func (gr *GPRepoDb) getPrelazakCollection() *mongo.Collection {
-	db := gr.client.Database("myDB")
+	db := gr.client.Database("myGpDB")
 	collection := db.Collection("prelasci")
 	return collection
 }
 
 func (gr *GPRepoDb) getPrijavaCollection() *mongo.Collection {
-	db := gr.client.Database("myDB")
+	db := gr.client.Database("myGpDB")
 	collection := db.Collection("prijave")
 	return collection
 }

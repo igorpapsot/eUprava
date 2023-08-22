@@ -12,10 +12,9 @@ type GPolicajac struct {
 	Ime      string   `json:"ime"`
 	Prezime  string   `json:"prezime"`
 	Jmbg     string   `json:"jmbg"`
-	Lozinka  string   `json:"lozinka"`
+	Password string   `json:"password"`
 	Pol      EPol     `json:"pol"`
 	GPrelaz  EGPrelaz `json:"prelaz"`
-	Password string   `json:"password"`
 	CCode    int      `json:"ccode"`
 }
 

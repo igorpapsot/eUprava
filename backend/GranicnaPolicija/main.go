@@ -22,7 +22,7 @@ func main() {
 
 	port := os.Getenv("app_port")
 	if len(port) == 0 {
-		port = "8080"
+		port = "8083"
 	}
 
 	// NoSQL: Initialize Product Repository store
@@ -52,10 +52,18 @@ func main() {
 	loginPolicajacRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	loginPolicajacRouter.HandleFunc("/", policajacHandler.LoginPolicajac)
 
+	// Y-yes O-outsourced X-not done
+	// Y? Provera lične karte i pasoša sa MUP-om
+	// O? Dobijanje liste lica sa poternicom od strane MUP-a
+	// Y? Zabrana prelaska i kontaktiranje MUP-a i licu sa poternicom
+	// Y? Lista svih prelaza granice do sada
+	// X Provera krijumčarenja
+	// X Podnošenje prijave krijumčarenja tužilaštvu sa slikom
+
 	//Provera Gradjana routers
 	postProveraRouter := routerUser.Methods(http.MethodPost).Subrouter()
-	postProveraRouter.HandleFunc("/prelazak", proveraHandler.CreateProveraHandler)
-	postProveraRouter.Use(policajacHandler.MiddlewareGPValidation)
+	postProveraRouter.HandleFunc("/provera", proveraHandler.CreateProveraHandler)
+	//postProveraRouter.Use(proveraHandler.MiddlewareProveraValidation)
 
 	getProvereRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getProvereRouter.HandleFunc("/provere", proveraHandler.GetProvere)

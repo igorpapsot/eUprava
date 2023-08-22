@@ -5,7 +5,7 @@ import (
 	"GranicnaPolicija/db"
 	"context"
 	"encoding/json"
-	"github.com/gorilla/mux"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -17,6 +17,11 @@ type ProveraHandler struct {
 	repo   db.GpRepo
 }
 
+type ProveraStruct struct {
+	PolicajacId string //`json:"policajacId"`
+	Gradjanin   string //`json:"gradjanin"`
+}
+
 type ProveraKey struct{}
 
 type PrijavaKey struct{}
@@ -26,31 +31,45 @@ func NewProveraHandler(l *log.Logger, ur db.GpRepo) *ProveraHandler {
 }
 
 func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Request) {
-	vars := mux.Vars(h)
-	var gradjaninJmbg = vars["gradjanin"]
-	var policajacId = vars["policajacId"]
+
+	decoder := json.NewDecoder(h.Body)
+	var proveravanje ProveraStruct
+	err := decoder.Decode(&proveravanje)
+
+	if err != nil {
+		http.Error(rw, "Unable to decode json", http.StatusInternalServerError)
+		p.logger.Println("Unable to decode json :", err)
+		return
+	}
+	p.logger.Println(proveravanje)
+
+	policajac, err := p.repo.GetPolicajac(proveravanje.PolicajacId)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusNotFound)
+		p.logger.Println("Unable to find policajac.", err)
+		return
+	}
+	fmt.Println(policajac.Ime)
 
 	client := &http.Client{}
-	req1, err := http.NewRequest("GET", "http://localhost:8004/user/jmbg", nil)
+	req1, err := http.NewRequest("GET", "http://mup_service:8004/user/jmbg", nil)
 	if err != nil {
-		//error
+		fmt.Println(err)
 		return
 	}
-	req1.Header.Add("jmbg", gradjaninJmbg)
+	q := req1.URL.Query()
+	q.Add("jmbg", proveravanje.Gradjanin)
+	req1.URL.RawQuery = q.Encode()
 	resp1, err := client.Do(req1)
-	req2, err := http.NewRequest("GET", "http://localhost:8004/poternica/gradjanin", nil)
+
 	if err != nil {
-		//error
+		http.Error(rw, err.Error(), http.StatusNotFound)
+		fmt.Println("zahtev zeznuo")
 		return
 	}
-	req2.Header.Add("jmbg", gradjaninJmbg)
-	resp2, err := client.Do(req2)
-
-	var provera *data.ProveraGradjanina
-	provera.Vreme = time.Now().String()
-	provera.Status = data.EStatusProvere(data.NACEKANJU)
 
 	gradjaninJson, err := io.ReadAll(resp1.Body)
+	fmt.Println(gradjaninJson)
 	if err != nil {
 		http.Error(rw, err.Error(), http.StatusNotFound)
 		p.logger.Println("Unable to retrive gradjanin.", err)
@@ -63,22 +82,32 @@ func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Req
 		p.logger.Println("Unable to unmarshal gradjanin.", err1)
 		return
 	}
-	provera.Gradjanin = gradjanin
 
-	policajac, err := p.repo.GetPolicajac(policajacId)
-	if err != nil {
-		http.Error(rw, err.Error(), http.StatusNotFound)
-		p.logger.Println("Unable to find policajac.", err)
+	//TODO: proveri jel radi ovo
+	if gradjanin.Id == "" {
+		http.Error(rw, "gradjanin not found", http.StatusNotFound)
+		p.logger.Println("gradjanin not found", err1)
 		return
 	}
-	provera.Policajac = policajac
+	
+	req2, err := http.NewRequest("GET", "http://mup_service:8004/poternica/gradjanin", nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	q2 := req2.URL.Query()
+	q2.Add("gradjaninId", gradjanin.Id)
+	req2.URL.RawQuery = q2.Encode()
+	resp2, err := client.Do(req2)
 
 	poternicaJson, err := io.ReadAll(resp2.Body)
 	if err != nil {
-		http.Error(rw, err.Error(), http.StatusNotFound)
+		//http.Error(rw, err.Error(), http.StatusNotFound)
 		p.logger.Println("Unable to retrive poternica.", err)
+		rw.Write([]byte("nema poternicu"))
 		return
 	}
+
 	var poternica data.Poternica
 	err2 := json.Unmarshal(poternicaJson, &poternica)
 	if err2 != nil {
@@ -86,14 +115,24 @@ func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Req
 		p.logger.Println("Unable to unmarshal poternica.", err2)
 		return
 	}
+	fmt.Println(poternicaJson)
+	fmt.Println("dosao do kreiranja")
+
+	provera := &data.ProveraGradjanina{}
+	provera.Policajac = policajac
+	provera.Gradjanin = gradjanin
 	provera.Poternica = poternica
+	provera.Vreme = time.Now().String()
+	provera.Status = data.EStatusProvere(data.NACEKANJU)
 
-	if p.repo.CreateProvera(provera) {
-		rw.WriteHeader(http.StatusAccepted)
-		return
-	}
+	fmt.Println(provera)
 
-	rw.WriteHeader(http.StatusNotAcceptable)
+	//if p.repo.CreateProvera(provera) {
+	//	rw.WriteHeader(http.StatusAccepted)
+	//	return
+	//}
+	err = provera.ToJSON(rw)
+	rw.WriteHeader(http.StatusCreated)
 
 }
 
