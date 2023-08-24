@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
@@ -83,13 +84,12 @@ func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Req
 		return
 	}
 
-	//TODO: proveri jel radi ovo
 	if gradjanin.Id == "" {
 		http.Error(rw, "gradjanin not found", http.StatusNotFound)
 		p.logger.Println("gradjanin not found", err1)
 		return
 	}
-	
+
 	req2, err := http.NewRequest("GET", "http://mup_service:8004/poternica/gradjanin", nil)
 	if err != nil {
 		fmt.Println(err)
@@ -127,24 +127,13 @@ func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Req
 
 	fmt.Println(provera)
 
-	//if p.repo.CreateProvera(provera) {
-	//	rw.WriteHeader(http.StatusAccepted)
-	//	return
-	//}
-	err = provera.ToJSON(rw)
-	rw.WriteHeader(http.StatusCreated)
-
-}
-
-// Verovatno ne treba jer cu slati direkt Tuzilastvu novu krivicnu prijavu
-func (p ProveraHandler) Prijava(rw http.ResponseWriter, h *http.Request) {
-	prijava := h.Context().Value(PrijavaKey{}).(*data.KrivicnaPrijava)
-
-	if p.repo.CreatePrijava(prijava) {
+	if p.repo.CreateProvera(provera) {
+		provera.ToJSON(rw)
 		rw.WriteHeader(http.StatusAccepted)
-		rw.Write([]byte("202 - Accepted"))
 		return
 	}
+	rw.WriteHeader(http.StatusInternalServerError)
+
 }
 
 func (p *ProveraHandler) GetProvereNaCekanju(rw http.ResponseWriter, h *http.Request) {
@@ -161,6 +150,44 @@ func (p *ProveraHandler) GetProvereNaCekanju(rw http.ResponseWriter, h *http.Req
 	rw.WriteHeader(http.StatusOK)
 }
 
+func (p *ProveraHandler) RefusePrelazak(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var proveraId = vars["proveraId"]
+	provera, err := p.repo.GetProveraById(proveraId)
+	if err != nil {
+		http.Error(rw, "No provera found", http.StatusNotAcceptable)
+		p.logger.Println("No provera found ", err)
+		return
+	}
+
+	provera.Status = data.ODBIJEN
+
+	if !p.repo.UpdateProvera(&provera) {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+	rw.WriteHeader(http.StatusAccepted)
+}
+
+func (p *ProveraHandler) AcceptPrelazak(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var proveraId = vars["proveraId"]
+	provera, err := p.repo.GetProveraById(proveraId)
+	if err != nil {
+		http.Error(rw, "No provera found", http.StatusNotAcceptable)
+		p.logger.Println("No provera found ", err)
+		return
+	}
+
+	provera.Status = data.PUSTEN
+
+	if !p.repo.UpdateProvera(&provera) {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+	rw.WriteHeader(http.StatusAccepted)
+}
+
 func (p *ProveraHandler) GetProvere(rw http.ResponseWriter, h *http.Request) {
 	provere := p.repo.GetProvere()
 
@@ -173,6 +200,43 @@ func (p *ProveraHandler) GetProvere(rw http.ResponseWriter, h *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusOK)
+}
+
+//TODO : get prijave na cekanju da bih se preko fronta poslale tuzilastvu
+//TODO : takodje napraviti methodu za to u mainu NE ZABORAVI JEEZ OSNOVNO
+
+// Verovatno ne treba jer cu slati direkt Tuzilastvu novu krivicnu prijavu
+func (p ProveraHandler) Prijava(rw http.ResponseWriter, h *http.Request) {
+	prijava := h.Context().Value(PrijavaKey{}).(*data.KrivicnaPrijava)
+
+	prijava.Status = data.EStatusPrijave(data.CEKANASLANJE)
+
+	if p.repo.CreatePrijava(prijava) {
+		rw.WriteHeader(http.StatusAccepted)
+		rw.Write([]byte("202 - Accepted"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusInternalServerError)
+}
+
+func (p ProveraHandler) PoslataPrijava(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	var prijavaId = vars["prijavaId"]
+	prijava, err := p.repo.GetPrijava(prijavaId)
+	if err != nil {
+		http.Error(rw, "No prijava found", http.StatusNotAcceptable)
+		p.logger.Println("No prijava found ", err)
+		return
+	}
+
+	prijava.Status = data.EStatusPrijave(data.PROSLEDJENO)
+
+	if !p.repo.UpdatePrijava(&prijava) {
+		rw.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+	rw.WriteHeader(http.StatusAccepted)
 }
 
 func (u *ProveraHandler) MiddlewareProveraValidation(next http.Handler) http.Handler {

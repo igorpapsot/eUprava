@@ -21,12 +21,20 @@ func NewPrelazakHandler(l *log.Logger, ur db.GpRepo) *PrelazakHandler {
 	return &PrelazakHandler{l, ur}
 }
 
+// TODO : dodati granicni prelaz (preko policajca izvuci info)
+// IDEA : ako je provera prosao smes da napravis prelazak inace baci error
 func (p *PrelazakHandler) CreatePrelazakHandler(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
-	var provera = vars["proveraId"]
-	var prelazak *data.PrelazakGranice
+	var proveraId = vars["proveraId"]
+	provera, err := p.repo.GetProveraById(proveraId)
+	if err != nil {
+		http.Error(rw, "No provera found", http.StatusNotAcceptable)
+		p.logger.Println("No provera found ", err)
+		return
+	}
+	prelazak := &data.PrelazakGranice{}
 	prelazak.Vreme = time.Now().String()
-	prelazak.ProveraId = provera
+	prelazak.Provera = provera
 
 	if p.repo.CreatePrelazak(prelazak) {
 		rw.WriteHeader(http.StatusAccepted)

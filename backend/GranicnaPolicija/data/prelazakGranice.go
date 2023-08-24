@@ -7,10 +7,10 @@ import (
 )
 
 type PrelazakGranice struct {
-	Id        string   `json:"id"`
-	ProveraId string   `json:"provera"`
-	Vreme     string   `json:"vreme"`
-	GPrelaz   EGPrelaz `json:"g_prelaz"`
+	Id      string            `json:"id"`
+	Provera ProveraGradjanina `json:"provera"`
+	Vreme   string            `json:"vreme"`
+	GPrelaz EGPrelaz          `json:"g_prelaz"`
 }
 
 type PrelasciGranice []*PrelazakGranice

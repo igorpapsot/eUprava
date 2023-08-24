@@ -167,6 +167,19 @@ func (gr GPRepoDb) GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina
 	return result, nil
 }
 
+func (gr GPRepoDb) GetProveraById(proveraId string) (data.ProveraGradjanina, error) {
+	gr.logger.Println("Getting provera...")
+	var result data.ProveraGradjanina
+	coll := gr.getProveraCollection()
+	filter := bson.D{{"id", proveraId}}
+	err := coll.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		gr.logger.Println(err)
+		return result, errors.New("Couldnt find provera")
+	}
+	return result, nil
+}
+
 func (gr GPRepoDb) GetProvere() data.ProvereG {
 	gr.logger.Println("Getting provere gradjanina...")
 	coll := gr.getProveraCollection()
@@ -194,6 +207,7 @@ func (gr GPRepoDb) GetProvere() data.ProvereG {
 
 func (gr GPRepoDb) GetProvereByStatus(status string) data.ProvereG {
 	gr.logger.Println("Getting provere gradjanina...")
+	fmt.Println("dobijanje provera sa statusom" + status)
 	coll := gr.getProveraCollection()
 	filter := bson.D{{"status", status}}
 	cursor, err := coll.Find(context.TODO(), filter)
@@ -215,6 +229,18 @@ func (gr GPRepoDb) GetProvereByStatus(status string) data.ProvereG {
 		gr.logger.Printf("%s\n", output)
 	}
 	return results
+}
+
+func (gr GPRepoDb) UpdateProvera(provera *data.ProveraGradjanina) bool {
+	coll := gr.getProveraCollection()
+	filter := bson.D{{"id", provera.Id}}
+
+	_, err := coll.ReplaceOne(context.TODO(), filter, provera)
+	if err != nil {
+		gr.logger.Println(err)
+		return false
+	}
+	return true
 }
 
 //======Prelazak Granice
@@ -358,6 +384,18 @@ func (gr GPRepoDb) GetPrijava(id string) (data.KrivicnaPrijava, error) {
 	}
 
 	return result, nil
+}
+
+func (gr GPRepoDb) UpdatePrijava(prijava *data.KrivicnaPrijava) bool {
+	coll := gr.getPrijavaCollection()
+	filter := bson.D{{"id", prijava.Id}}
+
+	_, err := coll.ReplaceOne(context.TODO(), filter, prijava)
+	if err != nil {
+		gr.logger.Println(err)
+		return false
+	}
+	return true
 }
 
 //======Kolekcije==========

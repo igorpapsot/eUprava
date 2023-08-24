@@ -52,13 +52,22 @@ func main() {
 	loginPolicajacRouter := routerUser.Methods(http.MethodPost).Subrouter()
 	loginPolicajacRouter.HandleFunc("/", policajacHandler.LoginPolicajac)
 
-	// Y-yes O-outsourced X-not done
-	// Y? Provera lične karte i pasoša sa MUP-om
-	// O? Dobijanje liste lica sa poternicom od strane MUP-a
-	// Y? Zabrana prelaska i kontaktiranje MUP-a i licu sa poternicom
-	// Y? Lista svih prelaza granice do sada
-	// X Provera krijumčarenja
-	// X Podnošenje prijave krijumčarenja tužilaštvu sa slikom
+	//1Y  Provera lične karte i pasoša sa MUP-om (Mup nije uradio pasose tkd proveravam samo licnu kartu)
+	//2Y  Provera postojanja poternica lica sa MUP-om
+	//3Y? Zabrana prelaska licu u slucaju utvrdjenog pokusaja krijumcarenja i pisanje krivicne prijave
+	//4Y? Zabrana prelaska licu sa poternicom i pisanje krivicne prijave
+	//4Y? Pustanje lica preko granice tj kreiranje prelaska
+	//5Y? Lista svih prelaza granice do sada
+	//6Y? Prosledjivanje krivicnih prijava tužilaštvu (lista krivicnih prijava gde se prosledjuje preko fronte i menja se status na prosledjeno)
+
+	//TODO : prelazak handler granicni prelaz
+
+	//TODO : na frontu staviti dropdown menu za tuzilastva radi cuvanja tj slanja krivicne prijave
+
+	//TODO : svaka provera na cekanju ima accept i refuse dugme... accept radi se stavka 1A, refuse onda stavka 2B
+	//TODO : na frontu ofarbati u crvenu provere sa poternicom i blokirati dugme accept
+	//TODO : 1A na frontu kada se prihvata prelazak mora da se kreira prelazak i ako vrati ok salje se accept provera
+	//TODO : 2B na frontu kada se odbije prelazak prebacuje se na pisanje krivicne prijave i samim tim se salje tuzilastvu
 
 	//Provera Gradjana routers
 	postProveraRouter := routerUser.Methods(http.MethodPost).Subrouter()
@@ -69,12 +78,18 @@ func main() {
 	getProvereRouter.HandleFunc("/provere", proveraHandler.GetProvere)
 
 	getProvereNaCekanjuRouter := routerUser.Methods(http.MethodGet).Subrouter()
-	getProvereNaCekanjuRouter.HandleFunc("/provere/cekaju", proveraHandler.GetProvere)
+	getProvereNaCekanjuRouter.HandleFunc("/provere/cekaju", proveraHandler.GetProvereNaCekanju)
+
+	postAcceptProvera := routerUser.Methods(http.MethodPost).Subrouter()
+	postAcceptProvera.HandleFunc("/provera/accept/{proveraId}", proveraHandler.AcceptPrelazak)
+
+	postRefuseProvera := routerUser.Methods(http.MethodPost).Subrouter()
+	postRefuseProvera.HandleFunc("/provera/refuse/{proveraId}", proveraHandler.RefusePrelazak)
 
 	//Prelazak granice routers
 	postPrelazakRouter := routerUser.Methods(http.MethodPost).Subrouter()
-	postPrelazakRouter.HandleFunc("/prelazak", prelazakHandler.CreatePrelazakHandler)
-	postPrelazakRouter.Use(policajacHandler.MiddlewareGPValidation)
+	postPrelazakRouter.HandleFunc("/prelazak/{proveraId}", prelazakHandler.CreatePrelazakHandler)
+	//postPrelazakRouter.Use(prelazakHandler.MiddlewarePrelazakValidation)
 
 	getPrelazakRouter := routerUser.Methods(http.MethodGet).Subrouter()
 	getPrelazakRouter.HandleFunc("/prelasci", prelazakHandler.GetPrelasci)

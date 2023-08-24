@@ -9,8 +9,10 @@ type GpRepo interface {
 
 	CreateProvera(provera *data.ProveraGradjanina) bool
 	GetProvera(gradjanin *data.Gradjanin) (data.ProveraGradjanina, error)
+	GetProveraById(id string) (data.ProveraGradjanina, error)
 	GetProvere() data.ProvereG
 	GetProvereByStatus(status string) data.ProvereG
+	UpdateProvera(provera *data.ProveraGradjanina) bool
 
 	CreatePrelazak(prelazak *data.PrelazakGranice) bool
 	GetPrelasci() data.PrelasciGranice
@@ -20,4 +22,5 @@ type GpRepo interface {
 	CreatePrijava(prijava *data.KrivicnaPrijava) bool
 	GetPrijave() data.KrivicnePrijave
 	GetPrijava(id string) (data.KrivicnaPrijava, error)
+	UpdatePrijava(prijava *data.KrivicnaPrijava) bool
 }
