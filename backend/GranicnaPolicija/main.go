@@ -60,8 +60,6 @@ func main() {
 	//5Y? Lista svih prelaza granice do sada
 	//6Y? Prosledjivanje krivicnih prijava tužilaštvu (lista krivicnih prijava gde se prosledjuje preko fronte i menja se status na prosledjeno)
 
-	//TODO : prelazak handler granicni prelaz
-
 	//TODO : na frontu staviti dropdown menu za tuzilastva radi cuvanja tj slanja krivicne prijave
 
 	//TODO : svaka provera na cekanju ima accept i refuse dugme... accept radi se stavka 1A, refuse onda stavka 2B
@@ -88,7 +86,7 @@ func main() {
 
 	//Prelazak granice routers
 	postPrelazakRouter := routerUser.Methods(http.MethodPost).Subrouter()
-	postPrelazakRouter.HandleFunc("/prelazak/{proveraId}", prelazakHandler.CreatePrelazakHandler)
+	postPrelazakRouter.HandleFunc("/prelazak", prelazakHandler.CreatePrelazakHandler)
 	//postPrelazakRouter.Use(prelazakHandler.MiddlewarePrelazakValidation)
 
 	getPrelazakRouter := routerUser.Methods(http.MethodGet).Subrouter()

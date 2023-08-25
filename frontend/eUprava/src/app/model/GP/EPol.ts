@@ -1,5 +1,4 @@
 export enum EPol {
-  DUMMYENUM,
-  MUSKI,
+  MUSKI = 1,
   ZENSKI
 }

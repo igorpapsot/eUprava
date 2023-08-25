@@ -4,6 +4,7 @@ import (
 	"GranicnaPolicija/data"
 	"GranicnaPolicija/db"
 	"context"
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -15,33 +16,48 @@ type PrelazakHandler struct {
 	repo   db.GpRepo
 }
 
+type PrelazakInfoStruct struct {
+	PolicajacId string //`json:"policajacId"`
+	ProveraId   string //`json:"proveraId"`
+}
+
 type PrelazakKey struct{}
 
 func NewPrelazakHandler(l *log.Logger, ur db.GpRepo) *PrelazakHandler {
 	return &PrelazakHandler{l, ur}
 }
 
-// TODO : dodati granicni prelaz (preko policajca izvuci info)
-// IDEA : ako je provera prosao smes da napravis prelazak inace baci error
 func (p *PrelazakHandler) CreatePrelazakHandler(rw http.ResponseWriter, h *http.Request) {
-	vars := mux.Vars(h)
-	var proveraId = vars["proveraId"]
-	provera, err := p.repo.GetProveraById(proveraId)
+	decoder := json.NewDecoder(h.Body)
+	var prelazakInfo PrelazakInfoStruct
+	err := decoder.Decode(&prelazakInfo)
+
+	policajac, err := p.repo.GetPolicajac(prelazakInfo.PolicajacId)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusNotFound)
+		p.logger.Println("Unable to find policajac.", err)
+		return
+	}
+	provera, err := p.repo.GetProveraById(prelazakInfo.ProveraId)
 	if err != nil {
 		http.Error(rw, "No provera found", http.StatusNotAcceptable)
 		p.logger.Println("No provera found ", err)
 		return
 	}
+	if provera.Status != data.PUSTEN {
+		http.Error(rw, "Provera not propusten", http.StatusNotAcceptable)
+		p.logger.Println("Provera not propusten")
+		return
+	}
 	prelazak := &data.PrelazakGranice{}
 	prelazak.Vreme = time.Now().String()
 	prelazak.Provera = provera
-
+	prelazak.GPrelaz = policajac.GPrelaz
 	if p.repo.CreatePrelazak(prelazak) {
 		rw.WriteHeader(http.StatusAccepted)
 		return
 	}
-
-	rw.WriteHeader(http.StatusNotAcceptable)
+	rw.WriteHeader(http.StatusInternalServerError)
 }
 
 func (p *PrelazakHandler) GetPrelasci(rw http.ResponseWriter, h *http.Request) {

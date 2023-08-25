@@ -1,7 +1,6 @@
 export enum EGPrelaz {
-  HORGOSm,
-  BATROVCI,
-  GRADINA,
-  PRESEVO,
+  HORGOS = 'horgos',
+  BATROVCI = 'batrovci',
+  GRADINA = 'gradina',
+  PRESEVO = 'presevo',
 }
-//status enum u sudstvu ima primer kako u string prebaciti

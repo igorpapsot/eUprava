@@ -1,16 +1,15 @@
 import {EGPrelaz} from "./EGPrelaz";
 import {EPol} from "./EPol";
 
-export class GPolicajac {
+export class Optuzeni {
 
   constructor() {
   }
 
-  Id: string
   Ime: string
   Prezime: string
   Jmbg: string
-  Password: string
+  Lozinka: string
   Pol: EPol
   GPrelaz: EGPrelaz
 }

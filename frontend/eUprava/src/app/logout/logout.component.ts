@@ -16,6 +16,7 @@ export class LogoutComponent {
   logOut() {
     this.loginS.logout()
     localStorage.removeItem('jmbg');
+    localStorage.removeItem('pjwt')
     this.router.navigateByUrl('')
   }
 }
