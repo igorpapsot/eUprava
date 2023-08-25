@@ -20,7 +20,7 @@ export class GpolicajacService {
 
   postLoginPolicajca(jmbg : string, password : string) {
     console.log(jmbg + password)
-    return this.httpClient.post<Jwt>(environment.apiUrl + "/gp/provera", {
+    return this.httpClient.post<Jwt>(environment.apiUrl + "/gp/", {
       jmbg : jmbg,
       password : password
     }, this.options())

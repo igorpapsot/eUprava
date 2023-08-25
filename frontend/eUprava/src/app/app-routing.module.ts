@@ -12,6 +12,7 @@ import { ViewRocisteComponent } from './sudstvo_components/rocista/view-rociste/
 import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija/create-sudija.component';
 import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
 import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
+import {GranicaComponent} from "./gp_components/granica/granica.component";
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'tuzilastvo', component: TuzilastvoComponent},
   {path: 'mup', component: MupPageComponent},
+  {path: 'granicnaPolicija', component: GranicaComponent},
 
   {path: 'sudstvo', component: SudstvoPageComponent},
   {path: 'create-poternica', component: CreatePoternicaComponent},

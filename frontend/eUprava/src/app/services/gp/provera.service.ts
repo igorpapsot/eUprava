@@ -44,7 +44,7 @@ export class ProveraService {
 
   postZabrani(provera : string) {
     console.log(provera)
-    return this.httpClient.post<unknown>(environment.apiUrl + "/gp/provera/accept/" + provera, {
+    return this.httpClient.post<unknown>(environment.apiUrl + "/gp/provera/refuse/" + provera, {
     }, this.options())
   }
 

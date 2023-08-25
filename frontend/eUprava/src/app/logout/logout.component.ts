@@ -17,6 +17,7 @@ export class LogoutComponent {
     this.loginS.logout()
     localStorage.removeItem('jmbg');
     localStorage.removeItem('pjwt')
+    localStorage.removeItem('gpolicajacId')
     this.router.navigateByUrl('')
   }
 }
