@@ -1,0 +1,109 @@
+
+<h1 [hidden]="logedPolicajac">Nemate pristup funkcijama granicne policije</h1>
+<div [hidden]="!logedPolicajac">
+  <h1>Granicna policija</h1>
+  <input type="number" [(ngModel)]="proveraJmbgInput" placeholder="Enter a jmbg">
+  <button (click)="postProvera()">PROVERI</button>
+
+  <h1>Provere na cekanju:</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Policajac</th>
+      <th>Gradjanin</th>
+      <th>Jmbg gradjanina</th>
+      <th>Vreme</th>
+      <th>Poternica</th>
+      <th>Propustiti?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let provera of provere |async">
+      <td>{{provera.Policajac.Ime}} + {{provera.Policajac.Prezime}}</td>
+      <td>{{provera.Gradjanin.Ime}} + {{provera.Gradjanin.Prezime}}</td>
+      <td>{{provera.Gradjanin.Jmbg}}</td>
+      <td>{{provera.Vreme}}</td>
+      <td>{{provera.Poternica.Naslov}}</td>
+      <td><button *ngIf="provera.Poternica.Id === ''"
+                  style="background-color: darkgreen;color: white;padding: 8px;cursor: pointer;"
+                  (click)="acceptProvera(provera.Id)">ACCEPT</button>
+        <button style="background-color: darkred;color: white;padding: 8px;cursor: pointer;"
+                (click)="openPrijava(prijavi,provera)">REFUSE</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h1>Prelasci:</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Policajac</th>
+      <th>Gradjanin</th>
+      <th>Jmbg gradjanina</th>
+      <th>Vreme prelaska</th>
+      <th>Prelaz</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let prelazak of prelasci|async">
+      <td>{{prelazak.Provera.Policajac.Ime}} + {{prelazak.Provera.Policajac.Prezime}}</td>
+      <td>{{prelazak.Provera.Gradjanin.Ime}} + {{prelazak.Provera.Gradjanin.Prezime}}</td>
+      <td>{{prelazak.Provera.Gradjanin.Jmbg}}</td>
+      <td>{{prelazak.Vreme}}</td>
+      <td>{{prelazak.GPrelaz}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <ng-template #prijavi let-modals>
+    <div class="modal-header" style="background-color: #f2f2f2;">
+      <h4 class="modal-title" id="dodavanje" style=" font-weight: bold;">Posalji krivičnu prijavu tužilaštvu</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modals.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" style="background-color: #f2f2f2;">
+      <div class="container">
+
+        <form #userForm="ngForm" (submit)="sendPrijava()">
+
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <div class="form-group">
+                <label>Clan zakonika</label>
+                <input type="text" class="form-control gray" required
+                       [(ngModel)]="prijavaDao.ClanZakonika" name="clanZakonika"
+                       #clanZakonika="ngModel" >
+                <div [hidden]="clanZakonika.valid || !clanZakonika.touched"
+                     class="alert alert-danger">
+                  Clan zakonika je obavezno polje
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <div class="form-group">
+                <label>Obrazlozenje</label>
+                <textarea type="text" class="form-control gray" required
+                          [(ngModel)]="prijavaDao.Obrazlozenje" name="obrazlozenje"
+                          #obrazlozenje="ngModel" >
+                                        </textarea>
+                <div [hidden]="obrazlozenje.valid || !obrazlozenje.touched"
+                     class="alert alert-danger">
+                  Obrazlozenje je obavezno polje
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f2f2f2;">
+      <button type="button" class="btn btn-success success" (click)="[modals.close('Save click'), sendPrijava()]" [disabled]="!userForm.form.valid">Potvrdi</button>
+    </div>
+  </ng-template>
+
+</div>

@@ -29,8 +29,8 @@ WORKDIR /root/
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
 
-# Expose port 8000 to the outside world
-EXPOSE 8001
+# Expose port 8003 to the outside world
+EXPOSE 8003
 
 RUN chmod +x ./main
 # Command to run the executable

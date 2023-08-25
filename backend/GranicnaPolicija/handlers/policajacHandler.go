@@ -5,6 +5,7 @@ import (
 	"GranicnaPolicija/db"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/golang-jwt/jwt"
 	"log"
 	"net/http"
@@ -25,7 +26,7 @@ type LogPolicajac struct {
 
 type Claims struct {
 	Jmbg string
-	Role string
+	Id   string
 	jwt.StandardClaims
 }
 
@@ -54,6 +55,8 @@ func (u *GPolicajacHandler) LoginPolicajac(rw http.ResponseWriter, req *http.Req
 	var logged LogPolicajac
 	err := decoder.Decode(&logged)
 
+	fmt.Println(logged)
+
 	if err != nil {
 		http.Error(rw, "Unable to convert to json", http.StatusInternalServerError)
 		u.logger.Println("Unable to convert to json :", err)
@@ -74,7 +77,7 @@ func (u *GPolicajacHandler) LoginPolicajac(rw http.ResponseWriter, req *http.Req
 
 	claims := &Claims{
 		Jmbg: policajac.Jmbg,
-		Role: "tuzilac",
+		Id:   policajac.Id,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},

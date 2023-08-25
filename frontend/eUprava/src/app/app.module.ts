@@ -24,6 +24,7 @@ import { SideBarComponent } from './sudstvo_components/side-bar/side-bar.compone
 import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija/create-sudija.component';
 import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
 import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
+import { GranicaComponent } from './gp_components/granica/granica.component';
 
 
 
@@ -49,7 +50,8 @@ import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optu
     SideBarComponent,
     CreateSudijaComponent,
     ViewSudijeComponent,
-    ViewOptuzniceComponent
+    ViewOptuzniceComponent,
+    GranicaComponent
   ],
   imports: [
     BrowserModule,

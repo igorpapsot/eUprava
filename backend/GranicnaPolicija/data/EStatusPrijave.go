@@ -3,6 +3,7 @@ package data
 type EStatusPrijave string
 
 const (
-	ODBACENA   int = 1
-	PRIHVACENA     = 2
+	CEKANASLANJE int = 0
+	ODBACENA         = 1
+	PROSLEDJENO      = 2
 )

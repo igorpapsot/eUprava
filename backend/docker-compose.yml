@@ -99,6 +99,36 @@ services:
       - 27019:27017
 
 
+  gp_service:
+    image: gp_service
+    build:
+      context: .
+      dockerfile: ./GranicnaPolicija/Dockerfile
+    restart: always
+    container_name: 'gp_service'
+    hostname: 'gp_service'
+    environment:
+      - MONGO_DB_URI=${GP_DB_URI}
+      - app_port=${GP_SERVICE_PORT}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    depends_on:
+      gp_db:
+        condition: service_healthy
+
+  gp_db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: myGpDB
+    # Docker healtcheck - checks if database is "alive"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+    volumes:
+      - mongo_store:/data/mongoGp
+    ports:
+      - 27020:27017
+
 volumes:
     mongo_store:
 
