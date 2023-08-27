@@ -6,8 +6,8 @@ export class PrelazakGranice {
   constructor() {
   }
 
-  Id: string
-  Provera: ProveraGradjanina
-  Vreme: string
-  GPrelaz: EGPrelaz
+  id: string
+  provera: ProveraGradjanina
+  vreme: string
+  g_prelaz: string
 }

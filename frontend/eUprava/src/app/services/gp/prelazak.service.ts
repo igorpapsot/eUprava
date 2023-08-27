@@ -10,6 +10,7 @@ import {PrelazakGranice} from "../../model/GP/prelazakGranice";
   providedIn: 'root'
 })
 export class PrelazakService {
+
   constructor(private httpClient: HttpClient) { }
 
   options() {
@@ -23,8 +24,8 @@ export class PrelazakService {
 
   postPrelazak(prelazak : PrelazakRequest) {
     return  this.httpClient.post<unknown>(environment.apiUrl + "/gp/prelazak", {
-      policajacId : prelazak.PolicajacId,
-      proveraId: prelazak.ProveraId
+      policajacId : prelazak.policajacId,
+      proveraId: prelazak.proveraId
     }, this.options())
   }
 

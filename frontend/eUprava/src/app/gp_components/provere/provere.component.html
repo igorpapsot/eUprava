@@ -1,0 +1,27 @@
+<p>provere works!</p>
+<table>
+    <thead>
+    <tr>
+      <th>Policajac</th>
+      <th>Gradjanin</th>
+      <th>Jmbg gradjanina</th>
+      <th>Vreme</th>
+      <th>Poternica</th>
+      <th>Propustiti?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let provera of provere">
+      <td>{{ provera.policajac.ime }} {{provera.policajac}}</td>
+      <td>{{provera.gradjanin.ime}} {{provera.gradjanin.prezime}}</td>
+      <td>{{provera.gradjanin.jmbg}}</td>
+      <td>{{provera.vreme}}</td>
+      <td>{{provera.poternica}}</td>
+      <td><button
+                  style="background-color: darkgreen;color: white;padding: 8px;cursor: pointer;"
+                  >ACCEPT</button>
+        <button style="background-color: darkred;color: white;padding: 8px;cursor: pointer;"
+                >REFUSE</button></td>
+    </tr>
+    </tbody>
+  </table>

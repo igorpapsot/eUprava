@@ -8,10 +8,10 @@ export class ProveraGradjanina {
   constructor() {
   }
 
-  Id: string
-  Policajac: GPolicajac
-  Gradjanin: Gradjanin
-  Vreme: string
-  Status: EStatusProvere
-  Poternica: Poternica
+  id: string
+  policajac: GPolicajac
+  gradjanin: Gradjanin
+  vreme: string
+  status: EStatusProvere
+  poternica: Poternica
 }

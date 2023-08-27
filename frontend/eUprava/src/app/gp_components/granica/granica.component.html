@@ -6,56 +6,83 @@
   <button (click)="postProvera()">PROVERI</button>
 
   <h1>Provere na cekanju:</h1>
-  <table>
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th>Policajac</th>
-      <th>Gradjanin</th>
-      <th>Jmbg gradjanina</th>
-      <th>Vreme</th>
+      <th>Jmbg<br>gradjanina</th>
+      <th>Gradjanin<br>(ime|prezime)</th>
+      <th>Policajac<br>(ime|prezime)</th>
+      <th>Vreme<br>provere</th>
       <th>Poternica</th>
       <th>Propustiti?</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let provera of provere |async">
-      <td>{{provera.Policajac.Ime}} {{provera.Policajac.Prezime}}</td>
-      <td>{{provera.Gradjanin.Ime}} {{provera.Gradjanin.Prezime}}</td>
-      <td>{{provera.Gradjanin.Jmbg}}</td>
-      <td>{{provera.Vreme}}</td>
-      <td>{{provera.Poternica.Naslov}}</td>
-      <td><button *ngIf="provera.Poternica.Id === ''"
-                  style="background-color: darkgreen;color: white;padding: 8px;cursor: pointer;"
-                  (click)="acceptProvera(provera.Id)">ACCEPT</button>
+    <tr *ngFor="let provera of provere">
+      <td>{{provera.gradjanin.jmbg}}</td>
+      <td>{{provera.gradjanin.ime}} {{provera.gradjanin.prezime}}</td>
+      <td>{{provera.policajac.ime}} {{provera.policajac.prezime}}</td>
+      <td>{{provera.vreme}}</td>
+      <td>{{provera.poternica.naslov}}</td>
+      <td><button *ngIf="provera.poternica.id === ''"
+        style="background-color: darkgreen;color: white;padding: 8px;cursor: pointer;"
+        (click)="acceptProvera(provera.id)">ACCEPT</button>
         <button style="background-color: darkred;color: white;padding: 8px;cursor: pointer;"
                 (click)="openPrijava(prijavi,provera)">REFUSE</button></td>
     </tr>
     </tbody>
   </table>
 
-  <h1>Prelasci:</h1>
+  <button style="background-color: cornflowerblue;color: white;padding: 8px;cursor: pointer;" (click)="hideShow()">Prelasci/Provere</button>
 
-  <table>
+  <div *ngIf="!prikaz"><h2>Prelasci:</h2>
+
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th>Policajac</th>
-      <th>Gradjanin</th>
-      <th>Jmbg gradjanina</th>
-      <th>Vreme prelaska</th>
+      <th>Jmbg<br>gradjanina</th>
+      <th>Gradjanin<br>(ime|prezime)</th>
+      <th>Policajac<br>(ime|prezime)</th>
+      <th>Vreme<br>prelaska</th>
       <th>Prelaz</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let prelazak of prelasci|async">
-      <td>{{prelazak.Provera.Policajac.Ime}} + {{prelazak.Provera.Policajac.Prezime}}</td>
-      <td>{{prelazak.Provera.Gradjanin.Ime}} + {{prelazak.Provera.Gradjanin.Prezime}}</td>
-      <td>{{prelazak.Provera.Gradjanin.Jmbg}}</td>
-      <td>{{prelazak.Vreme}}</td>
-      <td>{{prelazak.GPrelaz}}</td>
+    <tr *ngFor="let prelazak of prelasci">
+      <td>{{prelazak.provera.gradjanin.jmbg}}</td>
+      <td>{{prelazak.provera.gradjanin.ime}} {{prelazak.provera.gradjanin.prezime}}</td>
+      <td>{{prelazak.provera.policajac.ime}} {{prelazak.provera.policajac.prezime}}</td>
+      <td>{{prelazak.vreme}}</td>
+      <td>{{prelazak.g_prelaz}}</td>
     </tr>
     </tbody>
   </table>
+  </div>
 
+  <div *ngIf="prikaz"><h2>Sve provere do sad:</h2>
+  <table  class="table table-striped">
+    <thead>
+    <tr>
+      <th>Jmbg<br>gradjanina</th>
+      <th>Gradjanin<br>(ime|prezime)</th>
+      <th>Policajac<br>(ime|prezime)</th>
+      <th>Vreme<br>provere</th>
+      <th>Poternica</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let provera of provereSve">
+      <td>{{provera.gradjanin.jmbg}}</td>
+      <td>{{provera.gradjanin.ime}} {{provera.gradjanin.prezime}}</td>
+      <td>{{provera.policajac.ime}} {{provera.policajac.prezime}}</td>
+      <td>{{provera.vreme}}</td>
+      <td>{{provera.poternica.naslov}}</td>
+      <td>{{provera.status}}</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
 
   <ng-template #prijavi let-modals>
     <div class="modal-header" style="background-color: #f2f2f2;">
@@ -93,6 +120,23 @@
                 <div [hidden]="obrazlozenje.valid || !obrazlozenje.touched"
                      class="alert alert-danger">
                   Obrazlozenje je obavezno polje
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <div class="form-group">
+                <label>Tuzilastvo</label>
+                <select class="form-control" required
+                        [(ngModel)]="tuzilastvo.id" name="tuzilastvo"
+                        #tuzilastvomodel="ngModel" class="form-select form-select-md">
+                  <option *ngFor="let tuzilastvo of tuzilastva | async; index as i; first as isFirst" [value] = "tuzilastvo.id">{{tuzilastvo.naziv}}</option>
+                </select>
+                <div [hidden]="tuzilastvomodel.valid || !tuzilastvomodel.touched"
+                     class="alert alert-danger">
+                  Community is required
                 </div>
               </div>
             </div>

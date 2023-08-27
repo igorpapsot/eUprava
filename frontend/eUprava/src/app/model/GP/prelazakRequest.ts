@@ -1,4 +1,4 @@
 export class PrelazakRequest {
-  PolicajacId: string
-  ProveraId: string
+  policajacId: string
+  proveraId: string
 }

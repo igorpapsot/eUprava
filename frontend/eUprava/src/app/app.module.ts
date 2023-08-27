@@ -25,6 +25,7 @@ import { CreateSudijaComponent } from './sudstvo_components/sudija/create-sudija
 import { ViewSudijeComponent } from './sudstvo_components/sudija/view-sudije/view-sudije.component';
 import { ViewOptuzniceComponent } from './sudstvo_components/optuznice/view-optuznice/view-optuznice.component';
 import { GranicaComponent } from './gp_components/granica/granica.component';
+import { ProvereComponent } from './gp_components/provere/provere.component';
 
 
 
@@ -51,7 +52,8 @@ import { GranicaComponent } from './gp_components/granica/granica.component';
     CreateSudijaComponent,
     ViewSudijeComponent,
     ViewOptuzniceComponent,
-    GranicaComponent
+    GranicaComponent,
+    ProvereComponent,
   ],
   imports: [
     BrowserModule,

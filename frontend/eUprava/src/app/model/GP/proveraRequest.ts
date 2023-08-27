@@ -1,5 +1,5 @@
 export class ProveraRequest {
 
-  PolicajacId: string
-  Gradjanin: string
+  policajacId: string
+  gradjanin: string
 }
