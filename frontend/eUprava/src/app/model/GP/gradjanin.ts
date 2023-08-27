@@ -5,9 +5,9 @@ export class Gradjanin {
   constructor() {
   }
 
-  Id: string
-  Ime: string
-  Prezime: string
-  Jmbg: string
-  Pol: EPol
+  id: string
+  ime: string
+  prezime: string
+  jmbg: string
+  pol: EPol
 }

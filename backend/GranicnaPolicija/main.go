@@ -54,11 +54,11 @@ func main() {
 
 	//1Y  Provera lične karte i pasoša sa MUP-om (Mup nije uradio pasose tkd proveravam samo licnu kartu)
 	//2Y  Provera postojanja poternica lica sa MUP-om
-	//3Y? Zabrana prelaska licu u slucaju utvrdjenog pokusaja krijumcarenja i pisanje krivicne prijave
-	//4Y? Zabrana prelaska licu sa poternicom i pisanje krivicne prijave
-	//4Y? Pustanje lica preko granice tj kreiranje prelaska
-	//5Y? Lista svih prelaza granice do sada
-	//6Y? Prosledjivanje krivicnih prijava tužilaštvu (lista krivicnih prijava gde se prosledjuje preko fronte i menja se status na prosledjeno)
+	//3Y  Zabrana prelaska licu u slucaju utvrdjenog pokusaja krijumcarenja i pisanje krivicne prijave
+	//4Y  Zabrana prelaska licu sa poternicom i pisanje krivicne prijave
+	//4Y  Pustanje lica preko granice tj kreiranje prelaska
+	//5Y  Lista svih prelaza granice do sada
+	//6Y  Prosledjivanje krivicnih prijava tužilaštvu (lista krivicnih prijava gde se prosledjuje preko fronte i menja se status na prosledjeno)
 
 	//TODO : na frontu staviti dropdown menu za tuzilastva radi cuvanja tj slanja krivicne prijave
 

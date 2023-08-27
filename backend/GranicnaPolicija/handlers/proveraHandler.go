@@ -122,7 +122,7 @@ func (p ProveraHandler) CreateProveraHandler(rw http.ResponseWriter, h *http.Req
 	provera.Policajac = policajac
 	provera.Gradjanin = gradjanin
 	provera.Poternica = poternica
-	provera.Vreme = time.Now().String()
+	provera.Vreme = time.Now().Format("02-01-06 15:04")
 	provera.Status = data.EStatusProvere(data.NACEKANJU)
 
 	fmt.Println(provera)

@@ -23,8 +23,8 @@ export class ProveraService {
   postProvera(provera : ProveraRequest) {
     console.log(provera)
     return this.httpClient.post<unknown>(environment.apiUrl + "/gp/provera", {
-      policajacId : provera.PolicajacId,
-      gradjanin : provera.Gradjanin
+      policajacId : provera.policajacId,
+      gradjanin : provera.gradjanin
     }, this.options())
   }
 

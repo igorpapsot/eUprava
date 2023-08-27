@@ -3,9 +3,9 @@ export class Poternica {
   constructor() {
   }
 
-  Id: string
-  SudijaId: string
-  GradjaninId: string
-  Naslov: string
-  Opis: string
+  id: string
+  sudijaId: string
+  gradjaninId: string
+  naslov: string
+  opis: string
 }

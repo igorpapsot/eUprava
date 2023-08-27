@@ -50,7 +50,7 @@ func (p *PrelazakHandler) CreatePrelazakHandler(rw http.ResponseWriter, h *http.
 		return
 	}
 	prelazak := &data.PrelazakGranice{}
-	prelazak.Vreme = time.Now().String()
+	prelazak.Vreme = time.Now().Format("02-01-06 15:04")
 	prelazak.Provera = provera
 	prelazak.GPrelaz = policajac.GPrelaz
 	if p.repo.CreatePrelazak(prelazak) {

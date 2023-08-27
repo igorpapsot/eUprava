@@ -6,11 +6,11 @@ export class GPolicajac {
   constructor() {
   }
 
-  Id: string
-  Ime: string
-  Prezime: string
-  Jmbg: string
-  Password: string
-  Pol: EPol
-  GPrelaz: EGPrelaz
+  id: string
+  ime: string
+  prezime: string
+  jmbg: string
+  password: string
+  pol: EPol
+  prelaz: EGPrelaz
 }
